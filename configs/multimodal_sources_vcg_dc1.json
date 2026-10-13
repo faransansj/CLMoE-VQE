@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "type": "vqav2",
+      "task_id": "V",
+      "revision": "official v2.0 2017-04-26; SHA256 inventory /scratch2/faransansj/multimodal_sources_20261013/sources.json",
+      "license": "VQA annotations CC-BY-4.0; COCO image source licenses apply",
+      "train": {
+        "questions": "/scratch2/faransansj/multimodal_sources_20261013/v2_OpenEnded_mscoco_train2014_questions.json",
+        "annotations": "/scratch2/faransansj/multimodal_sources_20261013/v2_mscoco_train2014_annotations.json",
+        "images": "COCO2014/train2014",
+        "image_template": "COCO_train2014_{image_id:012d}.jpg"
+      },
+      "eval": {
+        "questions": "/scratch2/faransansj/multimodal_sources_20261013/v2_OpenEnded_mscoco_val2014_questions.json",
+        "annotations": "/scratch2/faransansj/multimodal_sources_20261013/v2_mscoco_val2014_annotations.json",
+        "images": "COCO2014/val2014",
+        "image_template": "COCO_val2014_{image_id:012d}.jpg"
+      }
+    },
+    {
+      "type": "coco_captions",
+      "task_id": "C",
+      "revision": "COCO2014 official captions; annotation ZIP SHA256 031296bbc80c45a1d1f76bf9a90ead27e94e99ec629208449507a4917a3bf009",
+      "license": "COCO annotations CC-BY-4.0; original per-image Flickr licenses apply",
+      "train": {
+        "annotations": "/scratch2/faransansj/multimodal_sources_20261013/captions_train2014.json",
+        "images": "COCO2014/train2014"
+      },
+      "eval": {
+        "annotations": "/scratch2/faransansj/multimodal_sources_20261013/captions_val2014.json",
+        "images": "COCO2014/val2014"
+      }
+    },
+    {
+      "type": "gqa",
+      "task_id": "G",
+      "revision": "official GQA questions v1.2; archive SHA256 cffe92775624693799d70c15db631d4373e4d09b44153e1757ccf1d5fb3fc623",
+      "license": "GQA official download page CC-BY-4.0; source image rights apply",
+      "train": {
+        "questions": "/scratch2/faransansj/multimodal_sources_20261013/train_balanced_questions.json",
+        "images": "GQA/images"
+      },
+      "eval": {
+        "questions": "/scratch2/faransansj/multimodal_sources_20261013/val_balanced_questions.json",
+        "images": "GQA/images"
+      }
+    }
+  ]
+}

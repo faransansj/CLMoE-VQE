@@ -21,3 +21,10 @@ venv/
 /artifacts/readout_report/*
 !/artifacts/readout_report/confirmation/
 !/artifacts/readout_report/routing_confirmation/
+!/artifacts/multimodal-source-access.json
+!/artifacts/multimodal-development-data-audit.json
+!/artifacts/multimodal-g0-smoke.json
+!/artifacts/multimodal-vqa-parity.json
+!/artifacts/multimodal-methods-smoke.json
+!/artifacts/multimodal-g0-audit.json
+!/artifacts/multimodal-execution.json

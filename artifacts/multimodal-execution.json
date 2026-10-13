@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-13",
+  "status": "technical_acceptance_verified_full_source_gate_blocked",
+  "branch": "research/multimodal-cl",
+  "slurm_jobs": {
+    "primary_gpu_smoke": 2477517,
+    "all_method_transitions": 2477586
+  },
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "isolated_source": "/home/faransansj/CLMoE-Multimodal-20261013",
+  "tests": {
+    "command": "OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=. .venv/bin/python -m pytest tests -q",
+    "passed": 199,
+    "seconds": 22.66,
+    "initial_failure": "Stat-based cache returned stale same-size image hash; fixed by rehashing/decoding current bytes on every verification"
+  },
+  "legacy_vqa_core_sha256_matches": [
+    "sema_vqa/readout_run.py",
+    "sema_vqa/readout_model.py",
+    "sema_vqa/readout_router.py",
+    "sema_vqa/vision_model.py",
+    "sema_vqa/vision_run.py",
+    "sema_vqa/expansion.py",
+    "sema_vqa/metrics.py"
+  ],
+  "legacy_prediction_files_byte_identical": 10,
+  "independent_audit_runs": 7,
+  "audited_predictions": 76,
+  "numpy_resume_rng_also_verified": true,
+  "g1_started": false,
+  "caption_learnability_verified": false,
+  "caption_smoke_caveat": "Both tiny train images produced same caption; caption loss did not monotonically decrease. Technical update/generation is not evidence of caption quality.",
+  "blocker": "Authorized Flickr30k images/captions/split metadata unavailable; official access request or licensed local path required. Four-task G1 not submitted.",
+  "data_retention": "Scratch assets/images/checkpoints subject to 30-day atime deletion. Local tracked JSON reports and Git are not independent model/data backup.",
+  "artifact_sha256": {
+    "artifacts/multimodal-source-access.json": "8442c06577c57a47767d29f2972642aeaa0ffe477701d061fa3ba7114364fc6b",
+    "artifacts/multimodal-development-data-audit.json": "79781c48a55b749049f89a860793b743af98ec864f17640a372a0d3e806f89a2",
+    "artifacts/multimodal-g0-smoke.json": "03a6738cb25d43f6d8cf69fa99aa1fbc5bf0127f66fa976f2cd59a147a436f94",
+    "artifacts/multimodal-vqa-parity.json": "776e4e477d3e47e08691765716d9abe4e442a6b0d2d89926b1a70bdc9895f078",
+    "artifacts/multimodal-methods-smoke.json": "57b8e039f07a1be71eb22838dff081ea98f4e6bd108b9b6a668f3b3417cb813a",
+    "artifacts/multimodal-g0-audit.json": "ddd6894d4338e551d9a7b254e6ec1e0b96b535177b551fbbd57cdbf0dfdea699"
+  }
+}

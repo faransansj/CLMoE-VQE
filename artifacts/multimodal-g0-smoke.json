@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+  "actual_gpu": "NVIDIA GeForce RTX 4090",
+  "train_losses": {
+    "vqa": [
+      8.94148874282837,
+      8.675295352935791,
+      8.267427921295166,
+      7.8533241748809814
+    ],
+    "caption": [
+      6.601242780685425,
+      6.157067060470581,
+      6.320265531539917,
+      6.863200426101685
+    ]
+  },
+  "both_family_experts_updated": true,
+  "old_expert_and_frozen_backbone_unchanged": true,
+  "frozen_router_public_view_invariant": true,
+  "native_routes": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "oracle_routes": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "oracle_is_diagnostic_only": true,
+  "caption_predictions": [
+    "a woman in a black top and white pants",
+    "a woman in a black top and white pants"
+  ],
+  "caption_generation": [
+    {
+      "generated_tokens": 10,
+      "max_new_tokens": 64,
+      "eos": true,
+      "empty": false,
+      "repeated_trigram": false,
+      "limit_reached": false
+    },
+    {
+      "generated_tokens": 10,
+      "max_new_tokens": 64,
+      "eos": true,
+      "empty": false,
+      "repeated_trigram": false,
+      "limit_reached": false
+    }
+  ],
+  "checkpoint_caption_roundtrip_identical": true,
+  "interrupted_mid_epoch_optimizer_resume_weights_predictions_rng_identical": true,
+  "partial_replay_batch_preserved": {
+    "event": "train_batch",
+    "task": 1,
+    "epoch": 0,
+    "batch": 1,
+    "loss": 8.888904571533203,
+    "steps": 4,
+    "images": 2,
+    "current_images": 1,
+    "replay_images": 1,
+    "target_tokens": 16,
+    "lr": 0.0003
+  },
+  "parameter_counts": {
+    "base": 361837439,
+    "experts": 2359296,
+    "active_trainable": 1179648,
+    "total": 364196735,
+    "trainable": 1179648
+  },
+  "runner_resources": {
+    "steps": 4,
+    "image_exposures": 10,
+    "target_tokens": 49,
+    "current_exposures": 8,
+    "replay_exposures": 2,
+    "training_seconds": 1.1187805775552988,
+    "feature_seconds": 7.003545761108398e-07,
+    "evaluation_seconds": 3.5650026444345713,
+    "independent_storage_bytes": 0,
+    "wall_seconds": 33.28877768851817,
+    "peak_gpu_memory_bytes": 2125862400
+  },
+  "scope": "Real tiny training/validation technical smoke only; not G1 held-out learnability or confirmation"
+}

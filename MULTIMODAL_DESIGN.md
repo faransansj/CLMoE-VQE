@@ -1,6 +1,6 @@
 # Heterogeneous vision-language continual learning 설계
 
-작성: 2026-10-13. 상태: **설계만 완료, 미구현·미실행**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate는 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
+작성: 2026-10-13. 상태: **G0 실행 경로 구현 및 실제 GPU 기술 smoke 검증 완료; 전체 source gate는 Flickr30k 접근 권한으로 차단**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate와 실행 기록은 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
 
 ## 1. 연구 질문과 범위
 
@@ -32,7 +32,7 @@ VQA 자체가 multimodal이다. 이번 확장은 modality 수를 늘리는 것�
 | `scripts/prepare_readout_data.py` | 전역 이미지 hash와 과거 split 제외 | 중복차단 원칙 재사용. Caption references와 family별 source adapter 추가 |
 | `scripts/summarize_readout.py` | 예측 ID 검증, VQA 재채점 | Caption corpus scoring이 가능하도록 새 summary 경로 작성. CIDEr를 VQA scorer에 억지로 넣지 않음 |
 
-제안 모듈은 `sema_multimodal/`의 `data.py`, `model.py`, `run.py`, `metrics.py`와 `scripts/prepare_multimodal_data.py`, `scripts/summarize_multimodal.py`다. **현재 존재하거나 실행 가능한 API라는 뜻이 아니다.** 모델 모듈은 `ReadoutMoEVQA`를 재사용하고 새 task 경로만 구현하여 원 VQA 코드를 복사하지 않는다. 공통 추출이 필요하면 기존 결과 parity를 증명한 뒤 최소 범위로 수행한다.
+구현 모듈은 `sema_multimodal/`의 `data.py`, `model.py`, `run.py`, `metrics.py`와 `scripts/prepare_multimodal_data.py`, `scripts/summarize_multimodal.py`다. 모델은 기존 `ReadoutMoEVQA`를 상속하여 token 평균 loss와 32/64-token 생성만 확장했다. 기존 VQA 모듈은 변경하지 않았다. Runner는 batch별 optimizer/scheduler/RNG/cursor checkpoint를 저장하며 interrupted resume를 실제 GPU에서 검증했다. 데이터 준비는 공식 source 파일과 명시적인 로컬 ZIP만 사용하며 부족/손상된 이미지를 다른 예제로 대체하지 않는다.
 
 ## 4. 데이터와 공개 입력 계약
 
@@ -88,4 +88,4 @@ Checkpoint에는 schema version, expert bank, active expert, router memory/weigh
 4. **VQA 보호:** archived VQA config/source는 수정하지 않는다. 공통 코드 변경 시 별도 출력의 기존 VQA smoke와 checkpoint 재생 결과 parity가 필수다. 기존 artifact 경로를 출력으로 받으면 실패시킨다.
 5. **Pilot/본 실험:** 아래 실험계획의 gate를 통과한 경우에만 실행한다. 기술 smoke 성공을 held-out 학습 성공으로 대체하지 않는다.
 
-기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. 현재 설계 단계에서는 어떤 source/model/checkpoint도 변경하지 않았다.
+기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. DC1의 새 source/environment는 `/home/faransansj/CLMoE-Multimodal-20261013/`다. 기존 venv의 의존성은 read-only 경로로 사용하고 추가 scorer 의존성은 새 venv에 설치했다. 실제 기술 smoke는 완료했지만 captioning held-out learnability와 본 CL 성능은 아직 검증하지 않았다.

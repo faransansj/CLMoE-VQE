@@ -1,0 +1,387 @@
+{
+  "scope": "Real method-transition acceptance, not learnability",
+  "actual_gpu": "NVIDIA GeForce RTX 4090",
+  "capacity_total_parameter_equivalence": true,
+  "methods": {
+    "shared_lora": {
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004248743394108769
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.8754141703248024
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2123592192,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5624460857361555
+        }
+      ],
+      "resources": {
+        "steps": 4,
+        "image_exposures": 10,
+        "target_tokens": 72,
+        "current_exposures": 10,
+        "replay_exposures": 0,
+        "training_seconds": 1.437860256060958,
+        "feature_seconds": 9.406358003616333e-07,
+        "evaluation_seconds": 5.2056910041719675,
+        "independent_storage_bytes": 0,
+        "wall_seconds": 49.71054184064269,
+        "peak_gpu_memory_bytes": 2123592192
+      }
+    },
+    "capacity_matched_shared": {
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.002709896865987634
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 2359296,
+            "total": 364196735,
+            "trainable": 2359296
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2128459264,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5667742136865854
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 2359296,
+            "total": 364196735,
+            "trainable": 2359296
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2140002816,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5574586614966393
+        }
+      ],
+      "resources": {
+        "steps": 4,
+        "image_exposures": 10,
+        "target_tokens": 72,
+        "current_exposures": 10,
+        "replay_exposures": 0,
+        "training_seconds": 1.1242328751832247,
+        "feature_seconds": 8.493661880493164e-07,
+        "evaluation_seconds": 3.3392392843961716,
+        "independent_storage_bytes": 0,
+        "wall_seconds": 33.65493878535926,
+        "peak_gpu_memory_bytes": 2140002816
+      }
+    },
+    "expand": {
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 43109,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5620443001389503
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 1179648,
+            "total": 364196735,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 79985,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2128310784,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5588752347975969
+        }
+      ],
+      "resources": {
+        "steps": 4,
+        "image_exposures": 10,
+        "target_tokens": 72,
+        "current_exposures": 10,
+        "replay_exposures": 0,
+        "training_seconds": 1.1209195349365473,
+        "feature_seconds": 0.42594496719539165,
+        "evaluation_seconds": 5.940141461789608,
+        "independent_storage_bytes": 0,
+        "wall_seconds": 36.1038833912462,
+        "peak_gpu_memory_bytes": 2128310784
+      }
+    },
+    "frozen_first": {
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5664042346179485
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 0,
+            "total": 363017087,
+            "trainable": 0
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 0,
+          "image_exposures": 0,
+          "target_tokens": 0,
+          "current_exposures": 0,
+          "replay_exposures": 0,
+          "training_seconds": 0.0
+        }
+      ],
+      "resources": {
+        "steps": 2,
+        "image_exposures": 5,
+        "target_tokens": 11,
+        "current_exposures": 5,
+        "replay_exposures": 0,
+        "training_seconds": 0.5664042346179485,
+        "feature_seconds": 5.885958671569824e-07,
+        "evaluation_seconds": 3.671237239614129,
+        "independent_storage_bytes": 0,
+        "wall_seconds": 32.92821594700217,
+        "peak_gpu_memory_bytes": 2111845888
+      }
+    },
+    "independent": {
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.563112298026681
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2123592192,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5642024762928486
+        }
+      ],
+      "resources": {
+        "steps": 4,
+        "image_exposures": 10,
+        "target_tokens": 72,
+        "current_exposures": 10,
+        "replay_exposures": 0,
+        "training_seconds": 1.1273147743195295,
+        "feature_seconds": 1.5795230865478516e-06,
+        "evaluation_seconds": 3.435034880414605,
+        "independent_storage_bytes": 9563052,
+        "wall_seconds": 36.91397839598358,
+        "peak_gpu_memory_bytes": 2123592192
+      }
+    }
+  }
+}

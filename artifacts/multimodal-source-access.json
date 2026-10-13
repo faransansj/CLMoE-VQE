@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-13",
+  "server": "Yonsei-DC1",
+  "download_node": "yonsei-ai-login1",
+  "source_inventory": {
+    "official_sources": {
+      "coco_annotations": {
+        "url": "https://s3.amazonaws.com/images.cocodataset.org/annotations/annotations_trainval2014.zip",
+        "bytes": 252872794,
+        "sha256": "031296bbc80c45a1d1f76bf9a90ead27e94e99ec629208449507a4917a3bf009",
+        "members": [
+          {
+            "path": "captions_train2014.json",
+            "sha256": "dd8c9636dc11740f956e36728866ea0c4ebe4988dcbdc5e712b7c2267f152d12"
+          },
+          {
+            "path": "captions_val2014.json",
+            "sha256": "7da4cc45cb76ee1642d163e846e1e0a33feffac2e841c9c426d585ea499165a4"
+          }
+        ]
+      },
+      "vqa_train_questions": {
+        "url": "https://cvmlp.s3.amazonaws.com/vqa/mscoco/vqa/v2_Questions_Train_mscoco.zip",
+        "bytes": 7239401,
+        "sha256": "05a64b6e2582d06d7585f5429674a9a33851878be1bff9f8668cdcf792df611e",
+        "members": [
+          {
+            "path": "v2_OpenEnded_mscoco_train2014_questions.json",
+            "sha256": "cb671e77b52a86fc3722b2a0ffc456c8199240391bfd97eaf2d850448404845c"
+          }
+        ]
+      },
+      "vqa_val_questions": {
+        "url": "https://cvmlp.s3.amazonaws.com/vqa/mscoco/vqa/v2_Questions_Val_mscoco.zip",
+        "bytes": 3494929,
+        "sha256": "e71f6c5c3e97a51d050f28243e262b28cd0c48d11a6b4632d769d30d3f93222a",
+        "members": [
+          {
+            "path": "v2_OpenEnded_mscoco_val2014_questions.json",
+            "sha256": "f34d9c9909dea76700d361baddd63dd47b4494945097459b542d9fe840244811"
+          }
+        ]
+      },
+      "vqa_train_annotations": {
+        "url": "https://cvmlp.s3.amazonaws.com/vqa/mscoco/vqa/v2_Annotations_Train_mscoco.zip",
+        "bytes": 21708861,
+        "sha256": "fb101bcefe91422c543c2bb6d70af11eb3119d0ff745ae283d09acdf66250853",
+        "members": [
+          {
+            "path": "v2_mscoco_train2014_annotations.json",
+            "sha256": "770d2d3980e7838d6186082e0ddeddd804014c390ae45a592e996d6baf841d92"
+          }
+        ]
+      },
+      "vqa_val_annotations": {
+        "url": "https://cvmlp.s3.amazonaws.com/vqa/mscoco/vqa/v2_Annotations_Val_mscoco.zip",
+        "bytes": 10518930,
+        "sha256": "0caae7c8d1dafd852727f5ac046bc1efca9b72026bd6ffa34fc489f3a7b3291e",
+        "members": [
+          {
+            "path": "v2_mscoco_val2014_annotations.json",
+            "sha256": "0564650e712b34c246e4ad142894692bf2e45dee8e9cc6ebb2cedbe85731c4bf"
+          }
+        ]
+      }
+    },
+    "annotations": {
+      "captions_val2014.json": {
+        "rows": 202654,
+        "image_count": 40504
+      },
+      "v2_OpenEnded_mscoco_train2014_questions.json": {
+        "rows": 443757,
+        "image_count": 82783
+      },
+      "v2_mscoco_train2014_annotations.json": {
+        "rows": 443757,
+        "image_count": 82783
+      },
+      "captions_train2014.json": {
+        "rows": 414113,
+        "image_count": 82783
+      },
+      "v2_mscoco_val2014_annotations.json": {
+        "rows": 214354,
+        "image_count": 40504
+      },
+      "v2_OpenEnded_mscoco_val2014_questions.json": {
+        "rows": 214354,
+        "image_count": 40504
+      }
+    },
+    "gqa_official": {
+      "url": "https://downloads.cs.stanford.edu/nlp/data/gqa/questions1.2.zip",
+      "bytes": 1498616372,
+      "sha256": "cffe92775624693799d70c15db631d4373e4d09b44153e1757ccf1d5fb3fc623",
+      "members": [
+        {
+          "path": "train_balanced_questions.json",
+          "sha256": "c600b8301c67ee3eac1b4b9af8a35f776589f045f245fd5b15c50c97fa244d6b",
+          "bytes": 812984653
+        },
+        {
+          "path": "val_balanced_questions.json",
+          "sha256": "2f675643c0cfffe0485dbae0c0c0dfc16b547443309a98544502bc1ae87c0779",
+          "bytes": 113884131
+        }
+      ]
+    }
+  },
+  "flickr30k": {
+    "available_locally": false,
+    "official_access": "https://shannon.cs.illinois.edu/DenotationGraph/",
+    "requires_request": true
+  },
+  "environment": {
+    "python_environment": "/home/faransansj/CLMoE-Multimodal-20261013/.venv",
+    "archived_dependencies_read_only": "/home/faransansj/CLMoE-VQE/.venv/lib/python3.12/site-packages",
+    "torch": "2.5.1+cu124",
+    "transformers": "4.46.3"
+  }
+}

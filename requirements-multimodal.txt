@@ -1,0 +1,7 @@
+# Install in the same environment as requirements.txt; existing VQA pins stay unchanged.
+-r requirements.txt
+pycocoevalcap==1.2
+pycocotools==2.0.10
+tqdm==4.67.1
+# Runtime: Java on PATH. pycocoevalcap ships Stanford CoreNLP 3.4.1 PTBTokenizer.
+# CIDEr-D uses task train-reference IDF, n=4, sigma=6, native scale=10.

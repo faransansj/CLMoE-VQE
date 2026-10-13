@@ -1,0 +1,46 @@
+{
+  "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+  "remote_manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+  "tasks": {
+    "V": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    },
+    "C": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    }
+  },
+  "total_unique_image_sha256": 5632,
+  "cross_task_split_overlap": 0,
+  "historical_exclusion_overlap": 0,
+  "historical_manifests": 6,
+  "confirmation_eligible": false,
+  "additional_vcg_source_audit": {
+    "manifest_sha256": "bad389dc6c37313a9a7187d345b72b6a36a5d40da5e88f902e646aa3d322f68c",
+    "remote_manifest": "/scratch2/faransansj/multimodal_data_vcg_20261013/manifest.json",
+    "tasks": {
+      "V": {
+        "train": 2048,
+        "validation": 256,
+        "eval": 512
+      },
+      "C": {
+        "train": 2048,
+        "validation": 256,
+        "eval": 512
+      },
+      "G": {
+        "train": 2048,
+        "validation": 256,
+        "eval": 512
+      }
+    },
+    "total_unique_image_sha256": 8448,
+    "cross_task_split_overlap": 0,
+    "historical_exclusion_overlap": 0,
+    "confirmation_eligible": false
+  }
+}

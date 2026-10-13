@@ -1,6 +1,6 @@
 # 멀티모달 task 확장 실험계획
 
-작성: 2026-10-13. 상태: **실험 전 계획, 데이터 확보·구현·GPU 실행 전**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 조건은 시작안이며, 변경은 validation trial 이전에 revision으로 기록한다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않는다.
+작성: 2026-10-13. 상태: **G0 구현·실제 GPU 기술 smoke 완료, G1 이후 미실행; Flickr30k source 접근 gate 차단**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 본 실험 조건은 변경하지 않았다. 변경은 validation trial 이전에 revision으로 기록한다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않는다.
 
 ## 1. 검증할 주장
 
@@ -130,7 +130,7 @@ AF, transfer, tuned replay, router, 개별 task/order 결과는 exploratory다. 
 
 ## 7. 실행·보존·최종 산출물
 
-이번 작업은 설계까지다. 새 학습을 제출하거나 데이터를 다운로드하지 않았다. Run당 GPU 메모리·walltime을 G0/G1에서 측정하기 전에는 GPU-hours/완료 날짜를 추정하지 않는다. 원격 실행은 서버별 지침 확인 후 scheduler로만 수행한다.
+G0 데이터 준비와 GPU 기술 smoke를 실행했다. G1 독립 task learnability 및 본 CL 실험은 아직 실행하지 않았다. Tiny smoke의 메모리·시간을 본 실험 GPU-hours/완료 날짜 추정으로 확대하지 않는다. 원격 실행은 서버별 지침 확인 후 scheduler로만 수행한다.
 
 실행 시작 전 체크리스트:
 
@@ -141,3 +141,37 @@ AF, transfer, tuned replay, router, 개별 task/order 결과는 exploratory다. 
 - 계산된 job matrix와 비교 목록의 기계 검증, 독립 보존 공간 확보
 
 최종 공개 산출물은 source/config/environment lock, 원 예측과 references 연결용 manifest, 전 task matrix, summary/task/resource CSV, paired 비교/CI, routing confusion, checkpoint hash inventory다. 모델/데이터/원 예측의 독립 백업은 Git과 별도로 계획해야 한다. 기존 VQA 산출물에는 어떤 쓰기도 하지 않는다.
+
+## 8. 실행 기록: G0
+
+- 공식 VQAv2 train/val questions·10인 annotation, COCO2014 captions, GQA v1.2 balanced train/val questions를 DC1 login node에서 확보했다. URL/원 ZIP·JSON SHA256과 실제 row 수는 [source-access 증거](artifacts/multimodal-source-access.json)에 보존한다.
+- V/C 개발 manifest는 task당 train2,048/validation256/eval512, 총5,632개 unique image SHA256이다. Cross-task/split 및 과거 이미지 제외 조건의 overlap은0이며 과거 manifest6개를 사용했다. [분할 audit](artifacts/multimodal-development-data-audit.json). 이 2-task manifest는 **confirmation_eligible=false**다. G1/본 평가의 4-task manifest로 대체하지 않는다.
+- 통합 검증에서 같은 크기로 변경된 이미지의 stat 기반 cache가 오래된 hash를 반환하는 오류를 발견했다. Timestamp를 신뢰하는 cache를 제거하여 매번 실제 bytes를 hash/decode한다. 수정 후 `pytest tests -q`: **199 passed**.
+- SLURM **2477517**, RTX4090: 실제 VQA/caption expert 업데이트, backbone·old expert 불변, public-view routing 불변, EOS caption 생성, checkpoint roundtrip, **epoch 중간 중단/재개 후 가중치·예측·RNG 일치**, partial replay batch 보존을 확인했다. [GPU smoke 증거](artifacts/multimodal-g0-smoke.json).
+- 기존 VQA expand/replay smoke의 예측 각각5개 파일, 총10개가 이전 GPU smoke와 byte-identical했다. [VQA parity](artifacts/multimodal-vqa-parity.json). 기존 핵심7개 source SHA256도 confirmation lock과 일치한다.
+- 실제 새 replay uninterrupted/resumed 두 run의 원 예측 **20개를 독립 재채점**했다. 이는 tiny technical acceptance이며 정확도 향상 근거가 아니다.
+- Caption smoke의 두 train 이미지에서 같은 문장 `a woman in a black top and white pants`를 생성했다. Caption loss도 단조 감소하지 않았다. 새 expert update·생성 기능은 확인했지만 caption 품질/학습 성공이나 G1 통과를 주장하지 않는다.
+- Flickr30k의 [공식 데이터 페이지](https://shannon.cs.illinois.edu/DenotationGraph/)는 접근 신청을 요구한다. 서버 프로젝트·사용자 scratch·공용 `/datasets`에 승인된 데이터가 없었다. **승인된 이미지·caption 및 split metadata 경로 또는 공식 접근 승인이 필요하다.** 미승인 mirror로 대체하거나 V/C만으로 G1을 통과시키지 않는다.
+
+### 재현 실행
+
+DC1에서 새 checkout 및 `requirements-multimodal.txt`의 의존성, Java PATH를 준비한 후:
+
+```bash
+# 다운로드는 login node에서만; 기존 source 파일을 변경하지 않음.
+.venv/bin/python -m scripts.download_multimodal_sources \
+  --output /scratch2/faransansj/multimodal_sources_20261013
+# 실제 source 경로/라이선스와 과거 manifest를 지정해 새 데이터만 준비.
+.venv/bin/python -m scripts.prepare_multimodal_data --help
+# 기존 결과를 덮어쓰지 않는 새 SLURM job/output 경로 사용.
+sbatch --wait scripts/multimodal_g0.sbatch
+# 완성 run은 scripts.summarize_multimodal로 독립 재채점.
+```
+
+Source config 예시는 `configs/multimodal_sources_dc1.json`(V/C), `configs/multimodal_sources_vcg_dc1.json`(V/C/G)이다. 둘 다 개발용 source 부분집합이지 완성된 4-task 본 평가 설정은 아니다. 서버별 source/output/SLURM 경로를 확인하고 수정한 다음 사용한다.
+
+### 나머지 방법의 실제 실행 검증
+
+SLURM **2477586**, RTX4090에서 shared/capacity-matched/expand/frozen-first/independent의 두 task 전이를 추가로 실행했다. 각 학습 방법의10 exposures/4 steps, frozen-first의5 exposures/2 steps, 독립 모델의 이전 task 점수 보존, native/oracle 분리, router/replay memory 계약을 확인했다. Capacity-matched와 expansion의 최종 총 adapter/model 파라미터도 일치했다. [방법별 smoke 증거](artifacts/multimodal-methods-smoke.json). 모두5개 train/2개 validation 이미지/task를 사용한 기술 검증이며, 점수로 방법 순위를 매기지 않는다.
+
+V/C/G의 실제3-source 준비도 완료했다. 세 task 모두2,048/256/512개이며 unique image SHA2568,448개, task/split 및 과거 이미지 제외 조건 overlap0이다. 두 개발 manifest는 모두 non-confirmation이다. 최종 독립 audit은 위 다섯 방법과 replay uninterrupted/resumed를 합친 **7개 run/76개 원 예측**을 검증했다. [전체 GPU smoke audit](artifacts/multimodal-g0-audit.json). 평가 단위는 원래 accuracy/CIDEr로 유지했으며 unlike-unit AP를 계산하지 않았다.

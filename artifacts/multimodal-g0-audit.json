@@ -1,0 +1,2476 @@
+{
+  "schema_version": 1,
+  "runs": [
+    {
+      "directory": "/scratch2/faransansj/multimodal_g0_2477517/multimodal/resumed",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "replay_lora",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 3,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004997231549126347
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        9.65881473651833e-05
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004997231549126347,
+            "post_train": 0.004997231549126347,
+            "AF": null,
+            "pre_to_post_gain": 9.65881473651833e-05
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": 9.65881473651833e-05
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004997231549126347,
+            "cider_d": 0.004997231549126347,
+            "bleu4": 1.914603068955324e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and blue jeans": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing on a black background": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.0
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 3,
+          "replay_row_bytes": 1430,
+          "replay_image_bytes": 470260,
+          "raw_replay_bytes": 471690,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111870464,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5594558883458376
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 6,
+          "replay_row_bytes": 3470,
+          "replay_image_bytes": 889622,
+          "raw_replay_bytes": 893092,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2125964288,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 38,
+          "current_exposures": 3,
+          "replay_exposures": 2,
+          "training_seconds": 0.5608023330569267
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_g0_2477517/multimodal/uninterrupted",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "replay_lora",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 3,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004997231549126347
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        9.65881473651833e-05
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004997231549126347,
+            "post_train": 0.004997231549126347,
+            "AF": null,
+            "pre_to_post_gain": 9.65881473651833e-05
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": 9.65881473651833e-05
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004997231549126347,
+            "cider_d": 0.004997231549126347,
+            "bleu4": 1.914603068955324e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and blue jeans": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing on a black background": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.0
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 3,
+          "replay_row_bytes": 1430,
+          "replay_image_bytes": 470260,
+          "raw_replay_bytes": 471690,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111870464,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5597168542444706
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 6,
+          "replay_row_bytes": 3470,
+          "replay_image_bytes": 889622,
+          "raw_replay_bytes": 893092,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2125862400,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 38,
+          "current_exposures": 3,
+          "replay_exposures": 2,
+          "training_seconds": 0.5590637233108282
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_methods_20261013/capacity_matched_shared",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "capacity_matched_shared",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 64,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.002709896865987634
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        -0.00219074653577353
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.002709896865987634,
+            "post_train": 0.002709896865987634,
+            "AF": null,
+            "pre_to_post_gain": -0.00219074653577353
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": -0.00219074653577353
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.002709896865987634,
+            "cider_d": 0.002709896865987634,
+            "bleu4": 3.0020653565437186e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and blue jeans": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and blue jeans": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 1.0,
+          "output_counts": {
+            "a woman in a black dress and a white shirt": 2
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 11.0
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 2359296,
+            "total": 364196735,
+            "trainable": 2359296
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2128459264,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5667742136865854
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 2359296,
+            "total": 364196735,
+            "trainable": 2359296
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2140002816,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5574586614966393
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_methods_20261013/expand",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "expand",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 64,
+        "oracle_diagnostic": true,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        0.0
+      ],
+      "oracle_matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004900643401761164,
+            "post_train": 0.004900643401761164,
+            "AF": null,
+            "pre_to_post_gain": 0.0
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": 0.0
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": null
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004900643401761164,
+            "post_train": 0.004900643401761164,
+            "AF": null,
+            "pre_to_post_gain": null
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": null
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "oracle",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "oracle",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "oracle",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 1.0,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing on a black background": 2
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.0
+        }
+      ],
+      "audited_predictions": 16,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 43109,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5620443001389503
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 2359296,
+            "active_trainable": 1179648,
+            "total": 364196735,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 79985,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2128310784,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5588752347975969
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_methods_20261013/frozen_first",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "frozen_first",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 64,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        0.0
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004900643401761164,
+            "post_train": 0.004900643401761164,
+            "AF": null,
+            "pre_to_post_gain": 0.0
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": 0.0
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 1.0,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing on a black background": 2
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.0
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5664042346179485
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 0,
+            "total": 363017087,
+            "trainable": 0
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 0,
+          "image_exposures": 0,
+          "target_tokens": 0,
+          "current_exposures": 0,
+          "replay_exposures": 0,
+          "training_seconds": 0.0
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_methods_20261013/independent",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "independent",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 64,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004900643401761164
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        0.0
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004900643401761164,
+            "post_train": 0.004900643401761164,
+            "AF": null,
+            "pre_to_post_gain": 0.0
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": 0.0
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 1.0,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing on a black background": 2
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.0
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.563112298026681
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2123592192,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5642024762928486
+        }
+      ]
+    },
+    {
+      "directory": "/scratch2/faransansj/multimodal_methods_20261013/shared_lora",
+      "config": {
+        "manifest": "/scratch2/faransansj/multimodal_data_20261013/manifest.json",
+        "assets": "/scratch2/faransansj/CLMoE-VQE/models/blip",
+        "image_root": "/scratch2/faransansj/multimodal_images_20261013",
+        "method": "shared_lora",
+        "task_ids": [
+          "V",
+          "C"
+        ],
+        "eval_split": "validation",
+        "seed": 17,
+        "lr": 0.0003,
+        "epochs": 1,
+        "rank": 8,
+        "alpha": 16,
+        "batch_size": 3,
+        "micro_batch_size": 2,
+        "image_size": 224,
+        "device": "cuda",
+        "router_modality": "joint",
+        "router_memory": 128,
+        "router_ridge": 1.0,
+        "replay_per_task": 64,
+        "oracle_diagnostic": false,
+        "image_shuffled_diagnostic": false,
+        "smoke_output": true,
+        "train_limit": 5,
+        "eval_limit": 2,
+        "schema_version": 1,
+        "protocol": "multimodal_development",
+        "task_order": [
+          "V",
+          "C"
+        ],
+        "manifest_sha256": "98e258d5dce2d38e0f26664bb406ba7aea5c61fcac24ee1a5b1e90793dae3b11",
+        "source_sha256": {
+          "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+          "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+          "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+          "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+          "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+          "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+          "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+          "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+          "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+          "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+          "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+          "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+          "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+        },
+        "assets_sha256": {
+          "model_base_capfilt_large.pth": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+          "sources.json": "5449f4f4a0894bb538426a7067bd16171546fa2a77b4d8e0fdbe517dfbceae07",
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "tokenizer_sha256": {
+          "tokenizer/.cache/huggingface/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+          "tokenizer/.cache/huggingface/download/config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/config.json.metadata": "92adbc8162a75a0f0c1690740198ec35a8a3b545e6132786877a654dbd5b62ec",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/tokenizer_config.json.metadata": "436fccc84dac6509510f6e153e562a768077987013d298b8721bb35f3d1f4b1c",
+          "tokenizer/.cache/huggingface/download/vocab.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tokenizer/.cache/huggingface/download/vocab.txt.metadata": "2a186d60b6f904618c4c04a3bce49921a3601cb0b13cb1098f36a68162553275",
+          "tokenizer/config.json": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "tokenizer/tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        "scorer_locks": {
+          "V": {
+            "metric": "vqav2",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "accuracy_points",
+            "normalizer_sha256": "8b49e1033e29d551c0bdd86d9149e2b54370e4cd17e52176ac9061b3521f0774",
+            "consensus": "official_leave_one_out_conditional_normalization"
+          },
+          "C": {
+            "metric": "cider_d",
+            "implementation_sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+            "units": "native_cider_d",
+            "pycocoevalcap": "1.2",
+            "numpy": "1.26.4",
+            "tokenizer": "Stanford_CoreNLP_3.4.1_PTB_preserveLines_lowerCase",
+            "tokenizer_jar_sha256": "2fcb91bb7a111f93d71e264f4ee0e3afd19ba0dde6d21b38605088df9e940399",
+            "tokenizer_wrapper_sha256": "ded90551127b8a4bf683873432ccafa83330a9997f6d0b695cb71a618808b8c1",
+            "cider_source_sha256": "299037838373391c3335e066c867ba2d6dd8617d2c8fb2c4193f32620a774adc",
+            "bleu_source_sha256": "05b74a92b32e071eacfb954ef34328137cfd1b82c563572648633087def23776",
+            "bleu_scorer_sha256": "413ccfef71b88c5f11d25d05fdcf08625a1559338ffbb7c2787e800116eaecdd",
+            "idf_source": "task_train_references",
+            "train_documents": 2048,
+            "train_reference_sha256": "df453e3994b8753df7351e6fd76f309d88c954b95fe87f215b439975c85e91f6",
+            "document_frequency_sha256": "959cefef9d3c33724307f5b2090405354681e91be7e86a0c20de66b2e27cb7ec",
+            "n": 4,
+            "sigma": 6.0,
+            "scale": 10.0
+          }
+        },
+        "optimizer": {
+          "name": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip_norm": 1.0,
+          "scheduler": "epoch_cosine",
+          "precision": "cuda_bfloat16_or_cpu_float32"
+        },
+        "generation": {
+          "strategy": "cached_greedy",
+          "vqa_max_new_tokens": 32,
+          "caption_max_new_tokens": 64
+        },
+        "loss": "BLIP smoothing 0.1; shifted target token mean per row, then effective-batch example mean",
+        "torch": "2.5.1+cu124",
+        "numpy": "1.26.4",
+        "cuda": "12.4",
+        "deterministic_algorithms": true,
+        "tf32": false
+      },
+      "matrix": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          0.004248743394108769
+        ]
+      ],
+      "pre_task_scores": [
+        0.0,
+        0.004900643401761164
+      ],
+      "pre_to_post_gain": [
+        0.0,
+        -0.0006519000076523947
+      ],
+      "oracle_matrix": [
+        [],
+        []
+      ],
+      "metrics": {
+        "tasks": {
+          "V": {
+            "family": "vqa",
+            "metric": "vqav2",
+            "units": "accuracy_points",
+            "final": 0.0,
+            "post_train": 0.0,
+            "AF": 0.0,
+            "pre_to_post_gain": 0.0
+          },
+          "C": {
+            "family": "caption",
+            "metric": "cider_d",
+            "units": "native_cider_d",
+            "final": 0.004248743394108769,
+            "post_train": 0.004248743394108769,
+            "AF": null,
+            "pre_to_post_gain": -0.0006519000076523947
+          }
+        },
+        "families": {
+          "caption": {
+            "tasks": [
+              "C"
+            ],
+            "units": "native_cider_d",
+            "native_AF": null,
+            "native_subsequent_gain": -0.0006519000076523947
+          },
+          "vqa": {
+            "tasks": [
+              "V"
+            ],
+            "units": "accuracy_points",
+            "native_AF": 0.0,
+            "native_subsequent_gain": null
+          }
+        }
+      },
+      "oracle_metrics": null,
+      "corpus_evaluations": [
+        {
+          "stage": 0,
+          "kind": "before",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 0,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "before",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004900643401761164,
+            "cider_d": 0.004900643401761164,
+            "bleu4": 1.914603068955324e-09
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "V",
+          "scoring": {
+            "score": 0.0,
+            "accuracy": 0.0
+          }
+        },
+        {
+          "stage": 1,
+          "kind": "after",
+          "task_id": "C",
+          "scoring": {
+            "score": 0.004248743394108769,
+            "cider_d": 0.004248743394108769,
+            "bleu4": 1.5243986255211354e-09
+          }
+        }
+      ],
+      "generation": [
+        {
+          "stage": 0,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and black pants": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "V",
+          "family": "vqa",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a white shirt and blue jeans": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 15.0
+        },
+        {
+          "stage": 1,
+          "task_id": "C",
+          "family": "caption",
+          "examples": 2,
+          "empty_fraction": 0.0,
+          "largest_output_fraction": 0.5,
+          "output_counts": {
+            "a woman in a black dress and a man in a white shirt are standing next to each other people": 1,
+            "a woman in a black dress and a man in a white shirt are standing on a white background": 1
+          },
+          "eos_fraction": 1.0,
+          "repeated_trigram_fraction": 0.0,
+          "limit_reached_fraction": 0.0,
+          "mean_generated_tokens": 20.5
+        }
+      ],
+      "audited_predictions": 10,
+      "image_bytes_verified": true,
+      "stage_resources": [
+        {
+          "task_id": "V",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2111845888,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 11,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.8754141703248024
+        },
+        {
+          "task_id": "C",
+          "parameter_counts": {
+            "base": 361837439,
+            "experts": 1179648,
+            "active_trainable": 1179648,
+            "total": 363017087,
+            "trainable": 1179648
+          },
+          "router_memory_bytes": 0,
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "raw_replay_bytes": 0,
+          "replay_storage": "Rows and immutable image-file references; no duplicate image copies",
+          "peak_gpu_memory_bytes": 2123592192,
+          "steps": 2,
+          "image_exposures": 5,
+          "target_tokens": 61,
+          "current_exposures": 5,
+          "replay_exposures": 0,
+          "training_seconds": 0.5624460857361555
+        }
+      ]
+    }
+  ],
+  "normalizer_sha256": null,
+  "audited_predictions": 76
+}

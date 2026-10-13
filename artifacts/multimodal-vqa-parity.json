@@ -1,0 +1,30 @@
+{
+  "scope": "Six training and four validation examples, not a performance result",
+  "stem_routing_exercised": true,
+  "methods": {
+    "expand": {
+      "completed_tasks": 2,
+      "training_examples": [
+        3,
+        3
+      ],
+      "partial_batch_retained": true,
+      "missing_report_restored": true,
+      "no_retraining_or_checkpoint_mutation_on_resume": true,
+      "previous_prediction_files_byte_identical": 5,
+      "router_memory_bytes": 36880
+    },
+    "replay_lora": {
+      "completed_tasks": 2,
+      "training_examples": [
+        3,
+        3
+      ],
+      "partial_batch_retained": true,
+      "missing_report_restored": true,
+      "no_retraining_or_checkpoint_mutation_on_resume": true,
+      "previous_prediction_files_byte_identical": 5,
+      "router_memory_bytes": 0
+    }
+  }
+}

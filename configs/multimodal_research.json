@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-10-13",
-  "status": "design_only_not_implemented_not_run",
+  "status": "g0_implemented_gpu_technical_smoke_verified_full_source_gate_blocked",
   "branch": "research/multimodal-cl",
   "vqa_baseline_commit": "47efefe",
   "design": "MULTIMODAL_DESIGN.md",
@@ -14,6 +14,9 @@
     {"id": "F", "dataset": "Flickr30k captions", "family": "caption", "metric": "cider_d_fixed_train_idf"}
   ],
   "source_access_verified": false,
+  "source_gate_blocker": "Authorized Flickr30k images, captions and split metadata unavailable; official access request required",
+  "g0_gpu_job": 2477517,
+  "g1_started": false,
   "sampling_seed": 20261013,
   "images_per_task": {"train": 2048, "validation": 256, "eval": 512},
   "image_disjoint_across_tasks_and_splits": true,
@@ -39,7 +42,7 @@
     "inference_instruction_allowed": true
   },
   "common_training": {"optimizer": "AdamW", "lr": 0.0003, "epochs": 5, "batch_size": 16, "micro_batch_size": 8},
-  "optimizer_details_gate": "explicitly pin betas, epsilon, weight decay, precision and scheduler before G0 runs",
+  "optimizer_details": {"betas": [0.9, 0.999], "eps": 1e-8, "weight_decay": 0.01, "gradient_clip_norm": 1.0, "scheduler": "epoch_cosine", "precision": "cuda_bfloat16_or_cpu_float32", "deterministic_algorithms": true, "tf32": false},
   "development_grid": {"lr": [0.0001, 0.0003], "epochs": [5, 10]},
   "common_methods": ["shared_lora", "capacity_matched_shared", "replay_lora", "expand"],
   "capacity_matching": {"rank_formula": "8 * task_count", "alpha_formula": "2 * rank"},
