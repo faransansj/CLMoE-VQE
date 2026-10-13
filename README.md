@@ -2,6 +2,8 @@
 
 **VQA 실험 종료:** 8-seed readout confirmation 128개 학습과 160개 routing 조건을 완료했다. 최종 판정·산출물 무결성 확인·남은 제한은 [VQA_CLOSURE.md](VQA_CLOSURE.md)에 정리했다. 아래 결과와 기존 원 산출물은 후속 연구에서 덮어쓰지 않는다.
 
+**후속 설계(미실행):** `research/multimodal-cl` 브랜치에서 VQA와 captioning의 heterogeneous vision-language CL을 계획한다. [아키텍처 설계](MULTIMODAL_DESIGN.md), [단계별 실험계획](MULTIMODAL_EXPERIMENTS.md), [실험 matrix 설정](configs/multimodal_research.json)을 참조한다. 기존 결과를 변경하지 않으며 새 데이터·코드·GPU 학습은 아직 실행하지 않았다.
+
 **기존 vision-side 검증 결론:** Vision-side SEMA의 실제 확장·학습은 확인했다. 다만 학습량을 맞춘 no-expansion보다 우월하다는 근거는 확보하지 못했다. 아래에 완료된74개 실험과 실패·편향 진단을 함께 기록한다.
 
 ## 후속 연구: VQA-aware readout expansion
