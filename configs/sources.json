@@ -1,0 +1,16 @@
+{
+  "papers": {
+    "2403.18886v3.pdf": {"method": "SEMA", "sha256": "d313cb2bced77849db10a1613a42ec4cfd20a28c732218382a1c4af703f61929"},
+    "2503.00413v1.pdf": {"method": "CL-MoE", "sha256": "746bf97d059ebd0ccf286faa1415004f2e2cf79b6fec845a07009f86a4b676b7"},
+    "2411.13949v2.pdf": {"method": "SMoLoRA", "sha256": "a652dfc7c5335b4ebafa192769667b6fd6da672c2aa36d91924e3e5adc663c33"}
+  },
+  "repositories": {
+    "SEMA-CL": {"url": "https://github.com/huiyiwang01/SEMA-CL", "commit": "5a4551262d659c6d93dd6c50ff814e028554fbf3"},
+    "CL-MoE": {"url": "https://github.com/ECNU-ICALK/CL-MoE", "commit": "a9eff1c35a0cea13aa48e7233f5bbc8dd7b09471"},
+    "SMoLoRA": {"url": "https://github.com/Minato-Zackie/SMoLoRA", "commit": "ba50e074f7468e18f0e6d512360acebe8e213424"}
+  },
+  "datasets": {
+    "CL4VQA": {"url": "https://drive.google.com/drive/folders/1mcAjzmCU1UVW0TKvsHAy9Sr1hmwsJudo", "versioning": "Per-file SHA256 recorded in generated manifest; Drive files are not immutable."},
+    "SMoLoRA": {"url": "https://huggingface.co/datasets/zackie29/SMoLoRA", "revision": "8acf4f538c372af7193e296d05ce37bb46eb6968"}
+  }
+}

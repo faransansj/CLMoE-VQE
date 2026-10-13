@@ -1,0 +1,22 @@
+{
+  "purpose": "Contingent diagnostic controls required by the original plan after positive mean dataset-stream results. No new hyperparameter selection.",
+  "protocols": ["vqa_stream"],
+  "image_size": 224,
+  "epochs_per_functional_phase": 20,
+  "effective_batch_size": 16,
+  "micro_batch_size": 8,
+  "adapter_lr": 0.005,
+  "rd_epochs": 20,
+  "rd_lr": 0.01,
+  "detect_batch_size": 128,
+  "confirmation": {
+    "seeds": [17, 29, 43],
+    "primary_methods": ["sequential", "no_expansion"],
+    "ablation_methods_seed17": []
+  },
+  "source_cohorts": ["confirmation", "confirmation_independent"],
+  "matching": "Replay each parent SEMA run's completed functional phase counts per task at the same LR, epochs, effective batch and sample order. Restart optimizer and cosine schedule per phase, as SEMA does. This matches functional example exposure and readout optimizer steps, not RD work, total FLOPs, wall time or dropout draws after expert initialization.",
+  "source_runner_before_extension_sha256": "0b9fe42881c57123da8cc0f213a44148bd1fbafd0313dda5e31cdae6d5f030f2",
+  "original_scientific_code": "artifacts/vision-core-before-exposure.tar.gz",
+  "code_change": "Only vision_run.py adds controlled phase repetition and validates source provenance. Vision model, SEMA modules and scorers remain byte-identical. Audit old and new code cohorts separately; do not weaken same-code checks."
+}

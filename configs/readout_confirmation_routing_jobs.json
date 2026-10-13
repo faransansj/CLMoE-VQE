@@ -1,0 +1,162 @@
+[
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed29",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed29",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed43",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed43",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed59",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed59",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed71",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed71",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed83",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed83",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed97",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed97",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed109",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed109",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_common_seed127",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_common_seed127",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed29",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed29",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed43",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed43",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed59",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed59",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed71",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed71",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed83",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed83",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed97",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed97",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed109",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed109",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/cl4vqa/expand_independent_seed127",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/cl4vqa/expand_independent_seed127",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed29",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed29",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed43",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed43",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed59",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed59",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed71",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed71",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed83",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed83",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed97",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed97",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed109",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed109",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_common_seed127",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_common_seed127",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed29",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed29",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed43",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed43",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed59",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed59",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed71",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed71",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed83",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed83",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed97",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed97",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed109",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed109",
+    "allow_eval": true
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/confirmation/vqa_stream/expand_independent_seed127",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/confirmation/vqa_stream/expand_independent_seed127",
+    "allow_eval": true
+  }
+]

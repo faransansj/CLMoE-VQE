@@ -1,0 +1,88 @@
+{
+  "status": "Frozen before the first new official evaluation; confirmation output directory verified absent",
+  "seeds": [
+    29,
+    43,
+    59,
+    71,
+    83,
+    97,
+    109,
+    127
+  ],
+  "training_jobs": 128,
+  "routing_parent_banks": 32,
+  "routing_variants_per_bank": 5,
+  "paired_comparisons": 20,
+  "primary_AP_comparisons": 6,
+  "multiplicity": "Holm across all six primary AP tests; remaining comparisons/endpoints exploratory",
+  "primary_selection": "Unconditional raw-joint expansion at best shared-LoRA validation setting; strongest baseline remains the validation-selected method, not selected from test scores",
+  "adaptive_selection": "Margin0.25 on both protocols; validation accuracy loss retained, not promoted as successful efficiency",
+  "planned_concurrent_gpus": 4,
+  "deployed_files_sha256": {
+    "configs/readout_confirmation_jobs.json": "9110444f37d52f6fd246d21b6cf09d1ee2c83d2af39664db3f735bc69e375f40",
+    "configs/readout_confirmation_routing_jobs.json": "1771629286f9ce2c172f50a0a676b87ff74a849764a9824a21180102dedd78be",
+    "configs/readout_confirmation_comparisons.json": "31732c158d32336ea5ddfb3fac8f7a135befb82bf24a4a1ebf7d9b41fa7a4353",
+    "sema_vqa/readout_run.py": "b4e61848983d578641434cf6b3f2c125f79d1fa163accce6ee27b86cea2f9ebd",
+    "scripts/summarize_readout.py": "2e24c883fbaff824270fd3e9713907a7f075c9db9236f932fb6cb53eddbaa462",
+    "scripts/compare_readout.py": "59ffc3c534856b8e7a158acbbf56477132f2e1b0e8a3495a977f8ed15070cc8d",
+    "scripts/ablate_readout_routing.py": "916261acd90066ffe4651ddebb9cc1d9cee388e07c3b7591c8d566aea2a37220",
+    "scripts/summarize_readout_routing.py": "060714ee5ad30486ebbe4fccf7fa1fa4db40cb053973d3575440274b6ca7d0c6"
+  },
+  "core_source_sha256": {
+    "sema_vqa/readout_run.py": "b4e61848983d578641434cf6b3f2c125f79d1fa163accce6ee27b86cea2f9ebd",
+    "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+    "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+    "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+    "sema_vqa/vision_run.py": "065a162245c8391848a6cd80c4318412d5c9c4e31a3e567d6c7ad9500e90923d",
+    "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+    "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333"
+  },
+  "assets_sources": {
+    "checkpoint": {
+      "url": "https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_capfilt_large.pth",
+      "sha256": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+      "bytes": 2115792294,
+      "stage": "pretraining, not VQA finetuning"
+    },
+    "tokenizer": {
+      "repo": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594"
+    },
+    "BLIP_commit": "056a169437371659074aa2732649d5de3bffb4a8"
+  },
+  "manifest_sha256": {
+    "cl4vqa": "01324ce86b69e553ef18d6f021c63e51065da55ca59c52241742cf2fde791ec1",
+    "vqa_stream": "1cdd371671552aa49232da0a55b8c2a29db375deae9bb56a8b0023e3e5662ca0"
+  },
+  "evidence_sha256": {
+    "configs/readout_research.json": "96be5172c0ca5b7ad85d510b030a07d3caa56cacc1d54fe2ad6cd1fae8a58a7c",
+    "artifacts/readout_report/development/selection.json": "4bc5172fc2246cb1a983181f468638b627df7452ff000964e53d5c46aeca8b1a",
+    "artifacts/readout_report/development_controls/selection.json": "3d7f8c875887d09877fa04e23ae42aaddbe7523eafc5e4f99a584be5fcba453a",
+    "artifacts/readout-data-preflight.json": "4ae761b9164687fd0a3c766ef32fbb47a3b0eecebb3bb52c1c3678b606b46cd6"
+  },
+  "source_archive": "artifacts/readout-confirmation-source.tar.gz",
+  "source_archive_sha256": "7917aaacfcbaa998881ea173bcba96b4f675a11fe89b01a5ef553d9f383f8a8e",
+  "selection_sources": {
+    "cl4vqa": {
+      "shared_lora": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/shared_lora_lr0.0003_ep5_seed17",
+      "replay_lora": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/replay_lora_lr0.0003_ep10_seed17",
+      "full_readout": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/full_readout_lr2e-05_ep5_seed17",
+      "expand_common": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0003_ep5_seed17",
+      "expand_independent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0003_ep10_seed17",
+      "adaptive": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/cl4vqa/adaptive_margin0.25_lr0.0003_ep5_seed17",
+      "capacity_matched": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/cl4vqa/capacity_matched_lr0.0003_ep5_seed17",
+      "frozen_first": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/cl4vqa/frozen_first_lr0.0003_ep5_seed17"
+    },
+    "vqa_stream": {
+      "shared_lora": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/shared_lora_lr0.0003_ep5_seed17",
+      "replay_lora": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/replay_lora_lr0.0003_ep10_seed17",
+      "full_readout": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/full_readout_lr2e-05_ep10_seed17",
+      "expand_common": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0003_ep5_seed17",
+      "expand_independent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0003_ep10_seed17",
+      "adaptive": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/vqa_stream/adaptive_margin0.25_lr0.0003_ep5_seed17",
+      "capacity_matched": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/vqa_stream/capacity_matched_lr0.0003_ep5_seed17",
+      "frozen_first": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development_controls/vqa_stream/frozen_first_lr0.0003_ep5_seed17"
+    }
+  }
+}

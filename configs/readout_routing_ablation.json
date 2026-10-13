@@ -1,0 +1,14 @@
+{
+  "declared_before_fresh_official_evaluation": true,
+  "development_evidence": "artifacts/readout_report/routing_old_validation.json",
+  "observed_validation_task_identification_percent": {
+    "raw_joint": 92.85,
+    "raw_question": 94.70,
+    "image_only": 69.01,
+    "stem_joint": 82.32
+  },
+  "interpretation": "Values are approximate summaries of the linked exact artifact, NOT VQA accuracy. Native question formatting/context aids dataset identification. Image-only routing remains weaker after stem normalization, but this is not a pure formatting intervention because options/OCR are removed too.",
+  "implementation": "Add router_text raw|stem. Stem is first nonempty question line after removing <image>, whitespace-normalized, casefolded, terminal .?! stripped. Only router features use stem; actual VQA model always retains original complete question/options/OCR.",
+  "primary": "Keep raw joint routing as declared; do not replace the primary on final evaluation results.",
+  "ablation": "Evaluate stem-joint, raw-image, raw-question routing using identical expert training/settings, alongside raw-joint. Select any independently tuned deployment variant on validation only. Report reduced-context routing as robustness analysis, not a claim of fully format-invariant semantics."
+}

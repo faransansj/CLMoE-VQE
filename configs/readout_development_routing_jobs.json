@@ -1,0 +1,34 @@
+[
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0001_ep5_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/cl4vqa/expand_lr0.0001_ep5_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0001_ep10_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/cl4vqa/expand_lr0.0001_ep10_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0003_ep5_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/cl4vqa/expand_lr0.0003_ep5_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/cl4vqa/expand_lr0.0003_ep10_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/cl4vqa/expand_lr0.0003_ep10_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0001_ep5_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/vqa_stream/expand_lr0.0001_ep5_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0001_ep10_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/vqa_stream/expand_lr0.0001_ep10_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0003_ep5_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/vqa_stream/expand_lr0.0003_ep5_seed17"
+  },
+  {
+    "parent": "/scratch2/faransansj/CLMoE-VQE/readout_runs/development/vqa_stream/expand_lr0.0003_ep10_seed17",
+    "output": "/scratch2/faransansj/CLMoE-VQE/readout_routing/development/vqa_stream/expand_lr0.0003_ep10_seed17"
+  }
+]

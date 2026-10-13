@@ -1,0 +1,86 @@
+{
+  "variant": "source-faithful vision-side SEMA on pretrained BLIP VQA architecture",
+  "source_SEMA_commit": "5a4551262d659c6d93dd6c50ff814e028554fbf3",
+  "source_BLIP_commit": "056a169437371659074aa2732649d5de3bffb4a8",
+  "initialization": "model_base_capfilt_large.pth pure pretraining, not VQA-tuned",
+  "protocols": [
+    "cl4vqa",
+    "vqa_stream"
+  ],
+  "image_size": 224,
+  "vision_blocks": 12,
+  "expandable_blocks_zero_based": [
+    9,
+    10,
+    11
+  ],
+  "functional_bottleneck": 16,
+  "descriptor_dimension": 128,
+  "buffer_size": 500,
+  "head_training": "BLIP question encoder and answer decoder continue learning even if no expansion",
+  "partition_seed": 2027,
+  "validation_fraction_of_original_train_image_groups": 0.2,
+  "partition_policy": "Remove train images byte-identical to official eval; globally group images across tasks before splitting. Eval unchanged.",
+  "epochs_per_functional_phase": 20,
+  "effective_batch_size": 16,
+  "micro_batch_size": 8,
+  "adapter_optimizer": "SGD",
+  "adapter_lr": 0.005,
+  "adapter_momentum": 0.9,
+  "adapter_weight_decay": 0.0005,
+  "head_optimizer": "AdamW",
+  "head_weight_decay": 0.05,
+  "rd_epochs": 20,
+  "rd_lr": 0.01,
+  "detect_batch_size": 128,
+  "calibration": {
+    "seed": 17,
+    "eval_split": "validation",
+    "shared_head_lr_candidates": [
+      2e-05,
+      1e-05,
+      2e-06
+    ],
+    "sema_threshold_candidates": [
+      1.0,
+      0.75
+    ],
+    "methods": [
+      "sequential",
+      "sema"
+    ],
+    "selection": "Secondary analysis, declared after all36 validation runs and before official evaluation. Keep the strongest sequential validation AP baseline. Independently select SEMA LR/epoch/threshold by highest AP among settings with AF no worse than that baseline; if none, select highest AP and record failure. Tie-break lower AF, threshold1.0, fewer epochs, lower LR. Preserve the original shared-budget primary comparison.",
+    "epoch_candidates": [
+      20,
+      5
+    ],
+    "selection_scope": "independent"
+  },
+  "confirmation": {
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "eval_split": "eval",
+    "primary_methods": [
+      "sema"
+    ],
+    "ablation_methods_seed17": [
+      "no_expansion",
+      "task_expansion"
+    ],
+    "training_rows": "Same fit split as calibration; never merge held-out validation back into fitting",
+    "success": "Positive mean paired AP gain AND reduced mean paired AF, with actual new-task learning; report each protocol separately. No forced positive conclusion.",
+    "baseline_cohort": "confirmation: independently optimized sequential at its original selected budget, all three seeds",
+    "interpretation": "If no experts are added or no_expansion matches, do not attribute any improvement to expansion. This secondary analysis does not replace the shared-budget primary comparison."
+  },
+  "limitations": [
+    "Fixed selected subset and task order; not full benchmark replication or comparison with published CL-MoE/SMoLoRA numbers.",
+    "VQA readout is a trainable question/answer encoder-decoder, unlike SEMA's small classification head; answer labels are shared across tasks, so class-incremental masking is inapplicable.",
+    "SEMA permits multiple functional phases per task after shallow-to-deep additions. Record exposures; a positive claim about expansion alone requires an additional sequential control matched to those exposures.",
+    "BLIP pretrained weights may have seen benchmark images/captions, but no VQA-tuned checkpoint is used.",
+    "224-pixel deterministic resize matches SEMA resolution rather than BLIP's 480-pixel VQA finetuning configuration. Generation is greedy32, not answer-vocabulary ranking."
+  ],
+  "refinement_reason": "Validation found a shorter SEMA budget with better CL4VQA AP and AF but no expansion. Separately confirm this candidate and the lower-forgetting dataset-stream candidate without using any official eval outcomes."
+}

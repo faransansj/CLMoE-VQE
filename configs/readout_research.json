@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-08",
+  "status": "development plan; no new confirmation scores inspected",
+  "objective": "Meaningful continual VQA accuracy/forgetting improvement and separate evidence for expert expansion, not a guaranteed positive conclusion or novelty claim.",
+  "initialization": "Same pure BLIP pretraining as vision study; not VQA-finetuned",
+  "hypotheses": [
+    "Protecting vision experts alone leaves destructive updates in the shared VQA readout. Frozen-base readout LoRA experts can isolate task-specific adaptation with small parameter growth.",
+    "Questions distinguish VQA skill shifts invisible to image-only routing. Frozen question/image features may improve task-agnostic expert selection.",
+    "Current-train answer competence can guide expert growth more directly than image reconstruction novelty. Must compare to unconditional task growth and report missed learning when reusing an expert."
+  ],
+  "prior_art": [
+    {"name": "SEMA", "url": "https://arxiv.org/abs/2403.18886"},
+    {"name": "CL-MoE", "url": "https://arxiv.org/abs/2503.00413"},
+    {"name": "SMoLoRA", "url": "https://arxiv.org/abs/2411.13949"},
+    {"name": "Dynamic Routing Between Experts", "url": "https://arxiv.org/abs/2511.01831", "overlap": "Frozen VLM backbone, incremental LoRA experts and task-agnostic routing already exist; do not claim these alone are novel."},
+    {"name": "SAMoRA", "url": "https://arxiv.org/abs/2604.19048", "overlap": "Semantic-aware LoRA expert routing already studied in multitask LLMs; distinct from proving continual VQA adaptive growth."}
+  ],
+  "data": {
+    "protocols": ["cl4vqa", "vqa_stream"],
+    "seed": 20261008,
+    "fit_target_per_task": 2048,
+    "validation_target_per_task": 256,
+    "fresh_eval_target_per_task": 512,
+    "shortages": "Report actual source-supported counts without replacement; never fill by duplicated examples.",
+    "fresh_eval_exclusion": "All image identities/SHA256 bytes and namespaced IDs in historical train/validation/eval manifests; selected independently of predictions before development.",
+    "fit_validation": "Original training sources, globally image-byte-disjoint across both protocols and all splits; exclude all old eval and new eval images.",
+    "pilot": "Previously used train/validation splits only; pilot scores are development evidence, not confirmation."
+  },
+  "architecture": {
+    "frozen": "Original vision encoder and original question encoder/answer decoder",
+    "expert": "Rank8 alpha16 LoRA in all 96 readout self/cross-attention query/value projections; 1179648 parameters per expert",
+    "routing": "Top1 global expert using ridge regression on frozen image/text means, no task IDs or answers at inference",
+    "router_memory": "128 deterministic TRAIN feature vectors/task; report bytes; this is feature memory, not memory-free CL",
+    "router_ridge": 1.0,
+    "image_size": 224,
+    "generation": "Greedy, maximum32 tokens; same source scorers as prior experiments"
+  },
+  "pilot": {
+    "seed": 17,
+    "task_prefix": 3,
+    "eval_split": "validation",
+    "lora_lr_candidates": [0.0001, 0.0003],
+    "epochs": 10,
+    "methods": ["shared_lora", "expand"],
+    "full_readout_lr": 0.00002,
+    "full_readout_epochs": 10,
+    "oracle": "Separate diagnostic only, never primary result"
+  },
+  "development": {
+    "eval_split": "validation",
+    "seed": 17,
+    "lora_lr_candidates": [0.0001, 0.0003],
+    "epoch_candidates": [5, 10],
+    "baseline_methods": ["shared_lora", "replay_lora", "full_readout"],
+    "full_readout_lr_candidates": [0.000002, 0.00002],
+    "collapse_guard": "Largest final answer fraction must be below0.9 for a successful development selection; report full taskwise answer distributions rather than treating this cutoff as a semantic-quality guarantee.",
+    "plasticity_guard": "Mean pre-to-post gain over tasks AFTER the first must be positive; first-task fitting cannot mask complete lack of later learning.",
+    "primary_expansion": "expand",
+    "secondary_expansion": "adaptive",
+    "growth_margin_candidates": [0.25, 0.5],
+    "growth_probe": "128 current TRAIN examples; normalized BLIP smoothed token cross-entropy minus each expert's post-training reference; no evaluation labels",
+    "adaptive_selection": "At the locked primary common-budget setting, evaluate BOTH growth margins on full validation. Among candidates with AF no worse than unconditional expansion, positive post-first-task plasticity and largest final answer fraction below0.9, maximize AP; ties prefer fewer experts then smaller margin. If none qualify, preserve and report failure, retaining highest AP only as a failed exploratory candidate. Fewer experts at maintained accuracy, not an adaptive label alone, is required to claim growth efficiency.",
+    "frozen_first_control": "Train only the first expert at the locked common-budget setting; retain it unchanged through later tasks. This controls preservation without further adaptation.",
+    "selection": "Retain strongest independently tuned validation baseline. Primary compute-matched expansion comparison uses strongest shared_lora setting. Report independent tuning separately. Maximize AP subject to AF no worse and positive mean new-task plasticity; if no candidate satisfies, record failure instead of changing criterion.",
+    "router_ablation": ["image", "question", "joint"],
+    "capacity_control": "At the locked shared-LoRA setting, also evaluate a shared adapter of rank8 times protocol task count, alpha2 times rank; this matches unconditional expansion total adapter parameters, not its active parameters or FLOPs.",
+    "additional_development": "If pilots identify a failure, record a new dated plan before new validation trials; never use fresh official eval to tune."
+  },
+  "confirmation": {
+    "seeds": [29, 43, 59, 71, 83, 97, 109, 127],
+    "seed_count_reason": "Declared before any fresh official evaluation: eight paired seeds permit minimum two-sided exact sign-flip p=2/256, whereas five seeds cannot attain p<0.05 (minimum2/32). This is not an extension after inspecting confirmation significance.",
+    "seed_independence": "Before any fresh evaluation, exclude development seed17 from confirmation. All eight confirmation training seeds are absent from this method's hyperparameter search; do not retrain the already completed seed17 configuration just to count it twice.",
+    "eval_split": "eval",
+    "freeze_before_evaluation": true,
+    "fit_rows": "Same fit as development; do not merge validation",
+    "primary_metrics": ["AP", "AF", "BWT", "MAP", "pre-to-post new-task gain"],
+    "primary_AP_family": "For EACH protocol, primary common-budget expansion minus (a) strongest independently tuned validation baseline among shared/replay/full-readout, (b) matched-setting shared LoRA, and (c) total-parameter-matched shared LoRA at the same setting. Identical candidate/baseline conditions are tested once, not counted as independent evidence. Holm correction covers every distinct primary comparison jointly. Other comparisons and endpoints are exploratory.",
+    "required_controls": ["shared_lora", "replay_lora", "full_readout", "total-parameter-matched shared adapter", "frozen first-task expert", "unconditional vs adaptive expansion", "image-only vs question/joint routing"],
+    "success": "Positive paired AP gain and non-increased AF versus strongest declared baseline, meaningful new-task learning, no degenerate answer collapse. Report eight-seed paired deltas and uncertainty, individual task outcomes, parameter/memory growth and actual training exposures. Tiny nominal improvement is not statistical significance. Exact paired sign-flip p-values are two-sided; primary AP tests across two protocols use Holm correction.",
+    "not_equalized": "Base architecture/input/scorers fixed. Full readout parameter count differs. Router feature memory and replay raw-example memory differ and must be explicit. Adaptive skipped phases reduce exposure; do not call equal epochs equal total compute."
+  }
+}
