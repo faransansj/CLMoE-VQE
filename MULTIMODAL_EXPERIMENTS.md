@@ -1,6 +1,6 @@
 # 멀티모달 task 확장 실험계획
 
-작성: 2026-10-13. 상태: **G0 구현·실제 GPU 기술 smoke 완료, G1 이후 미실행; Flickr30k source 접근 gate 차단**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 본 실험 조건은 변경하지 않았다. 변경은 validation trial 이전에 revision으로 기록한다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않는다.
+작성: 2026-10-13. 실행 갱신: 2026-10-14. 상태: **개발92개 학습 및 G1~G3 gate 통과; 실제 routing 검증과 pre-eval lock 후 G4 새8-seed/224개 조건 실행 중**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 본 실험 조건은 변경하지 않았다. 변경은 validation trial 이전에 revision으로 기록한다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않는다.
 
 ## 1. 검증할 주장
 
@@ -130,7 +130,7 @@ AF, transfer, tuned replay, router, 개별 task/order 결과는 exploratory다. 
 
 ## 7. 실행·보존·최종 산출물
 
-G0 데이터 준비와 GPU 기술 smoke를 실행했다. G1 독립 task learnability 및 본 CL 실험은 아직 실행하지 않았다. Tiny smoke의 메모리·시간을 본 실험 GPU-hours/완료 날짜 추정으로 확대하지 않는다. 원격 실행은 서버별 지침 확인 후 scheduler로만 수행한다.
+G0 기술 smoke와 G1~G3 개발92개 학습을 완료했다. Tiny smoke의 메모리·시간을 본 실험 GPU-hours로 확대하지 않는다. 원격 실행은 서버별 지침 확인 후 scheduler로만 수행한다.
 
 실행 시작 전 체크리스트:
 
@@ -151,7 +151,7 @@ G0 데이터 준비와 GPU 기술 smoke를 실행했다. G1 독립 task learnabi
 - 기존 VQA expand/replay smoke의 예측 각각5개 파일, 총10개가 이전 GPU smoke와 byte-identical했다. [VQA parity](artifacts/multimodal-vqa-parity.json). 기존 핵심7개 source SHA256도 confirmation lock과 일치한다.
 - 실제 새 replay uninterrupted/resumed 두 run의 원 예측 **20개를 독립 재채점**했다. 이는 tiny technical acceptance이며 정확도 향상 근거가 아니다.
 - Caption smoke의 두 train 이미지에서 같은 문장 `a woman in a black top and white pants`를 생성했다. Caption loss도 단조 감소하지 않았다. 새 expert update·생성 기능은 확인했지만 caption 품질/학습 성공이나 G1 통과를 주장하지 않는다.
-- Flickr30k의 [공식 데이터 페이지](https://shannon.cs.illinois.edu/DenotationGraph/)는 접근 신청을 요구한다. 서버 프로젝트·사용자 scratch·공용 `/datasets`에 승인된 데이터가 없었다. **승인된 이미지·caption 및 split metadata 경로 또는 공식 접근 승인이 필요하다.** 미승인 mirror로 대체하거나 V/C만으로 G1을 통과시키지 않는다.
+- 당시 Flickr30k 공식 신청 경로만 확인해 source 접근을 blocker로 기록했으나, 이후 사용자가 지정한 공개 [nlphuji/flickr30k](https://huggingface.co/datasets/nlphuji/flickr30k) mirror를 확보하여 **접근 차단을 해소했다**. 원본 이미지 이용 조건은 유지하며 CSV의 실제 split을 사용한다. 이전 실행 증거 JSON의 blocker는 당시 상태 기록이지 현재 blocker가 아니다.
 
 ### 재현 실행
 
@@ -175,3 +175,108 @@ Source config 예시는 `configs/multimodal_sources_dc1.json`(V/C), `configs/mul
 SLURM **2477586**, RTX4090에서 shared/capacity-matched/expand/frozen-first/independent의 두 task 전이를 추가로 실행했다. 각 학습 방법의10 exposures/4 steps, frozen-first의5 exposures/2 steps, 독립 모델의 이전 task 점수 보존, native/oracle 분리, router/replay memory 계약을 확인했다. Capacity-matched와 expansion의 최종 총 adapter/model 파라미터도 일치했다. [방법별 smoke 증거](artifacts/multimodal-methods-smoke.json). 모두5개 train/2개 validation 이미지/task를 사용한 기술 검증이며, 점수로 방법 순위를 매기지 않는다.
 
 V/C/G의 실제3-source 준비도 완료했다. 세 task 모두2,048/256/512개이며 unique image SHA2568,448개, task/split 및 과거 이미지 제외 조건 overlap0이다. 두 개발 manifest는 모두 non-confirmation이다. 최종 독립 audit은 위 다섯 방법과 replay uninterrupted/resumed를 합친 **7개 run/76개 원 예측**을 검증했다. [전체 GPU smoke audit](artifacts/multimodal-g0-audit.json). 평가 단위는 원래 accuracy/CIDEr로 유지했으며 unlike-unit AP를 계산하지 않았다.
+
+## 9. Flickr30k source 고정과 G1 실행
+
+사용자가 지정한 `nlphuji/flickr30k` revision `2b239befc81b6e3f035ce6bd52f5f4d60f5625f7`의 CSV와 ZIP을 login node에서 다운로드하고 Hub LFS SHA256과 일치를 확인했다. `scripts/prepare_flickr30k_hf.py`가31,014개 JPEG 전체를 decode/hash하고5개 raw caption을 모두 보존했다. Train29,000/val1,014/test1,000의 **CSV row split**을 유지한다. HF loader의 top-level `test`는 split으로 쓰지 않는다. Mirror는 원 collection31,783개의 부분집합이며 이를 전체 원본과 동일하다고 부르지 않는다. 출처·개별 이미지 hash는 [Flickr source 증거](artifacts/multimodal-flickr30k-sources.json)에 보존했다.
+
+새 source config는 `configs/multimodal_sources_full_dc1.json`이다. Flickr train만 개발 train/validation 후보로 사용하고 test에서 eval을 고정하는 기존 recipe를 유지한다. G1 grid는 `configs/multimodal_g1_jobs.json`의16개 독립 학습이며 전부 validation-only다. G1을 통과할 때만 `configs/multimodal_g2_jobs.json`의8개 양방향 pilot을 제출한다.
+
+### 학습 전 검증과 재현 계약
+
+- Source 변환·G1 adjudicator 추가 후 통합 테스트는 **279 passed**였다.
+- 최초4-task manifest에서 GQA eval2개가 이전2-task G0의 train/validation 이미지 bytes와 겹쳐, **어떤 G1 학습/평가도 시작하기 전에** 이전2/3-task manifest를 추가 제외했다. 기존 manifest는 보존하고 `manifest_v2.json`을 새로 만들었다. 예전 상대 image-root manifest4개는 원본 row를 바꾸지 않은 root-resolved 사본을 사용하며 [원본/사본 hash](artifacts/multimodal-history-roots.json)를 보존했다.
+- 최종4-task manifest는 task당2,048/256/512, unique image SHA256 **11,264개**, task/split/history overlap0이다. 과거 manifest8개를 제외했고 새 eval은 이전 멀티모달의 모든 split과도 disjoint다. [최종 분할 audit](artifacts/multimodal-full-data-audit.json).
+- Tokenizer preflight에서 모든 입력/target이512-position 이내였다. Flickr reference2개는64-token 생성 한도보다 길다. 학습 target은 잘라내지 않고 사전 고정한 생성 한도도 바꾸지 않았다. [Preflight](artifacts/multimodal-full-preflight.json).
+- COCO/Flickr train 이미지 각1개를 실제로 열어5개 reference와 내용 정합성을 확인했다. 이는 전수 semantic 검증이 아니다.
+- G1 실행 전 source/config/manifest와16-job grid, bootstrap seed20261013을 [G1 lock](artifacts/multimodal-g1-lock.json)에 고정했다. Future eval 예측은 만들지 않는다.
+
+```bash
+sbatch --wait --array=0-15%4 \
+  --export=ALL,MULTIMODAL_JOBS=configs/multimodal_g1_jobs.json \
+  scripts/multimodal_array.sbatch
+.venv/bin/python -m scripts.evaluate_multimodal_g1 \
+  --runs artifacts/multimodal_runs/g1 \
+  --manifest /scratch2/faransansj/multimodal_data_full_20261013/manifest_v2.json \
+  --output artifacts/multimodal_report/g1
+```
+
+G1 adjudicator는16개 complete run의 config/source/scorer·예측을 독립 재채점하고 frozen-base/native/image-shuffled 결과를 모두 보존한다. Paired-image bootstrap2,000회는 고정 train-IDF CIDEr의 정확한 image별 기여를 사전 계산한 뒤 동일 draw의 corpus 평균을 재계산한다. 실제 corpus scorer와 중복 image draw의 일치 regression을 통과했으며 BLEU에는 이 분해를 사용하지 않는다. CLI exit0은 gate pass,1은 과학적 gate 실패,2는 불완전/변경된 증거다. 모든 task가 통과할 때만 normalizers를 발행하며 pilot을 자동 제출하지 않는다.
+
+### G1 결과: 통과
+
+SLURM **2478261**의16개 독립 학습을 완료하고 frozen-base/native/image-shuffled **12,288개 예측을 독립 재채점**했다. 공통 LR3e-4/5epoch의 네 task가 모두 gate를 통과했다. 아래 accuracy는0–100, CIDEr-D는 scorer 원 단위0–10이며 서로 평균하지 않는다.
+
+| Task | Frozen base | 학습 후 | Gain 95% paired-image CI | Native − shuffled |
+|---|---:|---:|---:|---:|
+| V: VQAv2 | 0.0000 | 33.0469 | [27.5381, 38.8672] | 6.5234 |
+| C: COCO captions | 0.02891 | 0.49321 | [0.40217, 0.52952] | 0.44902 |
+| G: GQA | 0.0000 | 32.0313 | [26.5527, 37.8906] | 5.0781 |
+| F: Flickr30k captions | 0.04067 | 0.11628 | [0.04211, 0.11502] | 0.10137 |
+
+공통 조건의 빈 출력률은 모두0, 최빈 전체 출력 비율은 V21.48%/C5.47%/G19.92%/F2.34%였다. 이는 독립 학습 가능성의 증거이지 CL 이득·caption의 높은 절대 품질·여러 seed 재현성을 증명하지 않는다.
+
+정규화 reference는 네 task 모두 LR3e-4/10epochs가 선택됐다. **V35.9765625, C0.6802684683477754, G33.59375, F0.15263336791624926**을 고정했다. [전체 G1 판정](artifacts/multimodal-g1-report.json), [정규화 상수](artifacts/multimodal-g1-normalizers.json)(SHA256 `9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928`).
+
+원 예측/config/events는 DC1의 `artifacts/multimodal_runs/g1/`와 로컬/원격 `artifacts/multimodal-g1-raw.tar.gz`에 보존했다. Checkpoint는 DC1 home의 각 run에 유지하며 압축 증거에는 포함하지 않는다. 최종 및 사용하지 않은 최초 manifest와 역사적 root-resolved 사본은 `artifacts/multimodal-full-manifests.tar.gz`로 보존했다.
+
+## 10. G2 양방향 pilot: 통과
+
+SLURM **2478596**에서7개 run을 완료했다. `V_C_replay_lora_seed17`은 모델/학습/config 생성 이전 scorer 초기화에서 PTB tokenizer가10,242개 caption에10,243줄을 반환해 중단됐다. 초과 stdout 내용이 저장되지 않아 근본 원인은 확인하지 못했다. 코드·환경·설정을 변경하지 않은 **2478885**의 동일 array index2 재실행은 완료됐다. 원 실패 로그도 raw archive에 보존했으며 실패 trial을 방법 성능에서 조용히 제외한 것이 아니다.
+
+`scripts/evaluate_multimodal_g2.py`가8개 run의 **10,240개 원 예측을 독립 재채점**했다. Shared/replay/expansion의 첫 task 원 예측은 해당 G1 공통 조건과 byte-identical했다. 모든 방법이 task당640 optimizer steps/10,240 image exposures를 사용했다. Replay의 후속 current exposure는 절반이며, 나머지는 과거 이미지 replacement다.
+
+| 순서 | 방법 | 최종 정규화 평균 ↑ | 첫 task 망각 ↓ | 후속 task gain ↑ |
+|---|---|---:|---:|---:|
+| V→C | shared | 0.38743 | 33.04688 | 0.52646 |
+| V→C | capacity-matched | 0.46494 | 35.15625 | 0.61180 |
+| V→C | replay | 0.69765 | 3.35938 | 0.38718 |
+| V→C | expansion | **0.82445** | **0.00000** | 0.49618 |
+| C→V | shared | 0.56834 | 0.44972 | 38.59375 |
+| C→V | capacity-matched | 0.54617 | 0.59826 | 38.32031 |
+| C→V | replay | 0.79649 | 0.03148 | 32.89063 |
+| C→V | expansion | **0.87554** | **0.00000** | 36.91406 |
+
+망각/gain은 해당 task의 원 단위다(V accuracy points, C CIDEr-D). 두 순서 모두 후속 gain>0, shared보다 작은 망각, 높은 최종 정규화 평균을 만족했다. 정규화 평균의 expansion−shared 차이는 V→C **+0.43703**, C→V **+0.30720**이다. Expansion은 이 pilot에서 replay/capacity 대조보다도 최종 점수가 높지만, seed17/두 family pilot이므로 일반적 CL 우월성·family 내 routing·positive transfer를 확정하지 않는다.
+
+[전체 G2 판정](artifacts/multimodal-g2-report.json), [실행/재시도 기록](artifacts/multimodal-g2-execution.json). 예측/config/events 및 원/재시도 job 로그는 로컬/원격 `artifacts/multimodal-g2-raw.tar.gz`에 보존했다. Checkpoint는 DC1 home의 원 run에 남겨둔다.
+
+## 11. G3 실행 계약
+
+G2 통과 후 `configs/multimodal_g3_jobs.json`의64개 grid+4개 frozen-first를 제출했다. 기존 네 순서·LR/epoch grid·seed17·validation-only·공통 주 조건을 유지한다. [G3 lock](artifacts/multimodal-g3-lock.json)에 G1/G2 report, normalizers, source, jobs와 adjudicator hash를 실행 전에 고정했다.
+
+`scripts/evaluate_multimodal_g3.py`는68개 전체 run을 독립 재채점하고, 네 순서 평균으로 replay 설정을 선택한다. G3 gate의 family 후속 gain은 **첫 task를 제외한 family별6개 전이의 원 단위 평균**으로 계산한다. 공통 조건 expansion의 모든 stage/task 생성 guard도 확인한다. Validation 결과만으로 confirmation 실행을 대체하지 않는다. G3 통과와 pre-eval hash lock 전에는 새 seed/eval을 실행하지 않는다.
+
+G3 학습은 SLURM **2479153**에서68개 모두 완료했다. 원 matrix/config/events 및68개 job 로그를 로컬/원격 `artifacts/multimodal-g3-raw.tar.gz`에 보존했다. Confirmation 전에 동일 frozen G3 bank로 routing 진단 도구의 validation smoke를 수행하고 새 분석/진단 도구도 hash lock한다.
+
+### G3 결과: family-average gate 통과, 개별 실패 보존
+
+68개 run의 **243,712개 원 예측을 독립 재채점**했다. 공통 expansion의 후속 family 평균 gain은 VQA **+14.16016 accuracy points**, caption **+0.27547 CIDEr-D**였고 모든 stage/task 생성 guard를 통과했다. 따라서 사전 G3 gate는 통과했다. 단, Flickr의 후속 gain은 `V→C→G→F`에서 **−0.03630**, `V→G→C→F`에서 **−0.02637**이었다. Family 평균 통과를 모든 task의 신규 학습 성공으로 표현하지 않는다.
+
+네 고정 순서의 family-balanced normalized final score 평균:
+
+| 공통 조건 방법 | Validation 평균 ↑ |
+|---|---:|
+| Shared | 0.53799 |
+| Capacity-matched shared | 0.68014 |
+| Replay | **0.95554** |
+| Expansion | 0.85036 |
+| Frozen-first | 0.31819 |
+
+Validation-tuned replay는 LR3e-4/10epochs, 평균 **0.99755**가 선택됐다. Expansion의 주 조건은3e-4/5epochs 그대로다. **이 개발 결과에서 expansion은 common/tuned replay를 이기지 못했다.** G4는 이 실패를 숨기지 않고 사전 고정8개 새 seed로 검증하며, tuned replay32개를 포함한 총224개 조건을 사용한다.
+
+[G3 전체 판정](artifacts/multimodal-g3-report.json), [실행/부정적 전이](artifacts/multimodal-g3-execution.json). G1~G3의108개 checkpoint,11,264개 선택 이미지, 원 BLIP 초기화 자산도 DC1과 독립적인 로컬 백업을 만들어 SHA256 일치를 확인했다. [백업 위치·hash·보존 정책](artifacts/multimodal-backups.json). 대용량 데이터/모델 archive는 Git에 넣지 않으며 NAS는 읽기만으로 atime이 갱신되지 않는다는 서버 정책을 따른다.
+
+G4의 paired-seed bootstrap RNG seed는 **20261014**로 eval 이전에 고정했다. 기존8 seed/4 order/20,000 resamples/6개 주 Holm 및 별도 tuned-replay2개 Holm 설계는 바꾸지 않는다. 분석·routing 도구 통합 후 `pytest tests -q`: **305 passed**. 실제 GPU routing smoke는 별도이며 테스트 수로 대체하지 않는다.
+
+## 12. Pre-eval lock와 G4 실행
+
+G3의 `V→C→G→F` native expansion bank로 전체256개 validation/task를 사용한 다섯 routing 조건을 실행했다. SLURM **2482136**에서 native의14개 pre/after 예측 파일이 부모와 byte-identical했고, router checkpoint tensor 및 expert bank 불변을 확인했다. **16,896개 예측을 독립 재채점**했다. Family-restricted는 별도 refit이 아니라 native per-stage 계수의 고정 사본에 후보 mask만 적용한다. 도입 전 같은 family expert가 없으면 base-only로 평가하고 명시적으로 unroutable로 기록한다. Oracle은 아직 없는 expert를 사용하지 않으며 pre-task 점수를 정의하지 않는다.
+
+첫 smoke **2482127**은 boolean generation flag를 잘못 거부하는 진단 reader 오류로 중단됐다. 이를 고쳤고, 독립 rescorer에서 발견한 final-stage confusion 집계, route-error 분모, AF 부호도 eval 이전에 수정했다. Confirmation lock preflight는 실제 structured scorer-lock을 수용하도록 교정했다. 원 실패 로그·부분 예측은 보존하며, 최종 테스트는 **307 passed**다. [실제 검증/수정 기록](artifacts/multimodal-routing-validation-execution.json), [독립 routing audit](artifacts/multimodal-routing-validation-audit.json).
+
+이 validation bank에서 question-only caption 점수는 task-ID oracle보다 높았다. **Task-ID oracle은 expert/task 식별 정확도의 상한 진단이지 task 성능의 수학적 상한이 아니다.** 다른 task의 expert가 정답 expert보다 더 잘 답할 수 있다. 이 탐색 결과로 주 native joint router를 바꾸지 않는다.
+
+[Confirmation lock](artifacts/multimodal-confirmation-lock.json) SHA256: `4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161`. 코드·자산·scorer·정규화·환경·bootstrap·G1/G2/G3 보고서와224개 training job 및32-bank/160-condition routing template을 고정했다. 최초 confirmation 예측이 없는 상태에서 remote bytes와 모든 lock 조건 일치를 확인한 뒤 제출했다. [정확한 source snapshot](artifacts/multimodal-confirmation-source.tar.gz), [의존성 inventory](artifacts/multimodal-confirmation-environment.json).
+
+G4는 `configs/multimodal_g4_jobs.json`/`scripts/multimodal_array.sbatch`로 실행한다. G5의 `configs/multimodal_g5_jobs.json`은 자기 해시 순환을 피하기 위해 lock 경로/SHA를 job template 안에 넣지 않는다. `scripts/multimodal_routing_array.sbatch`가 외부 `MULTIMODAL_CONFIRMATION_LOCK`/`MULTIMODAL_CONFIRMATION_LOCK_SHA256`에서 주입하며 evaluator가 부모 run과의 binding을 검증한다. 모델 재학습은 없다.

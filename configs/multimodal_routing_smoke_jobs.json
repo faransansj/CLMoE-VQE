@@ -1,0 +1,14 @@
+{
+  "stage": "pre_G4_validation_smoke",
+  "jobs": [
+    {
+      "name": "V_C_G_F_expand_seed17_validation",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g3/V_C_G_F_expand_lr0.0003_ep5_seed17",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_validation_smoke_v2"
+      ]
+    }
+  ]
+}

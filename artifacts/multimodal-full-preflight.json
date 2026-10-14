@@ -1,0 +1,29 @@
+{
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "tasks": {
+    "V": {
+      "max_input_tokens": 21,
+      "max_target_tokens_including_BOS_EOS": 20,
+      "references_exceed_generation_limit": 0,
+      "references": 28160
+    },
+    "C": {
+      "max_input_tokens": 6,
+      "max_target_tokens_including_BOS_EOS": 62,
+      "references_exceed_generation_limit": 0,
+      "references": 14083
+    },
+    "G": {
+      "max_input_tokens": 27,
+      "max_target_tokens_including_BOS_EOS": 6,
+      "references_exceed_generation_limit": 0,
+      "references": 2816
+    },
+    "F": {
+      "max_input_tokens": 6,
+      "max_target_tokens_including_BOS_EOS": 88,
+      "references_exceed_generation_limit": 2,
+      "references": 14080
+    }
+  }
+}

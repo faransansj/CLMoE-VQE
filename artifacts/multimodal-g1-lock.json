@@ -1,0 +1,60 @@
+{
+  "stage": "G1",
+  "status": "locked_before_any_G1_training_or_validation_prediction",
+  "manifest": "/scratch2/faransansj/multimodal_data_full_20261013/manifest_v2.json",
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "jobs_sha256": "297257dc0c6f018342d7e98b7f9cd56c32718d6b015ab5778fe539b203da9ca5",
+  "source_sha256": {
+    "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+    "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+    "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+    "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+    "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+    "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+    "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+    "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+    "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+    "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+    "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+    "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+    "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+  },
+  "runner_source": "/home/faransansj/CLMoE-Multimodal-20261013",
+  "assets_sources": {
+    "checkpoint": {
+      "url": "https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_capfilt_large.pth",
+      "sha256": "8f5187458d4d47bb87876faf3038d5947eff17475edf52cf47b62e84da0b235f",
+      "bytes": 2115792294,
+      "stage": "pretraining, not VQA finetuning"
+    },
+    "tokenizer": {
+      "repo": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594"
+    },
+    "BLIP_commit": "056a169437371659074aa2732649d5de3bffb4a8"
+  },
+  "g1_tasks": [
+    "V",
+    "C",
+    "G",
+    "F"
+  ],
+  "grid": {
+    "seed": 17,
+    "lr": [
+      0.0001,
+      0.0003
+    ],
+    "epochs": [
+      5,
+      10
+    ],
+    "runs": 16
+  },
+  "eval_split": "validation",
+  "future_eval_predictions_allowed": false,
+  "gate_script_sha256": "735caf201a6be33118636b3c8a597db0f9b94f40575e7f69e1599809a6f87b2d",
+  "bootstrap_seed": 20261013,
+  "bootstrap_replicates": 2000,
+  "flickr_revision": "2b239befc81b6e3f035ce6bd52f5f4d60f5625f7"
+}

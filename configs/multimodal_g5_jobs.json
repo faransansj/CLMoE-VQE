@@ -1,0 +1,327 @@
+{
+  "stage": "G5",
+  "requires": "Complete locked G4 expansion parents; same final bank, no expert retraining",
+  "variant_conditions_per_parent": 5,
+  "jobs": [
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed137",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed137",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed137",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed137",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed137",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed137",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed137",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed137",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed137",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed137",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed137",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed137",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed149",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed149",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed149",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed149",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed149",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed149",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed149",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed149",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed149",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed149",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed149",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed149",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed163",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed163",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed163",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed163",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed163",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed163",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed163",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed163",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed163",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed163",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed163",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed163",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed179",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed179",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed179",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed179",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed179",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed179",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed179",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed179",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed179",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed179",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed179",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed179",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed191",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed191",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed191",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed191",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed191",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed191",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed191",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed191",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed191",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed191",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed191",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed191",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed211",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed211",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed211",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed211",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed211",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed211",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed211",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed211",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed211",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed211",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed211",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed211",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed227",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed227",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed227",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed227",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed227",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed227",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed227",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed227",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed227",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed227",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed227",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed227",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_C_G_F_expand_lr0.0003_ep5_seed241",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed241",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed241",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_G_C_V_expand_lr0.0003_ep5_seed241",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed241",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed241",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "V_G_C_F_expand_lr0.0003_ep5_seed241",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed241",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed241",
+        "--allow-eval"
+      ]
+    },
+    {
+      "name": "F_C_G_V_expand_lr0.0003_ep5_seed241",
+      "argv": [
+        "--parent",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed241",
+        "--output",
+        "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed241",
+        "--allow-eval"
+      ]
+    }
+  ]
+}

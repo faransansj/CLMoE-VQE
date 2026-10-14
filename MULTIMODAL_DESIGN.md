@@ -1,6 +1,6 @@
 # Heterogeneous vision-language continual learning 설계
 
-작성: 2026-10-13. 상태: **G0 실행 경로 구현 및 실제 GPU 기술 smoke 검증 완료; 전체 source gate는 Flickr30k 접근 권한으로 차단**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate와 실행 기록은 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
+작성: 2026-10-13. 상태: **G0 기술 검증 및 G1~G3 gate 통과, 개발92개 학습 완료; 실제 routing 검증과 pre-eval lock 후 G4 confirmation 실행 중**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate와 실행 기록은 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
 
 ## 1. 연구 질문과 범위
 
@@ -19,7 +19,7 @@ VQA 자체가 multimodal이다. 이번 확장은 modality 수를 늘리는 것�
 - 새 task마다 zero-delta expert를 추가하는 unconditional expansion을 주 방법으로 한다. Old expert 복사 초기화, shared+private expert, adaptive growth는 추가하지 않는다.
 - 기존 학습 task 경계는 제공한다. 평가 시 stream task index, dataset ID, 정답을 모델/router에 주지 않는다. 요청에 포함된 question/caption instruction은 합법적 입력이다. 따라서 task-family-blind 추론이라고 부르지 않는다.
 
-**미검증 가정:** BLIP의 VQA 경로에 고정 질문을 넣는 방식이 captioning을 충분히 학습할 수 있다. 원래 caption 모델과 conditioning 경로가 같다는 주장은 하지 않는다. 독립 caption 학습 gate가 실패하면 CL 실험을 진행하지 않고 원인을 진단한다. Backbone 변경이 필요하면 새로운 계획 revision과 모든 기준선 재실험이 필요하다.
+**G1에서 확인한 범위:** BLIP의 VQA 경로에 고정 질문을 넣은 독립 COCO/Flickr caption 학습이 seed17의 held-out validation에서 frozen-base보다 개선됐고, paired-image gain CI 하한도0보다 컸다. 원래 caption 모델과 conditioning 경로가 같거나 높은 절대 caption 품질이라는 주장은 하지 않는다. Backbone 변경이 필요하면 새로운 계획 revision과 모든 기준선 재실험이 필요하다.
 
 ## 3. 현재 코드와 구현 경계
 
@@ -88,4 +88,4 @@ Checkpoint에는 schema version, expert bank, active expert, router memory/weigh
 4. **VQA 보호:** archived VQA config/source는 수정하지 않는다. 공통 코드 변경 시 별도 출력의 기존 VQA smoke와 checkpoint 재생 결과 parity가 필수다. 기존 artifact 경로를 출력으로 받으면 실패시킨다.
 5. **Pilot/본 실험:** 아래 실험계획의 gate를 통과한 경우에만 실행한다. 기술 smoke 성공을 held-out 학습 성공으로 대체하지 않는다.
 
-기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. DC1의 새 source/environment는 `/home/faransansj/CLMoE-Multimodal-20261013/`다. 기존 venv의 의존성은 read-only 경로로 사용하고 추가 scorer 의존성은 새 venv에 설치했다. 실제 기술 smoke는 완료했지만 captioning held-out learnability와 본 CL 성능은 아직 검증하지 않았다.
+기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. DC1의 새 source/environment는 `/home/faransansj/CLMoE-Multimodal-20261013/`다. 기존 venv의 의존성은 read-only 경로로 사용하고 추가 scorer 의존성은 새 venv에 설치했다. G0 기술 smoke와 G1의 네 task 독립 학습 가능성을 확인했다. 본 CL 우월성 및 새 seed confirmation은 아직 검증하지 않았다.

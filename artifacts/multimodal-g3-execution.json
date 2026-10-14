@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "stage": "G3",
+  "status": "complete_passed",
+  "slurm_job": 2479153,
+  "training_conditions": 68,
+  "development_conditions_total": 92,
+  "audited_predictions": 243712,
+  "gate_passed": true,
+  "g4_allowed": true,
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "g3_report_sha256": "f62d61ded267168f62b0c0ce146a67433fb2fe230cb552f619fcbb6aca6b26df",
+  "normalizers_sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928",
+  "selected_replay": {
+    "lr": 0.0003,
+    "epochs": 10,
+    "mean_family_balanced_normalized_final_score": 0.9975472919320431
+  },
+  "primary_expansion_family_gains": {
+    "vqa": {
+      "task_transitions": 6,
+      "mean_gain": 14.16015625,
+      "mean_normalized_gain": 0.41862358912203623
+    },
+    "caption": {
+      "task_transitions": 6,
+      "mean_gain": 0.2754749516905429,
+      "mean_normalized_gain": 0.3518730283003601
+    }
+  },
+  "all_common_method_order_means": {
+    "shared_lora": 0.5379906036986488,
+    "capacity_matched_shared": 0.6801361300887112,
+    "replay_lora": 0.9555445745566531,
+    "expand": 0.8503641096608272,
+    "frozen_first": 0.31818957614996224
+  },
+  "primary_expansion_negative_transitions": [
+    {
+      "order": [
+        "V",
+        "C",
+        "G",
+        "F"
+      ],
+      "task_id": "F",
+      "family": "caption",
+      "gain": -0.03629988005199228,
+      "normalized_gain": -0.23782401284567223
+    },
+    {
+      "order": [
+        "V",
+        "G",
+        "C",
+        "F"
+      ],
+      "task_id": "F",
+      "family": "caption",
+      "gain": -0.02636963988498045,
+      "normalized_gain": -0.1727645811985857
+    }
+  ],
+  "raw_archive": {
+    "path": "artifacts/multimodal-g3-raw.tar.gz",
+    "sha256": "e9ca0e97b4bb2c4a4ec21db5e52eea69115cdfed4d3545560116b47dc7d1f466"
+  },
+  "integrated_tests": {
+    "passed": 305,
+    "seconds": 40.51
+  },
+  "confirmation_eval_predictions_created": false,
+  "conclusion": "G3 family-average gain and generation guards pass, but two subsequent Flickr transitions are negative and common/tuned replay outperform expansion on aggregate validation score. No confirmation superiority claim."
+}

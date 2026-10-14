@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "stage": "G2",
+  "status": "complete_passed",
+  "training_conditions": 8,
+  "slurm_jobs": [
+    2478596,
+    2478885
+  ],
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "g1_report_sha256": "195e1b9509830907c4c257db028500f295363ee72ae3292033f1f21b25716882",
+  "g2_report_sha256": "469d0380f2fbe2b88d815d63641c9d4d81e38137cf55aab554972c7d77dba487",
+  "normalizers_sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928",
+  "adjudicator_sha256": "80700a68698a24fdf9c43bf22c6717f44ae03ece223e3e393e04c95c18bf8c09",
+  "jobs_sha256": "65d9a2052e0dcbd1ce74e01126ec965c56c89f9dfa329089af06061be06dccdb",
+  "audited_predictions": 10240,
+  "gate_passed": true,
+  "g3_allowed": true,
+  "remote_root": "/home/faransansj/CLMoE-Multimodal-20261013",
+  "raw_archive": {
+    "path": "artifacts/multimodal-g2-raw.tar.gz",
+    "bytes": 441762,
+    "sha256": "f5a0a998e1250f47bb89a94cdd789e4f37319539b1a90ab673acd0f2c0265b7e"
+  },
+  "retry": {
+    "original_job": 2478596,
+    "array_index": 2,
+    "method": "replay_lora",
+    "order": [
+      "V",
+      "C"
+    ],
+    "phase": "scorer initialization before config/model/training",
+    "error": "PTB tokenizer returned 10243 lines for 10242 captions",
+    "root_cause": "Unknown; raw tokenizer stdout was not retained",
+    "retry_job": 2478885,
+    "same_code_config_environment": true,
+    "retry_completed": true,
+    "checkpoints_or_training_results_excluded": false
+  },
+  "confirmation_eval_predictions_created": false,
+  "conclusion": "Both predeclared pilot orders pass; development seed only, not multi-seed confirmation."
+}

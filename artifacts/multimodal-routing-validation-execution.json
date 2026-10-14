@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "stage": "pre_G4_validation_routing_smoke",
+  "parent": "artifacts/multimodal_runs/g3/V_C_G_F_expand_lr0.0003_ep5_seed17",
+  "failed_job": 2482127,
+  "successful_job": 2482136,
+  "native_files_byte_identical": 14,
+  "expert_retraining_steps": 0,
+  "audited_predictions": 16896,
+  "variants": [
+    "native_joint",
+    "image_only",
+    "question_only",
+    "family_restricted_joint",
+    "task_id_oracle"
+  ],
+  "eval_split": "validation",
+  "full_images_per_task": 256,
+  "tests": {
+    "passed": 307,
+    "seconds": 40.04
+  },
+  "bugs_corrected_before_confirmation": [
+    "Generation-record validator incorrectly rejected boolean EOS/empty/repetition/limit flags; fixed typed schema and regression.",
+    "Routing rescorer accumulated all-stage confusion while checking a final-stage report; restricted to final stage.",
+    "Routing error fractions used errors rather than all final images as denominator; corrected and regression added.",
+    "Routing exported task AF had BWT sign; corrected to post_train-minus-final and checked against continual_metrics on all real smoke variants.",
+    "Confirmation preflight required string scorer locks rather than actual structured TaskScorer locks; corrected and regression added."
+  ],
+  "raw_archive": {
+    "path": "artifacts/multimodal-routing-validation-raw.tar.gz",
+    "sha256": "09971708ca4014fd14ac01523be9bf5ab8165c4d2497a16fccf7358485804bff"
+  },
+  "independent_audit_sha256": "f244e7ed50b47f49a301c645e6d42fc1a9826ef2df00ab2bfde86902be0d5a8e",
+  "routing_result_caveat": "Task-ID oracle is perfect task/expert identification, not a mathematical upper bound on task metric; another learned expert can score better. Native joint remains the predeclared primary."
+}

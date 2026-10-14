@@ -1,0 +1,33 @@
+{
+  "manifest": "/scratch2/faransansj/multimodal_data_full_20261013/manifest_v2.json",
+  "sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "task_counts": {
+    "V": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    },
+    "C": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    },
+    "G": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    },
+    "F": {
+      "train": 2048,
+      "validation": 256,
+      "eval": 512
+    }
+  },
+  "unique_images": 11264,
+  "cross_task_split_overlap": 0,
+  "historical_exclusion_overlap": 0,
+  "eval_overlap_previous_multimodal_all_splits": 0,
+  "history_manifests": 8,
+  "confirmation_eligible": true,
+  "pre_training_revision": "Initial manifest contained 2 GQA eval images byte-identical to G0 V/C train/validation; no model eval or training ran on it. Regenerated v2 with both prior multimodal manifests in historical exclusions; original preserved."
+}

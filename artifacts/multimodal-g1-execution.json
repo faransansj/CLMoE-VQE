@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "stage": "G1",
+  "status": "complete_passed",
+  "slurm_job": 2478261,
+  "training_runs": 16,
+  "eval_split": "validation",
+  "seed": 17,
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "g1_report_sha256": "195e1b9509830907c4c257db028500f295363ee72ae3292033f1f21b25716882",
+  "normalizers_sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928",
+  "gate_passed": true,
+  "audited_predictions": 12288,
+  "tests": {
+    "command": "pytest tests -q",
+    "passed": 279,
+    "elapsed_seconds": 48.49
+  },
+  "remote_root": "/home/faransansj/CLMoE-Multimodal-20261013",
+  "checkpoint_storage": "home, retained in each artifacts/multimodal_runs/g1 run; excluded from raw archive",
+  "artifacts": {
+    "multimodal-g1-raw.tar.gz": {
+      "bytes": 803308,
+      "sha256": "82afff6427e0a9259d15afe5fe7deddf90338765dbb17c9b1173a1f1d93745da"
+    },
+    "multimodal-full-manifests.tar.gz": {
+      "bytes": 9104839,
+      "sha256": "34f96d5af66ade803d6f925a171c722f8887d5b8371875d7599ea83cda5c7a28"
+    }
+  },
+  "confirmation_eval_predictions_created": false,
+  "conclusion": "All four independent tasks pass the predeclared validation learnability gate; no claim of CL superiority."
+}

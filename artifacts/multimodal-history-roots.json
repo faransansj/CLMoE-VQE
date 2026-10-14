@@ -1,0 +1,26 @@
+[
+  {
+    "source": "/scratch2/faransansj/CLMoE-VQE/manifests/cl4vqa.json",
+    "original_sha256": "e42472c8db0abb1f51bd90b78a47aa05850da5261fe2da8c3758cb455400dcff",
+    "resolved_copy": "/scratch2/faransansj/multimodal_history_20261013/manifests_cl4vqa.json",
+    "resolved_sha256": "680c81d685b893b84083bdcc84d2d97d64eedfc3c694ac84a6a075dfc88824c5"
+  },
+  {
+    "source": "/scratch2/faransansj/CLMoE-VQE/manifests/vqa_stream.json",
+    "original_sha256": "4157bf0c4b4d640447c47333b289fec31c94b4baabdb31cb5903037c60190f30",
+    "resolved_copy": "/scratch2/faransansj/multimodal_history_20261013/manifests_vqa_stream.json",
+    "resolved_sha256": "e855f9b3fc651d239516a260c9ea296ca8dfe95637ec3f3edefe069761a861c2"
+  },
+  {
+    "source": "/scratch2/faransansj/CLMoE-VQE/vision_manifests_referenced/cl4vqa.json",
+    "original_sha256": "1969513873bc8ba42dcd4e1306d6c59dfee5392e2faf00d7a4c0f9af83a7a95a",
+    "resolved_copy": "/scratch2/faransansj/multimodal_history_20261013/vision_manifests_referenced_cl4vqa.json",
+    "resolved_sha256": "181c33b0daa8b4d1b9922adbbbc4d313aa79a9400d4fa7d7a27130150f803269"
+  },
+  {
+    "source": "/scratch2/faransansj/CLMoE-VQE/vision_manifests_referenced/vqa_stream.json",
+    "original_sha256": "4ee0dbc92ad7b673d1e94138de3b942c54428c42ed8f00afa4d5322bcacc764a",
+    "resolved_copy": "/scratch2/faransansj/multimodal_history_20261013/vision_manifests_referenced_vqa_stream.json",
+    "resolved_sha256": "fe8d8a26928466440bca7bf2da72a5110573c788539a570cf43b6f0dacc92dd5"
+  }
+]

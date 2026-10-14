@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "local_independent_backups_verified": true,
+  "image_archive": {
+    "path": "/scratch2/faransansj/multimodal_data_full_20261013/selected_images_v2.tar",
+    "images": 11264,
+    "bytes": 1730877440,
+    "sha256": "9c13a157b1a8c1663b4299c551607bab62f18432efda2006504ba0bbdf44dcef",
+    "local_path": "artifacts/multimodal-selected-images-v2.tar"
+  },
+  "initialization_archive": {
+    "path": "/scratch2/faransansj/multimodal_data_full_20261013/locked_blip_assets.tar",
+    "files": 12,
+    "bytes": 2116055040,
+    "sha256": "fb1c2b3ddceba0bc4471ac71d88fcd401f0aad3689ec448b8072658feaddf06c",
+    "local_path": "artifacts/multimodal-locked-blip-assets.tar"
+  },
+  "development_checkpoints": {
+    "file_count": 108,
+    "archive": {
+      "path": "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-development-checkpoints.tar",
+      "bytes": 1058508800,
+      "sha256": "fc875a95fd183324f6efd007ec43ec87a05a6d42aca5a1c3186d2007aae014a9"
+    },
+    "local_path": "artifacts/multimodal-development-checkpoints.tar"
+  },
+  "checkpoint_inventory": "artifacts/multimodal-development-checkpoints.json",
+  "policy": "Large image/initialization/checkpoint archives intentionally excluded from Git. Local copies are independent of DC1 home/scratch. Scratch atime must be explicitly refreshed within30days; reads alone do not refresh it."
+}

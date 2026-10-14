@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "eval_split": "validation",
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "scores": {
+    "V": 35.9765625,
+    "C": 0.6802684683477754,
+    "G": 33.59375,
+    "F": 0.15263336791624926
+  }
+}

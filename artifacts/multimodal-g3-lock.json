@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "stage": "G3",
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "g1_report_sha256": "195e1b9509830907c4c257db028500f295363ee72ae3292033f1f21b25716882",
+  "g2_report_sha256": "469d0380f2fbe2b88d815d63641c9d4d81e38137cf55aab554972c7d77dba487",
+  "normalizers_sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928",
+  "jobs_sha256": "d2b550c0d3e3883abc654ec24685e34fbdd17c4ee2d76cb30447196a838b0933",
+  "adjudicator_sha256": "e1e66abeb05be7427d30f7398b041b469a339add5df96176f44650f5737bc889",
+  "source_sha256": {
+    "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+    "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+    "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+    "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+    "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+    "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+    "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+    "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+    "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+    "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+    "third_party/BLIP/models/med.py": "faf785d868e0f758a27cc621c238a762e1c870328ac104e178d8c7f9db9b9159",
+    "third_party/BLIP/models/vit.py": "c16ef04bd471dc4d6ea1cae57982891670949bd9117ad209750bc88622539454",
+    "third_party/BLIP/configs/med_config.json": "d8b5029cc3c0124313d17009d043f0701bbe497f3721fa4ceb818720fe665326"
+  },
+  "training_conditions": 68,
+  "seed": 17,
+  "eval_split": "validation",
+  "primary_condition": {
+    "lr": 0.0003,
+    "epochs": 5
+  },
+  "gate": {
+    "positive_native_mean_subsequent_gain_per_family": true,
+    "aggregation": "all six subsequent task transitions per family across the four fixed orders",
+    "primary_expansion_generation_empty_fraction_max": 0.01,
+    "primary_expansion_generation_largest_output_fraction_strict_max": 0.9
+  },
+  "replay_selection": "highest mean family-balanced normalized final score over four orders; tie fewer epochs then lower lr",
+  "confirmation_not_launched": true
+}
