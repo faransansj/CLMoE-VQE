@@ -571,6 +571,7 @@ def audit_trials(matched, lock, manifest_cache):
         if not audited["image_bytes_verified"]:
             raise ValueError(f"Rescoring did not verify real image bytes: {directory}")
         config = json.loads((directory / "config.json").read_text())
+        resources = json.loads((directory / "results.json").read_text())["resources"]
         _validate_run_config(config, condition, lock)
         manifest = _load_manifest(config["manifest"], config["manifest_sha256"], manifest_cache)
         train_rows = len({task["task_id"]: task for task in manifest["tasks"]}
@@ -587,7 +588,7 @@ def audit_trials(matched, lock, manifest_cache):
                                                       else metrics.get("family_balanced_normalized_final")),
                  "subsequent_task_gains": _subsequent_task_gains(audited),
                  "generation_guard_failures": _guard_failures(audited),
-                 "audited_predictions": audited["audited_predictions"]}
+                 "audited_predictions": audited["audited_predictions"], "resources": resources}
         if condition["kind"] == "independent":
             task_id = condition["order"][0]
             trial["independent_score"] = metrics["tasks"][task_id]["final"]
@@ -640,36 +641,36 @@ def validate_capacity_parity(trials, lock):
 
 
 def validate_first_task_parity(trials, lock):
-    """Rank-8 same-seed first-task predictions must be byte-identical across methods."""
+    """Compare every rank-8 first-task run to its same-seed independent control."""
+    controls = {(trial["task_order"][0], trial["seed"]): trial
+                for trial in trials.values() if trial["kind"] == "independent"}
     groups = {}
     for trial in trials.values():
-        if trial["kind"] == "tuned_replay" or trial["method"] == "capacity_matched_shared":
+        if trial["kind"] not in ("common_cl", "frozen_first"):
             continue
-        if trial["kind"] not in ("common_cl", "frozen_first", "independent"):
-            continue
-        if trial["method"] not in FIRST_TASK_GROUP and trial["method"] != INDEPENDENT_METHOD:
+        if trial["method"] not in FIRST_TASK_GROUP:
             continue
         key = (trial["task_order"][0], trial["seed"])
-        groups.setdefault(key, {})[trial["method"]] = trial
-    identical_map = {}
-    report = {}
-    for key in sorted(groups, key=lambda item: (item[0], item[1])):
-        members = groups[key]
-        shared = members.get("shared_lora")
-        if shared is None:
-            raise ValueError(f"Same-seed first-task parity group lacks shared_lora: {key}")
-        reference = Path(shared["directory"]) / f"predictions_after_00_{key[0]}.jsonl"
-        payload = reference.read_bytes()
+        groups.setdefault(key, []).append(trial)
+    identical_map, report = {}, {}
+    for key in sorted(groups):
+        if key not in controls:
+            raise ValueError(f"Same-seed first-task parity group lacks independent control: {key}")
+        control = controls[key]
+        filename = f"predictions_after_00_{key[0]}.jsonl"
+        payload = (Path(control["directory"]) / filename).read_bytes()
+        members = sorted(groups[key], key=lambda trial: trial["name"])
         identical, divergent = [], []
-        for method in sorted(set(members) - {"shared_lora"}):
-            candidate = Path(members[method]["directory"]) / f"predictions_after_00_{key[0]}.jsonl"
-            (identical if candidate.read_bytes() == payload else divergent).append(method)
-        for method, trial in members.items():
-            identical_map[trial["name"]] = method not in divergent
-        report[f"{key[0]}/seed{key[1]}"] = {"members": sorted(members), "identical": identical,
-                                            "divergent": divergent}
+        for trial in members:
+            matches = (Path(trial["directory"]) / filename).read_bytes() == payload
+            identical_map[trial["name"]] = matches
+            (identical if matches else divergent).append(trial["name"])
+        identical_map[control["name"]] = True
+        report[f"{key[0]}/seed{key[1]}"] = {
+            "control": control["name"], "members": [trial["name"] for trial in members],
+            "identical": identical, "divergent": divergent}
         if divergent:
-            raise ValueError(f"Same-seed first-task predictions diverged in {sorted(divergent)}: {key}")
+            raise ValueError(f"Same-seed first-task predictions diverged in {divergent}: {key}")
     return report, identical_map
 
 
@@ -1096,7 +1097,7 @@ def resource_rows(trials):
     rows = []
     for name in sorted(trials):
         trial = trials[name]
-        resources = trial["audit"]["resources"]
+        resources = trial["resources"]
         for stage_index, stage in enumerate(trial["audit"]["stage_resources"]):
             counts = stage.get("parameter_counts") or {}
             rows.append({"directory": trial["directory"], "name": name, "kind": trial["kind"],
@@ -1167,6 +1168,7 @@ def adjudicate(run_roots, lock, lock_sha256):
               "grid": grid,
               "capacity_parity": capacity_records,
               "first_task_parity": first_task_report,
+              "first_task_parity_by_trial": first_task_equal,
               "guard_failures": guard_failures,
               "trials": [trials[name] for name in sorted(trials)],
               "audited_predictions": audited_predictions,
@@ -1248,10 +1250,7 @@ def main(argv=None):
         numerics = (lock["common_training"]["lr"], lock["common_training"]["epochs"], seed)
         for method in ("capacity_matched_shared", "expand"):
             capacity_equal[_run_name(tag.split("_"), method, *numerics)] = True
-    first_task_equal = {}
-    for trial in report["trials"]:
-        if trial["kind"] in ("common_cl", "frozen_first", "independent"):
-            first_task_equal[trial["name"]] = True
+    first_task_equal = report["first_task_parity_by_trial"]
     write_outputs(output, report, statistics, transfer_by_trial, capacity_equal, first_task_equal)
     print(json.dumps(build_compact_summary(report, statistics, output), indent=2, allow_nan=False))
     return 0

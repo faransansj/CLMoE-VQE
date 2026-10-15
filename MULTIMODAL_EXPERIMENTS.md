@@ -1,6 +1,6 @@
 # 멀티모달 task 확장 실험계획
 
-작성: 2026-10-13. 실행 갱신: 2026-10-14. 상태: **개발92개 학습 및 G1~G3 gate 통과; 실제 routing 검증과 pre-eval lock 후 G4 새8-seed/224개 조건 실행 중**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 본 실험 조건은 변경하지 않았다. 변경은 validation trial 이전에 revision으로 기록한다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않는다.
+작성: 2026-10-13. 최종 갱신: 2026-10-16. 상태: **G1~G5 완료: 개발92개·confirmation224개 학습, routing160조건. Replay 대비 종합 성공 기준 미충족**. [설계](MULTIMODAL_DESIGN.md)와 [기계 판독 계획](configs/multimodal_research.json)을 함께 따른다. 아래 본 실험 조건은 변경하지 않았다. Confirmation eval을 본 뒤 조건·지표·표본·seed를 바꾸지 않았다. 학습 완료 후 발견한 감사/출력 코드 결함과 교정은12절 및14절에 별도로 공개한다.
 
 ## 1. 검증할 주장
 
@@ -280,3 +280,54 @@ G3의 `V→C→G→F` native expansion bank로 전체256개 validation/task를 �
 [Confirmation lock](artifacts/multimodal-confirmation-lock.json) SHA256: `4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161`. 코드·자산·scorer·정규화·환경·bootstrap·G1/G2/G3 보고서와224개 training job 및32-bank/160-condition routing template을 고정했다. 최초 confirmation 예측이 없는 상태에서 remote bytes와 모든 lock 조건 일치를 확인한 뒤 제출했다. [정확한 source snapshot](artifacts/multimodal-confirmation-source.tar.gz), [의존성 inventory](artifacts/multimodal-confirmation-environment.json).
 
 G4는 `configs/multimodal_g4_jobs.json`/`scripts/multimodal_array.sbatch`로 실행한다. G5의 `configs/multimodal_g5_jobs.json`은 자기 해시 순환을 피하기 위해 lock 경로/SHA를 job template 안에 넣지 않는다. `scripts/multimodal_routing_array.sbatch`가 외부 `MULTIMODAL_CONFIRMATION_LOCK`/`MULTIMODAL_CONFIRMATION_LOCK_SHA256`에서 주입하며 evaluator가 부모 run과의 binding을 검증한다. 모델 재학습은 없다.
+
+### G4 학습 완료 및 분석 도구 교정
+
+SLURM **2482344**의224개 학습이 모두 완료됐고 총532,480 optimizer steps를 기록했다. 원 학습 코드·설정 해시는 lock과 일치한다. 256개 checkpoint(224 latest와32 independent)의 독립 로컬 백업 SHA256은 `6b288479429c8498b2e517a22175486ce16fae4ca1c342f7c7e76f2007b8cb38`이다.
+
+Confirmation 통계 열람 전 실제 산출물로 분석 도구의 bookkeeping 결함을 재현했다. 독립 C/G 기준선에는 대응하는 첫-task CL 그룹이 없는데 parity 검사에서 이를 요구했고, 같은 method의 두 order를 덮어썼다. 또 CSV가 shared audit API에 없는 total `resources`를 참조했고, 미검증 capacity/tuned 조건에 parity flag를 부여할 수 있었다. 원 CPU audit를 보고서 출력 전에 중단하고 해당 부분만 수정했다. 이제 모든 eligible order를 same-seed independent control과 비교하며, 실제 G4에서16개 그룹/144개 trial의 byte parity를 확인했다. 자원 합계는 원 `results.json`에서 읽는다.
+
+원 lock와 source archive는 변경하지 않았다. 수정 범위·이전/이후 SHA는 [analysis-only revision](artifacts/multimodal-confirmation-audit-revision.json)에 기록했다. 모델·원 예측·scoring·통계 함수·주 비교·bootstrap·multiplicity 기준은 그대로다. 따라서 최종 감사 코드는 원 pre-eval snapshot과 완전히 같다고 주장하지 않는다. 수정 후 repository-owned `pytest -q tests`: **308 passed**; 실제 resource export도640-step 산출물로 확인했다. 범위 없는 `pytest -q`는 third-party SMoLoRA의 Transformers `llava` config 충돌로 collection에 실패했으며, 이를 연구 테스트 통과로 계산하지 않는다.
+
+## 13. G4 confirmation 결과
+
+224개 조건의 **1,409,024개 원 예측을 독립 재채점**했다. Summary224행, task/resource 각각800행을 생성했다. [통계 원문](artifacts/multimodal-g4-statistics.json), [전체 audit·CSV archive](artifacts/multimodal-g4-report.tar.gz), [원 예측·실행 로그](artifacts/multimodal-g4-raw.tar.gz).
+
+각 seed 안에서 고정4 order를 평균한 뒤8 seed를 inference unit으로 사용했다. 아래 차이는 **expansion − baseline의 family-normalized final score**다. CI는 사전 고정20,000회 seed bootstrap의95% percentile이며, p는 exact two-sided sign-flip 후6개 주 비교에 대한 Holm 보정이다.
+
+| Family | Baseline | 평균 차이 | 95% CI | Holm p |
+|---|---|---:|---|---:|
+| VQA | shared | +0.271990 | [0.249411, 0.295666] | 0.046875 |
+| VQA | capacity-matched | +0.197128 | [0.169414, 0.225909] | 0.046875 |
+| VQA | common replay | −0.020090 | [−0.041010, −0.001266] | 0.125 |
+| Caption | shared | +0.378081 | [0.353165, 0.403818] | 0.046875 |
+| Caption | capacity-matched | +0.093677 | [0.070897, 0.115995] | 0.046875 |
+| Caption | common replay | −0.199517 | [−0.246175, −0.152715] | 0.046875 |
+
+**두 family 모두 종합 성공 기준 미충족.** Shared·capacity 대비 우위는 확인했지만 replay 우월성은 없다. Caption은 common replay에 유의하게 열세다. VQA replay 차이는 bootstrap CI가 음수여도 사전 지정 exact-test 기준에서는 유의하지 않다. 서로 다른 추론 방식의 결과를 선택적으로 바꾸지 않는다.
+
+별도2개 Holm family의 tuned replay(개발 단계에서 선택한10 epochs) 대비 차이는 VQA **−0.096337** [−0.112906, −0.080001], caption **−0.318700** [−0.370600, −0.270844], 각각 p=**0.015625**다. 양쪽 모두 열세이며, 이 비교는 common5-epoch와 동일 학습 예산 비교가 아니다.
+
+4-order/8-seed 평균 balanced-normalized final: shared **0.532924**, capacity **0.712557**, common replay **0.967763**, expansion **0.857959**, frozen-first **0.302639**, tuned replay **1.065478**. 정규화 기준은 고정 G1 validation 독립 점수이며1을 넘을 수 있다.
+
+Expansion의 family-normalized AF는 VQA **0.036958**, caption **0.008942**로 shared의 **0.436721**, **0.639107**보다 작고 generation guard 실패는 없다. 하지만 forgetting 감소가 replay 대비 최종 성능 우위를 뜻하지는 않는다. 후속 task의 native gain 평균은 VQA **+17.840169**, caption **+0.286678**인 반면, **Flickr가 후속 task인16개 조건은 모두 음의 gain**(평균 **−0.028751 CIDEr-D**)이다. Same-seed 독립 기준선 대비 exploratory normalized post-train transfer는 VQA **−0.043240**, caption **+0.020153**이다. Family 평균으로 이 실패들을 덮지 않는다.
+
+## 14. G5 frozen-bank routing 결과와 최종 해석
+
+SLURM **2490941**에서32개 bank ×5개 variant를 완료했고, **1,081,344개 원 예측을 독립 재채점**했다. 모든 bank에서 native14개 파일의 부모 byte parity와 expert 재학습0회를 검증했다. 재채점 native 점수는32개 G4 expansion 결과와 모두 일치한다. [집계](artifacts/multimodal-g5-summary.json), [전체 audit·CSV](artifacts/multimodal-g5-report.tar.gz), [원 예측·로그](artifacts/multimodal-g5-raw.tar.gz).
+
+| Router | VQA normalized final | Caption normalized final | Balanced |
+|---|---:|---:|---:|
+| Native joint | 0.972540 | 0.743379 | 0.857959 |
+| Image-only | 0.501616 | 0.419243 | 0.460429 |
+| Question-only | 0.975093 | 0.653056 | 0.814074 |
+| Family-restricted joint | 0.973136 | 0.743379 | 0.858257 |
+| Task-ID oracle | 1.014565 | 0.711416 | 0.862990 |
+
+표는 고정4-order/8-seed 평균이며 탐색 진단이다. Eval 점수로 router를 다시 선택하거나 새 유의성 검정을 추가하지 않았다. Native의 최종 other-family routing은 전체의 **0.01984%**, other-expert routing은 **23.88153%**다. Family mask의 차이는 매우 작다. 반면 image-only의 other-family routing은 **39.68658%**이며 성능도 낮다. Question-only는 caption의50%를 다른 task expert로 보내고 caption 평균이 native보다 낮다. Validation 단일 bank에서 보였던 question-only 이득은 confirmation 전체 평균으로 일반화되지 않았다.
+
+Task-ID oracle은 VQA에서는 native보다 높지만 caption에서는 낮다. **Task-ID를 맞히는 것과 task 점수를 최대화하는 것은 다르므로 이를 성능 상한으로 해석하지 않는다.** Routing 오차만 제거하면 replay 열세가 해결된다는 근거도 없다.
+
+G5 독립 감사의 첫 실행은 verifier가 반환하는 compact binding descriptor를 full lock으로 오인하여 manifest binding 오류로 중단됐다. Descriptor의 path/SHA를 기존 strict verifier로 재검증하도록 교정한 뒤 전체 audit가 완료됐다. Lock 검사를 생략하거나 모델/점수 계산을 바꾸지 않았으며 [동일 revision 기록](artifacts/multimodal-confirmation-audit-revision.json)에 두 source SHA를 보존했다. 최종 repository-owned 테스트 **308 passed**.
+
+**결론:** 고정 BLIP·소규모4-task cohort에서 expansion은 shared/capacity보다 최종 성능이 높고 망각이 작지만, replay 대비 성공 주장은 지지되지 않는다. VQA positive transfer와 Flickr 후속 학습도 실패 신호를 보인다. G1~G3 gate 통과는 confirmation의 우월성 증명이 아니다. 데이터는 task당 train2048/eval512이며 고정4 order와8 seed만 평가했으므로 full-dataset·다른 backbone·audio/video·일반적 novelty로 확장 주장하지 않는다. 원 pre-eval source, 분석 교정 이력, 실패와 음의 결과, 원 예측 및 checkpoint를 함께 보존한다.

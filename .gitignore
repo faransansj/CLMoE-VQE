@@ -53,3 +53,12 @@ venv/
 !/artifacts/multimodal-routing-validation-raw.tar.gz
 !/artifacts/multimodal-confirmation-lock.json
 !/artifacts/multimodal-confirmation-source.tar.gz
+!/artifacts/multimodal-confirmation-checkpoints.json
+!/artifacts/multimodal-confirmation-audit-revision.json
+!/artifacts/multimodal-confirmation-execution.json
+!/artifacts/multimodal-g4-raw.tar.gz
+!/artifacts/multimodal-g4-report.tar.gz
+!/artifacts/multimodal-g4-statistics.json
+!/artifacts/multimodal-g5-raw.tar.gz
+!/artifacts/multimodal-g5-report.tar.gz
+!/artifacts/multimodal-g5-summary.json

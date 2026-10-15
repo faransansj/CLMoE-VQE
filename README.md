@@ -2,7 +2,7 @@
 
 **VQA 실험 종료:** 8-seed readout confirmation 128개 학습과 160개 routing 조건을 완료했다. 최종 판정·산출물 무결성 확인·남은 제한은 [VQA_CLOSURE.md](VQA_CLOSURE.md)에 정리했다. 아래 결과와 기존 원 산출물은 후속 연구에서 덮어쓰지 않는다.
 
-**후속 멀티모달 CL 연구:** `research/multimodal-cl`에서 VQA/captioning 경로를 구현하고 테스트307개, 실제 GPU 학습·routing 재현·기존 VQA parity를 검증했다. 공개 HF Flickr30k를 확보한 뒤 G1~G3 개발92개 학습과 gate 판정을 완료했다. Expansion은4-task 개발에서 shared/capacity보다 높았지만 **common/tuned replay보다 낮았고, 두 Flickr 후속 전이는 음수**였다. 코드·데이터·통계를 pre-eval lock한 새8-seed/224개 confirmation 조건을 실행 중이다. [설계](MULTIMODAL_DESIGN.md), [실험계획·결과](MULTIMODAL_EXPERIMENTS.md), [설정](configs/multimodal_research.json). 기존 VQA 결과는 변경하지 않는다.
+**후속 멀티모달 CL 연구 완료:** 공개 HF Flickr30k를 통합해 G1~G3 개발92개, 새8-seed G4 confirmation224개 학습과 G5 routing160조건을 완료했다. G4/G5 원 예측 각각1,409,024개/1,081,344개를 독립 재채점했다. **Expansion은 shared·capacity 대비 우수하지만 replay 대비 종합 성공 기준은 두 family 모두 미충족**이다. Caption은 common replay에, 두 family 모두 tuned replay에 유의하게 열세이며 Flickr 후속16조건 모두 음의 gain이다. 테스트308개 통과; pre-eval lock 보존과 post-eval 감사/출력 코드 교정 이력도 공개한다. [설계](MULTIMODAL_DESIGN.md), [실험계획·최종 결과](MULTIMODAL_EXPERIMENTS.md), [설정](configs/multimodal_research.json). 기존 VQA 결과는 변경하지 않는다.
 
 **기존 vision-side 검증 결론:** Vision-side SEMA의 실제 확장·학습은 확인했다. 다만 학습량을 맞춘 no-expansion보다 우월하다는 근거는 확보하지 못했다. 아래에 완료된74개 실험과 실패·편향 진단을 함께 기록한다.
 

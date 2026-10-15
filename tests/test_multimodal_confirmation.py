@@ -20,7 +20,7 @@ from scripts.evaluate_multimodal_confirmation import (
     _number_matches, _parse_lock, _per_seed_order_means, _run_name,
     _validate_gate_chain, _validate_run_config, expected_conditions, holm,
     paired_statistics, parse_job, primary_statistics, transfer_records, validate_locked_jobs,
-    validate_stage_budgets)
+    validate_first_task_parity, validate_stage_budgets)
 from sema_multimodal.metrics import continual_metrics
 
 HEX_A = "a" * 64
@@ -29,6 +29,35 @@ HEX_C = "c" * 64
 HEX_D = "d" * 64
 HEX_E = "e" * 64
 HEX_F = "f" * 64
+
+
+def test_first_task_parity_checks_every_order_against_independent_control(tmp_path):
+    trials = {}
+    for name, kind, method, order in (
+        ("control_v", "independent", "independent", ["V"]),
+        ("control_c", "independent", "independent", ["C"]),
+        ("first_order", "common_cl", "shared_lora", ["V", "C", "G", "F"]),
+        ("second_order", "common_cl", "shared_lora", ["V", "G", "C", "F"]),
+        ("capacity", "common_cl", "capacity_matched_shared", ["V", "C", "G", "F"]),
+        ("tuned", "tuned_replay", "replay_lora", ["V", "C", "G", "F"]),
+    ):
+        directory = tmp_path / name
+        directory.mkdir()
+        (directory / f"predictions_after_00_{order[0]}.jsonl").write_text(
+            '{"prediction":"same"}\n' if name not in ("capacity", "tuned")
+            else '{"prediction":"different capacity or training budget"}\n')
+        trials[name] = {"name": name, "kind": kind, "method": method,
+                        "task_order": order, "seed": 137, "directory": str(directory)}
+    report, matches = validate_first_task_parity(trials, {})
+    assert matches == {"control_v": True, "first_order": True, "second_order": True}
+    assert report["V/seed137"]["control"] == "control_v"
+    (tmp_path / "first_order" / "predictions_after_00_V.jsonl").write_text(
+        '{"prediction":"diverged in the otherwise overwritten order"}\n')
+    with pytest.raises(ValueError, match="diverged.*first_order"):
+        validate_first_task_parity(trials, {})
+    del trials["control_v"]
+    with pytest.raises(ValueError, match="lacks independent control"):
+        validate_first_task_parity(trials, {})
 
 
 def synthetic_lock(selected_replay=(0.0003, 10)):

@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "completed_date": "2026-10-16",
+  "confirmation_lock_sha256": "4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161",
+  "g4": {
+    "job": 2482344,
+    "training_runs": 224,
+    "optimizer_steps": 532480,
+    "audited_predictions": 1409024,
+    "summary_rows": 224,
+    "task_rows": 800,
+    "resource_rows": 800,
+    "first_task_parity_groups": 16,
+    "first_task_parity_verified_trials": 144,
+    "operational_success": {
+      "vqa": false,
+      "caption": false
+    },
+    "audit_completion_evidence": "All five durable outputs recovered after background completion record expired; full audit JSON, statistics and 224/800/800 CSV rows verified. No exit-status claim from the expired wrapper."
+  },
+  "g5": {
+    "job": 2490941,
+    "parent_banks": 32,
+    "conditions": 160,
+    "audited_predictions": 1081344,
+    "native_files_byte_identical": 448,
+    "expert_retraining_steps": 0,
+    "audit_exit_code": 0,
+    "native_scores_match_all_g4_parents": true
+  },
+  "verification": {
+    "repository_owned_tests": "308 passed in 43.52s",
+    "unscoped_pytest": "Collection failed in third_party/SMoLoRA because Transformers llava config was already registered; no unrelated dependency changes.",
+    "actual_smoke": "All 224 real G4 descriptors checked: 16 parity groups / 144 eligible trials; actual 640-step resource export. Full G4 and G5 audits completed thereafter."
+  },
+  "analysis_revision": "artifacts/multimodal-confirmation-audit-revision.json",
+  "inventory": {
+    "multimodal-g4-raw.tar.gz": {
+      "bytes": 51854913,
+      "sha256": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6"
+    },
+    "multimodal-g4-report.tar.gz": {
+      "bytes": 7814897,
+      "sha256": "c13f5b59a052264bc0d2b6c9a5aa46ef2968f5ac5d9b0bc40c764b97d53186b5"
+    },
+    "multimodal-g4-statistics.json": {
+      "bytes": 40004,
+      "sha256": "833a36c7a1c5f38f6c758764b8f9cb2ab61d6b677a80273256fd4de934d3a8c6"
+    },
+    "multimodal-g5-raw.tar.gz": {
+      "bytes": 25281748,
+      "sha256": "73531b6c8da198706c481baf9af98f09c3198b543a53244ae6031ce4db9bfe5d"
+    },
+    "multimodal-g5-report.tar.gz": {
+      "bytes": 2284150,
+      "sha256": "ccb550ce562ee93554c45c088fc6e43a8e289f0f061fbb03478cd9fffb282068"
+    },
+    "multimodal-g5-summary.json": {
+      "bytes": 2585,
+      "sha256": "8e14b497d9b73701e44f8acf17c3a8c6f25900e5ab5c9318f4ef6b19d87ba585"
+    },
+    "multimodal-confirmation-checkpoints.json": {
+      "bytes": 52414,
+      "sha256": "f7300e31054d009888e498d99e5c70814e9a3d96aad51c8731373bca7e662ba5"
+    },
+    "multimodal-confirmation-audit-revision.json": {
+      "bytes": 1962,
+      "sha256": "37f01937c7d1a944a115a6803cc0c41644727be77ee10ecc33bb3fe6384ff92f"
+    }
+  },
+  "limitations": [
+    "Fixed BLIP, four tasks, 2048 train and 512 eval images per task, four fixed orders, eight confirmation seeds.",
+    "Replay superiority criterion not met; negative findings retained.",
+    "Post-training audit/output defects corrected transparently; original pre-eval lock/source preserved."
+  ]
+}

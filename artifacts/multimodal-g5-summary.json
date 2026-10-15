@@ -1,0 +1,94 @@
+{
+  "scope": "Exploratory frozen-bank routing diagnostics; no primary significance is claimed and no model or config is re-selected from these scores.",
+  "parent_banks": 32,
+  "conditions": 160,
+  "audited_predictions": 1081344,
+  "aggregation": "Equal-weight mean of the four fixed orders and eight seeds; exploratory, no new significance test or selection.",
+  "variants": {
+    "native_joint": {
+      "family_normalized_final": {
+        "vqa": 0.9725403536348256,
+        "caption": 0.7433785745731301,
+        "balanced": 0.8579594641039778
+      },
+      "other_expert_fraction": {
+        "all": 0.2388153076171875,
+        "vqa": 0.279510498046875,
+        "caption": 0.1981201171875
+      },
+      "other_family_fraction": {
+        "all": 0.0001983642578125,
+        "vqa": 0.000396728515625,
+        "caption": 0.0
+      }
+    },
+    "image_only": {
+      "family_normalized_final": {
+        "vqa": 0.5016158419185415,
+        "caption": 0.4192429654901881,
+        "balanced": 0.4604294037043648
+      },
+      "other_expert_fraction": {
+        "all": 0.58740234375,
+        "vqa": 0.70635986328125,
+        "caption": 0.46844482421875
+      },
+      "other_family_fraction": {
+        "all": 0.3968658447265625,
+        "vqa": 0.4522705078125,
+        "caption": 0.341461181640625
+      }
+    },
+    "question_only": {
+      "family_normalized_final": {
+        "vqa": 0.9750928354543847,
+        "caption": 0.6530557794947804,
+        "balanced": 0.8140743074745825
+      },
+      "other_expert_fraction": {
+        "all": 0.3855133056640625,
+        "vqa": 0.271026611328125,
+        "caption": 0.5
+      },
+      "other_family_fraction": {
+        "all": 0.0,
+        "vqa": 0.0,
+        "caption": 0.0
+      }
+    },
+    "family_restricted_joint": {
+      "family_normalized_final": {
+        "vqa": 0.9731363075398328,
+        "caption": 0.7433785745731301,
+        "balanced": 0.8582574410564815
+      },
+      "other_expert_fraction": {
+        "all": 0.238677978515625,
+        "vqa": 0.27923583984375,
+        "caption": 0.1981201171875
+      },
+      "other_family_fraction": {
+        "all": 0.0,
+        "vqa": 0.0,
+        "caption": 0.0
+      }
+    },
+    "task_id_oracle": {
+      "family_normalized_final": {
+        "vqa": 1.0145652633638866,
+        "caption": 0.7114156352974838,
+        "balanced": 0.8629904493306851
+      },
+      "other_expert_fraction": {
+        "all": 0.0,
+        "vqa": 0.0,
+        "caption": 0.0
+      },
+      "other_family_fraction": {
+        "all": 0.0,
+        "vqa": 0.0,
+        "caption": 0.0
+      }
+    }
+  }
+}

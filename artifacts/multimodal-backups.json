@@ -25,5 +25,13 @@
     "local_path": "artifacts/multimodal-development-checkpoints.tar"
   },
   "checkpoint_inventory": "artifacts/multimodal-development-checkpoints.json",
+  "confirmation_checkpoints": {
+    "file_count": 256,
+    "bytes": 2300518400,
+    "sha256": "6b288479429c8498b2e517a22175486ce16fae4ca1c342f7c7e76f2007b8cb38",
+    "local_path": "artifacts/multimodal-confirmation-checkpoints.tar",
+    "remote_path": "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-confirmation-checkpoints.tar",
+    "inventory": "artifacts/multimodal-confirmation-checkpoints.json"
+  },
   "policy": "Large image/initialization/checkpoint archives intentionally excluded from Git. Local copies are independent of DC1 home/scratch. Scratch atime must be explicitly refreshed within30days; reads alone do not refresh it."
 }

@@ -1,0 +1,28 @@
+{
+  "original_lock_sha256": "4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161",
+  "script": "scripts/evaluate_multimodal_confirmation.py",
+  "original_sha256": "0064c56b3cf5b99ac02e4ade6a1d88e41ffbae7370692368a84c1d9a4eed1bc6",
+  "revised_sha256": "3bf9dca62cf90a2c9d03940abdf175089beb34d99c3f154be36514bc26801b1b",
+  "changed_functions": [
+    "audit_trials",
+    "validate_first_task_parity",
+    "resource_rows",
+    "adjudicate",
+    "main"
+  ],
+  "timing": "After completion of all 224 training runs; before inspecting G4 confirmation statistics. Original CPU audit cancelled before emitting reports.",
+  "corrections": [
+    "Compare all common rank-8 first-task runs across both orders with the corresponding independent control; independent C/G have no first-task CL peers.",
+    "Export only verified first-task parity flags, excluding capacity-matched and tuned-replay runs.",
+    "Read total resources from completed results.json instead of the shared audit API, which exposes only stage_resources."
+  ],
+  "unchanged": "Model, predictions, scoring, locked cohort, normalizers, primary comparisons, statistical functions, seeds, bootstrap and multiplicity rules. Original lock and source archive preserved.",
+  "routing_rescorer_correction": {
+    "script": "scripts/summarize_multimodal_routing.py",
+    "original_sha256": "b9e55312c0d1c0322509d625ef7eb13825f3638ab4170c550898157931087dd1",
+    "revised_sha256": "b9c5bcc901b842fab5b55b7546b2be64ecbc17b6aab07530cef62580c53e41c7",
+    "observed_failure": "G5 auditor expected full lock fields in the compact verified binding descriptor; rejected manifest_sha256 although the verifier had already matched it.",
+    "correction": "Revalidate descriptor path/SHA through the existing strict verifier and compare the returned binding. No lock checks removed; no scoring/statistics changes.",
+    "timing": "After G5 execution, before any G5 independent audit results were emitted."
+  }
+}

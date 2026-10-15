@@ -1,6 +1,6 @@
 # Heterogeneous vision-language continual learning 설계
 
-작성: 2026-10-13. 상태: **G0 기술 검증 및 G1~G3 gate 통과, 개발92개 학습 완료; 실제 routing 검증과 pre-eval lock 후 G4 confirmation 실행 중**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate와 실행 기록은 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
+작성: 2026-10-13. 최종 갱신: 2026-10-16. 상태: **G1~G5 완료; 개발92개·confirmation224개 학습과160개 routing 조건 검증. Replay 대비 종합 성공 기준 미충족**. 브랜치: `research/multimodal-cl`. VQA 종료 기준선: `main`의 `47efefe`. 실험 조건·진행 gate와 최종 결과 및 분석 교정 이력은 [MULTIMODAL_EXPERIMENTS.md](MULTIMODAL_EXPERIMENTS.md), 기존 근거는 [VQA_CLOSURE.md](VQA_CLOSURE.md)를 따른다.
 
 ## 1. 연구 질문과 범위
 
@@ -88,4 +88,4 @@ Checkpoint에는 schema version, expert bank, active expert, router memory/weigh
 4. **VQA 보호:** archived VQA config/source는 수정하지 않는다. 공통 코드 변경 시 별도 출력의 기존 VQA smoke와 checkpoint 재생 결과 parity가 필수다. 기존 artifact 경로를 출력으로 받으면 실패시킨다.
 5. **Pilot/본 실험:** 아래 실험계획의 gate를 통과한 경우에만 실행한다. 기술 smoke 성공을 held-out 학습 성공으로 대체하지 않는다.
 
-기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. DC1의 새 source/environment는 `/home/faransansj/CLMoE-Multimodal-20261013/`다. 기존 venv의 의존성은 read-only 경로로 사용하고 추가 scorer 의존성은 새 venv에 설치했다. G0 기술 smoke와 G1의 네 task 독립 학습 가능성을 확인했다. 본 CL 우월성 및 새 seed confirmation은 아직 검증하지 않았다.
+기본 출력은 새 `artifacts/multimodal_runs/`, `artifacts/multimodal_report/`로 분리한다. 기존 `readout_runs/`, `readout_report/`, vision/legacy 결과는 읽기 전용이다. DC1의 새 source/environment는 `/home/faransansj/CLMoE-Multimodal-20261013/`다. 기존 venv의 의존성은 read-only 경로로 사용하고 추가 scorer 의존성은 새 venv에 설치했다. G1 학습 가능성과 G2/G3 gate를 통과한 뒤 G4/G5를 완료했다. Confirmation은 shared·capacity 대비 우위를 지지하지만 replay 우월성은 지지하지 않는다. 망각 감소와 positive transfer·최종 성능 우월성을 구분한다.

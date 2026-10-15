@@ -219,9 +219,10 @@ def audit(directory, *, normalizer_lock, confirmation_lock=None, image_root=None
     for expert, task in zip(assignments, tasks):
         if expert_family.get(expert) != task["own_family"]:
             raise ValueError("Expert family declaration disagrees with the parent stream")
-    for field in ("manifest_sha256", "source_sha256", "assets_sha256", "tokenizer_sha256", "scorer_locks"):
-        if confirmation_lock is not None and confirmation_lock.get(field) != config[field]:
-            raise ValueError(f"Locked confirmation {field} does not bind this routing parent")
+    if confirmation_lock is not None:
+        verified = verify_confirmation_lock(
+            confirmation_lock["path"], confirmation_lock["sha256"], config)
+        _assert_same(verified, confirmation_lock, "routing confirmation binding")
     parent = Path(report["parent"])
     eval_limit = config.get("eval_limit", 0)
     eval_rows = {task["task_id"]: task[config["eval_split"]][:eval_limit or None] for task in tasks}
