@@ -1,0 +1,142 @@
+{
+  "scope": "Existing saved scores only; no model inference, rescoring or new significance tests.",
+  "inputs": [
+    {
+      "path": "artifacts/multimodal-g4-report.tar.gz",
+      "sha256": "c13f5b59a052264bc0d2b6c9a5aa46ef2968f5ac5d9b0bc40c764b97d53186b5"
+    },
+    {
+      "path": "artifacts/multimodal-g4-statistics.json",
+      "sha256": "833a36c7a1c5f38f6c758764b8f9cb2ab61d6b677a80273256fd4de934d3a8c6"
+    },
+    {
+      "path": "artifacts/multimodal-g1-normalizers.json",
+      "sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928"
+    }
+  ],
+  "audit_archive_member": "g4/audit.json",
+  "seed_count": 8,
+  "exact_two_sided_p_floor": 0.0078125,
+  "holm_primary_six_floor": 0.046875,
+  "holm_tuned_two_floor": 0.015625,
+  "comparisons": [
+    {
+      "family": "primary_six",
+      "label": "expand_minus_shared_lora_vqa",
+      "raw_p": 0.0078125,
+      "holm_p": 0.046875,
+      "mean_difference": 0.27199002837537556
+    },
+    {
+      "family": "primary_six",
+      "label": "expand_minus_capacity_matched_shared_vqa",
+      "raw_p": 0.0078125,
+      "holm_p": 0.046875,
+      "mean_difference": 0.19712768366664143
+    },
+    {
+      "family": "primary_six",
+      "label": "expand_minus_replay_lora_vqa",
+      "raw_p": 0.125,
+      "holm_p": 0.125,
+      "mean_difference": -0.020090412973764654
+    },
+    {
+      "family": "primary_six",
+      "label": "expand_minus_shared_lora_caption",
+      "raw_p": 0.0078125,
+      "holm_p": 0.046875,
+      "mean_difference": 0.37808130432687903
+    },
+    {
+      "family": "primary_six",
+      "label": "expand_minus_capacity_matched_shared_caption",
+      "raw_p": 0.0078125,
+      "holm_p": 0.046875,
+      "mean_difference": 0.09367672966137
+    },
+    {
+      "family": "primary_six",
+      "label": "expand_minus_replay_lora_caption",
+      "raw_p": 0.0078125,
+      "holm_p": 0.046875,
+      "mean_difference": -0.19951698884763047
+    },
+    {
+      "family": "tuned_two",
+      "label": "expand_minus_tuned_replay_vqa",
+      "raw_p": 0.0078125,
+      "holm_p": 0.015625,
+      "mean_difference": -0.0963371027763049
+    },
+    {
+      "family": "tuned_two",
+      "label": "expand_minus_tuned_replay_caption",
+      "raw_p": 0.0078125,
+      "holm_p": 0.015625,
+      "mean_difference": -0.3186999642735552
+    }
+  ],
+  "gain_summaries": {
+    "vqa": {
+      "transitions": 48,
+      "negative_transitions": 0,
+      "raw_transition_mean": 17.840169270833332,
+      "normalized_transition_mean": 0.5273948101574797,
+      "raw_equal_order_seed_mean": 16.07177734375,
+      "normalized_equal_order_seed_mean": 0.47566965412973766
+    },
+    "caption": {
+      "transitions": 48,
+      "negative_transitions": 16,
+      "raw_transition_mean": 0.2866777271896611,
+      "normalized_transition_mean": 0.3727178187555181,
+      "raw_equal_order_seed_mean": 0.308423130851347,
+      "normalized_equal_order_seed_mean": 0.41685890706635387
+    },
+    "V": {
+      "transitions": 16,
+      "negative_transitions": 0,
+      "raw_transition_mean": 5.571289062500001,
+      "normalized_transition_mean": 0.15485884907709013
+    },
+    "C": {
+      "transitions": 32,
+      "negative_transitions": 0,
+      "raw_transition_mean": 0.44439207795782243,
+      "normalized_transition_mean": 0.6532598505368835
+    },
+    "G": {
+      "transitions": 32,
+      "negative_transitions": 0,
+      "raw_transition_mean": 23.974609375,
+      "normalized_transition_mean": 0.7136627906976744
+    },
+    "F": {
+      "transitions": 16,
+      "negative_transitions": 16,
+      "raw_transition_mean": -0.028750974346661563,
+      "normalized_transition_mean": -0.18836624480721265
+    }
+  },
+  "gain_weighting": "Transition means weight each subsequent task equally. Equal-order/seed means first average eligible tasks within each trial, then average 32 equally weighted trials; this matches the saved gain inference statistic.",
+  "normalizers": {
+    "V": 35.9765625,
+    "C": 0.6802684683477754,
+    "G": 33.59375,
+    "F": 0.15263336791624926
+  },
+  "caption_score_units": {
+    "C": {
+      "units": "native_cider_d",
+      "scale": 10.0,
+      "idf_source": "task_train_references"
+    },
+    "F": {
+      "units": "native_cider_d",
+      "scale": 10.0,
+      "idf_source": "task_train_references"
+    }
+  },
+  "scale_note": "Native pycocoevalcap CIDEr-D output is reported x1, not presentation x100. Its internal CIDEr scale factor is 10.0; do not confuse internal scale with external display multiplier."
+}

@@ -1,0 +1,28 @@
+stage0.5 task F (truncation rescore) — attempt log
+==================================================
+
+[2026-10-20 09:5x–12:0x KST] SSH connectivity outage to Yonsei login nodes (both DC1 165.132.142.82 and DC2 165.132.142.207):
+- First attempts: `Connection timed out during banner exchange` (TCP accepted, no SSH banner within 10–30 s).
+- Later attempts: `Connection reset by peer` during banner read on raw TCP test.
+- General egress verified working in parallel (ssh to another host OK) → issue specific to Yonsei DC1/DC2 sshd path; consistent with a rate-limit/ban triggered by the initial burst of concurrent connection attempts by several workers.
+- Retried via background loops (~60 min, one attempt/40–110 s, DC1+DC2) — all failed; logs kept in session transcript.
+- Coordination decision (parent/DecodingProbe 2026-10-20): ONLY the DecodingProbe agent attempts SSH, at most once every 20 minutes; TruncationRescore waits for a message from DecodingProbe and then works in ONE ControlPersist session. All local prep was completed during the outage (script dry-run-validated end to end with stubbed tokenization/scorers; rules unit-tested; stored-scalar sources sanity-checked; parent baseline numbers reproduced exactly from stored per-image scores).
+
+Local prep completed during outage (no SSH):
+- scripts/stage05_truncation_rescore.py sha256 9a7cb86a824ebc80c42b72ea9933997e6aae6656b35dad02a86dee86b2b2b37e
+- scripts/stage05_truncation_rescore.sbatch sha256 81743438b7f11807b61526c564364e63237622e761904cf4498814893dcaafe4 (CPU-only: NO --gres, -p dell_rtx3090, cpus 8, mem 48G, time 3h; first submission attempt will be without GPU; if the scheduler rejects, the exact rejection text will be recorded here before any resubmission)
+- Input sha256 values verified locally (to be re-verified remotely before sbatch):
+  artifacts/week1-per-example-scores.jsonl.gz cf74c2fdf946ea49419d922bcb64e627fd26e53dcae3542a3b6bc6adf5d612f3
+  artifacts/multimodal-full-manifests.tar.gz 34f96d5af66ade803d6f925a171c722f8887d5b8371875d7599ea83cda5c7a28
+  artifacts/multimodal-g4-raw.tar.gz 8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6
+  artifacts/multimodal-g4-report/audit.json 61aa4df5e50c43e17189595412b8701de40aa51ea460e0a0a4a3da5166b31ea3
+  artifacts/multimodal-g5-report/routing_audit.json c6a6d5a3b9212b84c2edd7f9ba949100472f6b58178b346154df6a6db0d85601
+  artifacts/multimodal-confirmation-lock.json 4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161
+  sema_multimodal/metrics.py 6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78
+
+[2026-10-20 12:0x KST] RESOLUTION of the SSH blocker: parent built a local scoring environment matching remote versions and instructed a LOCAL run (no SSH). No sbatch was ever submitted (the CPU-only no--gres first-attempt rule therefore never triggered; scripts/stage05_truncation_rescore.sbatch remains prepared but unused).
+- Environment: python 3.12.14, numpy 1.26.4, pycocoevalcap 1.2, OpenJDK 21.0.12.1 (nixos) vs remote Java 22.0.2 — recorded in the JSON envelope (environment_note + generated_by).
+- Parent smoke gate reproduced first: TaskScorer G4 F independent seed137 eval = 0.09060143557512251 vs stored 0.09060143557512253 (|Δ|=2e-17).
+- Run: scripts/stage05_truncation_rescore.py, single process, CPU only, wall 450.8 s (internal: load_rows 1.9 s, build_scorers 1.6 s, tokenize 0.5 s).
+- Outputs (exclusive create): artifacts/stage05-truncation-rescore.json (sha256 580fdbacc4923694da961b01ae9fa86d2ede1cecd1869af2a0c78cf7bb17b24f), artifacts/stage05-truncation-rescore.md (rendered from the JSON).
+- Parity (status ok, failures 0): baseline per-image vs stored row scores max |Δ| 4.44e-16; old C per-image 4.44e-16; baseline corpus vs stored scalars max |Δ| 2.78e-17; token-cache parity mismatch 0; scorer-lock parity vs multimodal-confirmation-lock.json: no drift (implementation sha 6f69c8a5…, DF sha 891e51d5…, train_documents 2048).

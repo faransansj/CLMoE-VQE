@@ -1,0 +1,2 @@
+status=pass corpora=416 rows=212992 max_fresh_vs_stored=0.000e+00 wall=329.021s failures=0
+week1_per_example_rescore exit=0

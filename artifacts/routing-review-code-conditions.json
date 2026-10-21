@@ -1,0 +1,258 @@
+{
+ "schema_version": 1,
+ "generated_by": "scripts/routing_review_items27.py",
+ "generated_at_utc": "2026-10-16T04:19:01Z",
+ "status": "pass",
+ "failures": [],
+ "claims": [
+  {
+   "claim": "New experts initialize zero-delta and are never copied from prior experts.",
+   "verdict": "verified_with_rng_caveat",
+   "evidence": [
+    "sema_vqa/readout_model.py:32",
+    "sema_vqa/readout_model.py:33",
+    "sema_vqa/readout_model.py:121",
+    "sema_multimodal/run.py:412"
+   ],
+   "detail": "LoRAExpert sets B=zeros and A=kaiming_uniform_(a=sqrt(5)); forward is x -> A -> B so the appended expert's delta output is exactly zero at init; add_expert() is called with no copy_from in both methods, and the independent method rebuilds the model from base weights. Caveat: the A matrices are drawn from the global torch RNG, so bitwise-identical experts require the same (seed, stream position); distribution and protocol are identical. Empirically confirmed below: position-matched banks produce bitwise-equal own-expert diagonal scores, and first-task (position 0) streams are byte-identical to independent runs."
+  },
+  {
+   "claim": "Backbone and old experts are frozen; only the newest expert is trainable; optimizer state is per-phase.",
+   "verdict": "verified",
+   "evidence": [
+    "sema_vqa/readout_model.py:115",
+    "sema_vqa/readout_model.py:144",
+    "sema_vqa/readout_model.py:148",
+    "sema_multimodal/run.py:93",
+    "sema_multimodal/run.py:327",
+    "sema_multimodal/run.py:425"
+   ],
+   "detail": "add_expert/train_expert call _freeze_all (requires_grad_(False) plus grad clears); train_expert refuses any index except the newest; optimizer_step aborts if any frozen parameter acquires a gradient; make_optimizer receives only requires_grad parameters and is rebuilt fresh for every phase, so optimizer moments never carry across tasks or methods. Run-time stage_resources show trainable == active_trainable at every stage (newest expert only)."
+  },
+  {
+   "claim": "Training is dropout-free in both methods.",
+   "verdict": "verified",
+   "evidence": [
+    "sema_vqa/readout_model.py:160",
+    "sema_vqa/readout_model.py:161",
+    "sema_vqa/readout_model.py:162"
+   ],
+   "detail": "ReadoutMoEVQA.train() keeps visual_encoder/text_encoder/text_decoder in eval() unconditionally; LoRA experts contain no dropout; the frozen zero-output vision adapters are not grown by add_expert (only text query/value projections). So phase training consumes torch RNG only through the expert A-init draws."
+  },
+  {
+   "claim": "Fresh-expert training is independent-equivalent in the sense used for the transfer endpoint.",
+   "verdict": "protocol_equivalent_not_bitwise; two seeded differences remain possible",
+   "evidence": [
+    "sema_multimodal/run.py:407",
+    "sema_multimodal/run.py:68",
+    "sema_multimodal/run.py:445",
+    "sema_multimodal/data.py:210",
+    "sema_vqa/readout_model.py:160",
+    "sema_vqa/readout_model.py:161",
+    "sema_vqa/readout_model.py:162"
+   ],
+   "differences": [
+    {
+     "id": "expert_A_init_draw_stream",
+     "independent": "torch.manual_seed(args.seed) before add_expert at every phase",
+     "expansion": "torch.manual_seed(args.seed + index*10007) before add_expert",
+     "consequence": "different kaiming draws (bitwise) for stream index > 0; same distribution",
+     "citations": [
+      "sema_multimodal/run.py phase_seed",
+      "sema_vqa/readout_model.py LoRAExpert.__init__"
+     ]
+    },
+    {
+     "id": "batch_shuffling_seed",
+     "independent": "epoch_batches rng seed = args.seed + 0*1000 + epoch",
+     "expansion": "epoch_batches rng seed = args.seed + index*1000 + epoch",
+     "consequence": "different shuffle of the same 2048-image corpus for index > 0",
+     "citations": [
+      "sema_multimodal/run.py epoch_batches call"
+     ]
+    },
+    {
+     "id": "caption_reference_cycling",
+     "independent": "hash(seed/image)-anchored cycle; identical formula/inputs",
+     "expansion": "identical",
+     "consequence": "none: per-image reference selection identical per epoch",
+     "citations": [
+      "sema_multimodal/data.py training_rows"
+     ]
+    },
+    {
+     "id": "frozen_sibling_experts_and_router",
+     "independent": "single-expert model, no router",
+     "expansion": "frozen siblings numerically inert and no router in phase training (observe happens at phase END, features from LoRA-disabled frozen backbone)",
+     "consequence": "no numerical effect on the phase's own gradients",
+     "citations": [
+      "sema_multimodal/run.py observe site",
+      "sema_multimodal/citations router_path"
+     ]
+    }
+   ],
+   "empirical_support": {
+    "first_task_rows_byte_identical_to_independent": 32,
+    "first_task_banks_checked": 32,
+    "first_task_transfer_delta_exactly_zero": 32,
+    "own_expert_diag_position_invariance": {
+     "V": true,
+     "C": true,
+     "G": true,
+     "F": true
+    }
+   }
+  },
+  {
+   "claim": "The router is the only cross-task knowledge path; it never influences phase training.",
+   "verdict": "verified_at_code_level",
+   "evidence": [
+    "sema_multimodal/run.py:476",
+    "sema_vqa/readout_router.py:52",
+    "sema_vqa/readout_router.py:48",
+    "sema_multimodal/data.py:196",
+    "sema_multimodal/run.py:327",
+    "sema_multimodal/run.py:425"
+   ],
+   "detail": "Experts occupy disjoint ModuleList slots and only the active expert enters the forward; the gradient guard allows updates only for the current expert. The FeatureRouter refits its ridge boundary at the END of each phase from per-task frozen-feature samples (128 per task, generator-seeded randperm; equal per-task weighting) and at inference only selects an expert per row from image/question features; routing_features disables LoRA and reads no answer/task/family metadata. Hence the new task's expert is trained without router or prior expert influence: cross-task influence is limited to the shared frozen backbone (pretrained) and to eval-time routing of previously-learned and current tasks."
+  }
+ ],
+ "claimed_code_parity": {
+  "files_checked": 13,
+  "all_match": true,
+  "mismatches": []
+ },
+ "config_drift_check": {
+  "fields": [
+   "eval_split",
+   "lr",
+   "epochs",
+   "batch_size",
+   "micro_batch_size",
+   "image_size",
+   "rank",
+   "alpha",
+   "router_modality",
+   "router_memory",
+   "router_ridge",
+   "replay_per_task",
+   "manifest_sha256"
+  ],
+  "expand_vs_independent_identical": true
+ },
+ "per_phase_trainable_parity": {
+  "stage_entries": 128,
+  "trainable_equals_active_everywhere": true
+ },
+ "code_assertions_quoted": [
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 32,
+   "text": "self.B = nn.Parameter(base.weight.new_zeros((base.out_features, rank)))"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 33,
+   "text": "nn.init.kaiming_uniform_(self.A, a=math.sqrt(5))"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 121,
+   "text": "def add_expert(self, copy_from=None):"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 412,
+   "text": "expert = model.add_expert()"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 115,
+   "text": "def _freeze_all(self):"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 144,
+   "text": "def train_expert(self, index):"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 148,
+   "text": "raise ValueError(\"Old experts are permanently frozen after expansion\")"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 93,
+   "text": "if any(parameter.grad is not None for parameter in frozen):"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 160,
+   "text": "self.visual_encoder.eval()"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 161,
+   "text": "self.text_encoder.eval()"
+  },
+  {
+   "file": "sema_vqa/readout_model.py",
+   "line": 162,
+   "text": "self.text_decoder.eval()"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 407,
+   "text": "phase_seed = args.seed if args.method == \"independent\" else args.seed + index * 10007"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 68,
+   "text": "rng = random.Random(seed + task * 1000 + epoch)"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 445,
+   "text": "batch = training_rows(batch, seed=args.seed, epoch=epoch)"
+  },
+  {
+   "file": "sema_multimodal/data.py",
+   "line": 210,
+   "text": "offset = int.from_bytes(hashlib.sha256(f\"{seed}/{image_identity(row)}\".encode()).digest(), \"big\")"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 476,
+   "text": "router.observe(features(model, rows, args), state[\"assignments\"][index], model.num_experts)"
+  },
+  {
+   "file": "sema_vqa/readout_router.py",
+   "line": 52,
+   "text": "def fit(self, num_experts, device):"
+  },
+  {
+   "file": "sema_vqa/readout_router.py",
+   "line": 48,
+   "text": "indices = torch.randperm(len(features), generator=generator)[:self.memory_per_task]"
+  },
+  {
+   "file": "sema_multimodal/data.py",
+   "line": 196,
+   "text": "def public_rows(rows):"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 327,
+   "text": "def make_optimizer():"
+  },
+  {
+   "file": "sema_multimodal/run.py",
+   "line": 425,
+   "text": "optimizer, scheduler = make_optimizer()"
+  }
+ ],
+ "limitations": [
+  "Code quotes refer to the current repo; SHA256 parity against the recorded run-time source_sha256 confirms the quoted code is the code that produced G4/G5.",
+  "[INFERENCE] Because the two seeded differences (A-init draws, batch shuffle seed) are the only remaining divergences and first-task streams are byte-identical to independent runs, the transfer endpoint's oracle-vs-independent residual (K) reflects these seeded differences plus any non-bitwise training-path effects, not parameter-level cross-task knowledge (older experts are frozen and inert)."
+ ]
+}

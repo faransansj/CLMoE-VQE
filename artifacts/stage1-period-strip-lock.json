@@ -1,0 +1,77 @@
+{
+ "schema_version": 1,
+ "stage": "stage1-period-strip-lock",
+ "locked_utc": "2026-10-20T11:52:29Z",
+ "origin": {
+  "host": "Yonsei-DC1",
+  "root": "/home/faransansj/CLMoE-Multimodal-20261013",
+  "slurm_jobs": {
+   "fidelity": "2583205",
+   "strip": "2583796"
+  },
+  "remote_log_names": {
+   "artifacts/stage1-logs/stage1-strip-2583796.log": "artifacts/stage1-logs/stage1-stage1strip-2583796.log",
+   "artifacts/stage1-logs/stage1-strip-2583796.err.log": "artifacts/stage1-logs/stage1-stage1strip-2583796.err.log",
+   "artifacts/stage1-logs/stage1-fidelity-2583205.log": "artifacts/stage1-logs/stage1-stage1strip-2583205.log",
+   "artifacts/stage1-logs/stage1-fidelity-2583205.err.log": "artifacts/stage1-logs/stage1-stage1strip-2583205.err.log"
+  },
+  "remote_sha256_matches_local": true,
+  "run_dirs_archive_note": "tar of remote artifacts/multimodal_runs/stage1_period_strip (28 files); member hashes equal remote sha256sum"
+ },
+ "files_sha256": {
+  "artifacts/stage1-period-strip.json": "2c9c836c31ccbf3e636d7a980763a2db2d20c5226caea9e625c1a26272e3bf56",
+  "artifacts/stage1-period-strip-predictions.jsonl.gz": "1a92412b210553eeea31cb2343102d01098dd1ba9ec9e88bb67245abbce9baa4",
+  "artifacts/stage1-fidelity.json": "02af68b8d58e032a7d506d094f6219a58cff8ef02e75771733eedc932a3be679",
+  "artifacts/stage1-period-strip-runs.tar.gz": "d09f1de0c99de95d8fb57ef1176a92b2b770775d842cb4f1646892e9538a4e53",
+  "artifacts/stage1-logs/stage1-fidelity-2583205.jsonl": "086813ef005b4fea46498a98a18af8c1f1efab7071968e8d6db4231ef7ab676e",
+  "artifacts/stage1-logs/stage1-strip-2583796.jsonl": "33d4da566734d64f48646deed0fb102c9b74ef8321db258364e184ac7a97d176",
+  "artifacts/stage1-logs/stage1-strip-2583796.log": "ba095a1e7fb97482071b60fa42b9b7c02770edad4248a805a8c71428fc246471",
+  "artifacts/stage1-logs/stage1-strip-2583796.err.log": "9eba5999ce0c83ab72f8bf0becb6e0be793b4750df2d206523738e5a530449bf",
+  "artifacts/stage1-logs/stage1-fidelity-2583205.log": "8b4b3c86862ab968ec7a51767482b363d35d9025ea3e244761ac737e9a0896bc",
+  "artifacts/stage1-logs/stage1-fidelity-2583205.err.log": "9eba5999ce0c83ab72f8bf0becb6e0be793b4750df2d206523738e5a530449bf",
+  "artifacts/stage05-decoding-predictions.jsonl.gz": "9a2cbbc3acf8398633585c866ec9451e725da76fc09591d52c92f93fb76893a9",
+  "artifacts/stage05-decoding-probe.json": "5779a9d8bbdaddd92f601ea004f1da3f7f506cd9528c7d5282ca4075e2839e6a",
+  "artifacts/g4-final-flickr-eos.json": "c87ffdf3b4d9e5799bd8b68e7be3dac693c6e3d8da2531c535fdfeefeb2ad8f5",
+  "artifacts/multimodal-g4-raw.tar.gz": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6"
+ },
+ "run_dir_members_sha256": {
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/config.json": "f137618ccc8079010abdc81e85621919debe0c734fd3007510aa69d54b43bda8",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/events.jsonl": "b97476f7d08c2c2afd9507552dcbc55824faeb69f0ccfcf2abe07f6223a23f6f",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/independent_F.pt": "1e841a676d9a446825ad4a228c73a1204003e96749a69e2b7b338ee68e36f07b",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/latest.pt": "547390a2c05cd883aa2ca38b9c508dd83620617ed44474c5b9437fd94ac45df3",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/predictions_after_00_F.jsonl": "0f172b5eeae9df9f30b5b4e1ec998a0a9c2d8b781f67b580d2edf939d5590b15",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/predictions_before_00_F.jsonl": "c7eff91cb2368cc8bc3a199e79915c602b9fec86d63aeca97b260f16a9254dc3",
+  "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137/results.json": "75698cd77918f9e7eeb4b6e7f6ec149490bb36d3914989e890410ddd53ded385",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/config.json": "f137618ccc8079010abdc81e85621919debe0c734fd3007510aa69d54b43bda8",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/events.jsonl": "5046088b60da2ce756a6c020197e4ccf213d9b7155467b3bf8912bea54cd7d83",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/independent_F.pt": "fbc3a4e277d4432cd5227c0544d1a8f9a27cb9e65a336de5c443b15e0b8c5a28",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/latest.pt": "0b661921577f463e5a23c3b8d8b915e1992255f6e2159b5c14c2230d339908e2",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/predictions_after_00_F.jsonl": "958b1ffe8bc9e71c7de207a4f3b306d71ae05d96f7b407856d29f27ac291a822",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/predictions_before_00_F.jsonl": "c7eff91cb2368cc8bc3a199e79915c602b9fec86d63aeca97b260f16a9254dc3",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed137/results.json": "3ddcc8842bbcaff2a9bba53ae9a26f45910e0d029da57eb18b2b4da325004c0f",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/config.json": "434d53c9622d022d7dbe4f09dbb2efe5e5d4b0119c197fe9c6833b180f0dc993",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/events.jsonl": "fb26e162654e37b63c154e18c361b4c30669cd44394e56be4ea1fec36dce566d",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/independent_F.pt": "88509596258c8d9e893d204b68497eed6f639ab5799c90967f4005904ad91d27",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/latest.pt": "1d0072a0d779e02bc4e9333fc9f092ff8fcae8c834de5ae8120839fd229a4a5a",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/predictions_after_00_F.jsonl": "18b9d4393a02fbffb68082adf4244ca9722e14e0ac9258f7c84f246c7cc4c7dd",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/predictions_before_00_F.jsonl": "c7eff91cb2368cc8bc3a199e79915c602b9fec86d63aeca97b260f16a9254dc3",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed149/results.json": "9e1060d2693dad377e45b6e757ffafa57fb082ffe95bdd1431a9030097fa0ef0",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/config.json": "6d2dfa89059e2c2a43ba64b6842598b8913676ea4728b7a7e7e5c66d4786d687",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/events.jsonl": "bd2bc0b08e8c35a304c34ee477f1c640e646e7631d3ac9a3b8f523594ed6e8f8",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/independent_F.pt": "255d88dbcac75527eb1419c1ebac3a739acdfb8ecf78ffd3bc9792dc8e5d8681",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/latest.pt": "23ba9ecbba2ce2538e723388a2b40f65ce8773bd6f990567ab966cac5bc27008",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/predictions_after_00_F.jsonl": "584c592c6b614c2f41fa8b909ddd4fd8609b0c55cfaa6cfddd1fd3c0f2e1fdc6",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/predictions_before_00_F.jsonl": "c7eff91cb2368cc8bc3a199e79915c602b9fec86d63aeca97b260f16a9254dc3",
+  "artifacts/multimodal_runs/stage1_period_strip/strip_seed163/results.json": "9a0c91bca70146b816a631305cae561a7e3e768adc90fcb80e73c52c21176776"
+ },
+ "source_sha256": {
+  "scripts/stage1_period_strip_train.py": "3cc2bbbc4b91045d2d9e695cb777145dbe2cce12924b111f9e36b1b3445c66db",
+  "scripts/stage1_period_strip_train.sbatch": "b1203f01286f2149c7d310ddc0fb7deb85b5b25a2fc37a457f1521de2d32b8da",
+  "scripts/g4_final_flickr_eos.py": "fa7eeddd705796a48a248c717d8a8c2a1977dac3e6039bbdb401fac13cb9f0ca",
+  "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+  "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+  "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+  "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+  "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46"
+ }
+}

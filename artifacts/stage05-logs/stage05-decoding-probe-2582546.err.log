@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/faransansj/CLMoE-Multimodal-20261013/scripts/stage05_decoding_probe.py", line 1340, in <module>
+    main()
+  File "/home/faransansj/CLMoE-Multimodal-20261013/scripts/stage05_decoding_probe.py", line 1278, in main
+    verified = verify_inputs_and_banks(args.index, run_dir, log,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/faransansj/CLMoE-Multimodal-20261013/scripts/stage05_decoding_probe.py", line 452, in verify_inputs_and_banks
+    raise ValueError(f"Config drift across banks at {field}: {bank}")
+ValueError: Config drift across banks at scorer_locks: C_independent_lr0.0003_ep5_seed137

@@ -1,0 +1,2 @@
+week1-batch1 job: job_id=2557362 node=node36 partition=suma_rtx4090 gres_alloc=0
+{"output": "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/week1-batch1/20261016T111738Z/outputs", "computes": 62, "match_counts": {"oracle": 30, "native": 25, "neither": 7}, "elapsed_seconds": 194.034}

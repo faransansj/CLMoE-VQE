@@ -1,0 +1,257 @@
+{
+  "status": "pass",
+  "script": {
+    "path": "scripts/week1_followup_verify.py",
+    "sha256": "c73ba630cab568e893805bb867ae9d0183e3934c0e0339867d0aa571de060b1a"
+  },
+  "inputs": [
+    {
+      "path": "artifacts/week1-followup-baseline.json",
+      "sha256": "da56c13d1b1fa09ce3ebfea1e52d8aaf8e314178fe4d63e9e6b5ca6c5de3edf0"
+    },
+    {
+      "path": "artifacts/week1-per-example-rescore.json",
+      "sha256": "baa7f6ba401903aa58251289c11a16e8812746c6cc13aee87c097107bdcdd7b9"
+    },
+    {
+      "path": "artifacts/week1-per-example-scores.jsonl.gz",
+      "sha256": "cf74c2fdf946ea49419d922bcb64e627fd26e53dcae3542a3b6bc6adf5d612f3"
+    },
+    {
+      "path": "artifacts/week1-batch1-cases.json",
+      "sha256": "eccc4965ef03222830c89eeee78396a8fb550861487243cb2e3fde197c725eaa"
+    },
+    {
+      "path": "artifacts/week1-batch1-predictions.jsonl",
+      "sha256": "36cad2c8d6a8d8732269286a164aaa349f3dc7566ecaa85c2ef88c78ed4fe7a5"
+    },
+    {
+      "path": "artifacts/week1-batch1-regeneration.json",
+      "sha256": "de999020b722c25365d6a38b61bc85f8e1697d9a745b7bb48a468081406723d1"
+    },
+    {
+      "path": "artifacts/week1-batch1-execution-provenance.zip",
+      "sha256": "514524a99950d80a1c328569fdda0b718bf4488f148379dba396e64eef02e815"
+    },
+    {
+      "path": "artifacts/week1-per-example-execution-provenance.zip",
+      "sha256": "df1f9c3dd81d4d87bb7f895594c4fc28b2bd807fd55f71ab49a61de17495aaf1"
+    }
+  ],
+  "protected_files_unchanged": 22,
+  "per_example_corpora": 416,
+  "per_example_rows": 212992,
+  "max_row_mean_vs_fresh": 3.552713678800501e-15,
+  "batch1_occurrences": 62,
+  "batch1_matches_recomputed": {
+    "oracle": 30,
+    "native": 25,
+    "neither": 7
+  },
+  "flickr_old_c_vs_new_f": {
+    "units": "native CIDEr-D x1; frozen task train-IDF",
+    "cells": [
+      {
+        "order": "V_C_G_F",
+        "seed": 137,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.06850318343077162,
+        "new_f_wins": 130,
+        "old_c_wins": 382,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed137|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed137|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 149,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.05113553326992252,
+        "new_f_wins": 173,
+        "old_c_wins": 339,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed149|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed149|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 163,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.06196783652573773,
+        "new_f_wins": 147,
+        "old_c_wins": 365,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed163|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed163|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 179,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.06205820577978488,
+        "new_f_wins": 166,
+        "old_c_wins": 346,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed179|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed179|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 191,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.0602930483701599,
+        "new_f_wins": 145,
+        "old_c_wins": 367,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed191|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed191|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 211,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.05341562528340485,
+        "new_f_wins": 158,
+        "old_c_wins": 354,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed211|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed211|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 227,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.04172233652603557,
+        "new_f_wins": 179,
+        "old_c_wins": 332,
+        "ties": 1,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed227|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed227|F_p03|after"
+      },
+      {
+        "order": "V_C_G_F",
+        "seed": 241,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.0484862766465043,
+        "new_f_wins": 166,
+        "old_c_wins": 346,
+        "ties": 0,
+        "pre_c_corpus": "native|V_C_G_F_expand_lr0.0003_ep5_seed241|F_p03|before",
+        "post_f_corpus": "oracle|V_C_G_F_expand_lr0.0003_ep5_seed241|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 137,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.06952093378869756,
+        "new_f_wins": 123,
+        "old_c_wins": 389,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed137|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed137|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 149,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.049865643692531395,
+        "new_f_wins": 171,
+        "old_c_wins": 341,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed149|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed149|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 163,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.049844112632061566,
+        "new_f_wins": 158,
+        "old_c_wins": 354,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed163|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed163|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 179,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.05713133234956966,
+        "new_f_wins": 165,
+        "old_c_wins": 347,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed179|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed179|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 191,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.057535040989468426,
+        "new_f_wins": 147,
+        "old_c_wins": 365,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed191|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed191|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 211,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.04951299592825642,
+        "new_f_wins": 160,
+        "old_c_wins": 352,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed211|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed211|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 227,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.03431191626441204,
+        "new_f_wins": 180,
+        "old_c_wins": 331,
+        "ties": 1,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed227|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed227|F_p03|after"
+      },
+      {
+        "order": "V_G_C_F",
+        "seed": 241,
+        "n": 512,
+        "mean_new_f_minus_old_c": -0.049166029999319134,
+        "new_f_wins": 162,
+        "old_c_wins": 350,
+        "ties": 0,
+        "pre_c_corpus": "native|V_G_C_F_expand_lr0.0003_ep5_seed241|F_p03|before",
+        "post_f_corpus": "oracle|V_G_C_F_expand_lr0.0003_ep5_seed241|F_p03|after"
+      }
+    ],
+    "occurrences": 8192,
+    "cells_new_f_lower": 16,
+    "mean_new_f_minus_old_c": -0.05402937821728985,
+    "new_f_wins": 2530,
+    "old_c_wins": 5660,
+    "ties": 2,
+    "interpretation": "Saved pre-stage native outputs all use C; saved post-stage oracle outputs use F. Same images paired across stages; observed output-quality comparison, not a controlled causal intervention. Original batch composition may differ. Repeated images/orders/seeds are occurrences, not independent images."
+  },
+  "new_scoring_or_inference_by_this_script": false,
+  "failed_batch1_attempts": [
+    {
+      "job": "2557282",
+      "failure": "pre-inference model digest on dict extra-state",
+      "generation_calls": 0,
+      "persisted_rows": 0,
+      "allocation_seconds": null
+    },
+    {
+      "job": "2557297",
+      "failure": "record construction after first generation, missing occurrence_ids key",
+      "generation_calls": 1,
+      "persisted_rows": 0,
+      "allocation_seconds": null
+    }
+  ],
+  "cost_limit": "Failed GPU attempts have no surviving scheduler allocation records; successful-run allocation is not total campaign cost."
+}

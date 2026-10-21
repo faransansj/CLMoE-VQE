@@ -1,0 +1,3 @@
+stage1 job: job_id=2583796 node=node33 partition=suma_rtx4090 gres_alloc=0 mode=strip
+{"report": "artifacts/stage1-period-strip.json", "predictions": "artifacts/stage1-period-strip-predictions.jsonl.gz", "rows": 1536, "total_seconds": 1329.425}
+stage1 mode=strip finished

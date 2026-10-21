@@ -1,0 +1,5027 @@
+{
+ "schema": "week1-index0-parity/1",
+ "generated_at_utc": "2026-10-16T09:36:57Z",
+ "runtime_seconds": 26.214,
+ "repository_context": {
+  "branch": "research/multimodal-cl",
+  "commit": "c75c2ba",
+  "plan_item": "1-B index-0 O=I 확인"
+ },
+ "parent_command": "python3 scripts/week1_index0_parity.py",
+ "execution_contract": {
+  "training_executed": false,
+  "generation_executed": false,
+  "scorer_executed": false,
+  "torch_imported_or_loaded": false,
+  "existing_artifacts_modified": false,
+  "new_files": [
+   "scripts/week1_index0_parity.py",
+   "artifacts/week1-index0-parity.json"
+  ]
+ },
+ "verification_status": "passed",
+ "failure_records": [],
+ "methods_boundaries": {
+  "oracle_scores": "저장된 G5 routing_audit matrix 값 + G5 diag oracle 원 예측(512행)만 사용",
+  "independent_scores": "G4 audit transfer/trial + 독립 results.json 상호 결합, 재채점 없음",
+  "checkpoint": "ZIP raw member bytes만; float32 delta는 실험 차이 계측용",
+  "no_substitution_statement": "The training-immediate (diagonal) task-ID oracle exists as a saved artifact: G5 re-evaluated every bank at each stream stage with frozen experts, and each first-task cell has task_id_oracle/predictions_after_00_<task>.jsonl with 512 aligned rows (this script asserts file presence, row counts and ID alignment). Its native counterpart at the same stage is verified equal to the original G4 training-time evaluation, so the diagonal timing itself is grounded by shipped evidence, and no substitute oracle was used."
+ },
+ "inputs_sha256": [
+  {
+   "path": "artifacts/multimodal-g4-raw.tar.gz",
+   "sha256": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6",
+   "bytes": 51854913,
+   "role": "G4 원 예측/설정/결과 (첫 task 대각선 + independent 실행; tar 재해석, 기존 산출무변경)"
+  },
+  {
+   "path": "artifacts/multimodal-g5-raw.tar.gz",
+   "sha256": "73531b6c8da198706c481baf9af98f09c3198b543a53244ae6031ce4db9bfe5d",
+   "bytes": 25281748,
+   "role": "G5 staged 재평가 원 예측 (native + task_id_oracle 대각선)"
+  },
+  {
+   "path": "artifacts/multimodal-g4-report/audit.json",
+   "sha256": "61aa4df5e50c43e17189595412b8701de40aa51ea460e0a0a4a3da5166b31ea3",
+   "bytes": 59222169,
+   "role": "G4 locked audit: transfer records / independent trials"
+  },
+  {
+   "path": "artifacts/multimodal-g5-report/routing_audit.json",
+   "sha256": "c6a6d5a3b9212b84c2edd7f9ba949100472f6b58178b346154df6a6db0d85601",
+   "bytes": 18531754,
+   "role": "G5 locked audit: bank별 variant matrix"
+  },
+  {
+   "path": "artifacts/multimodal-g1-normalizers.json",
+   "sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928",
+   "bytes": 262,
+   "role": "고정 G1 validation normalizer"
+  },
+  {
+   "path": "artifacts/multimodal-confirmation-checkpoints.tar",
+   "sha256": "6b288479429c8498b2e517a22175486ce16fae4ca1c342f7c7e76f2007b8cb38",
+   "bytes": 2300518400,
+   "role": "보관 confirmation 체크포인트 (ZIP 멤버 storage)"
+  },
+  {
+   "path": "artifacts/multimodal-confirmation-checkpoints.json",
+   "sha256": "f7300e31054d009888e498d99e5c70814e9a3d96aad51c8731373bca7e662ba5",
+   "bytes": 52414,
+   "role": "체크포인트 인벤토리 (bytes + sha256; 타르 멤버 검증에 사용)"
+  },
+  {
+   "path": "MULTIMODAL_RESEARCH_SUMMARY.md",
+   "sha256": "44bd7433b25d4853547b59c15f1e315b47f23ca0952ca220fbffa5e8c46eca60",
+   "bytes": 49918,
+   "role": "문서 근거 (4.4/4.5 인용 상수)"
+  },
+  {
+   "path": "멀티모달 CL 논문화 실행 계획.md",
+   "sha256": "0c7d91d07467dcc860d07207db5c1dc99d044eb821f518984012610589017242",
+   "bytes": 7107,
+   "role": "과제 정의 (1-B)"
+  },
+  {
+   "path": "artifacts/routing-review-routing-partition.json",
+   "sha256": "9ae700359038fd8bb36b372e00cce9207ee4a31cb30a20972ad08a5c8fab9e28",
+   "bytes": 125090,
+   "role": "선행 리뷰 결과물: position-invariance/first-task/분해 참조 (재실행 없음) (환경 보존 전제: 변경 없음; 본 스크립트는 읽기만 함)"
+  },
+  {
+   "path": "artifacts/routing-review-code-conditions.json",
+   "sha256": "33f5783113c6c4cdaa6b2d173ba638b04da70ce8a4afbcdd566f752b5dadad11",
+   "bytes": 9763,
+   "role": "선행 리뷰 결과물: 코드/학습 조건 확인 참조 (환경 보존 전제: 변경 없음; 본 스크립트는 읽기만 함)"
+  },
+  {
+   "path": "artifacts/multimodal-checkpoint-zip-inspection.json",
+   "sha256": "f4d87bc8aa0bb1f4558cbc9f72f2b32a5d6c56816fc34b83c5f6e81209e1ef18",
+   "bytes": 655205,
+   "role": "선행 리뷰 결과물: checkpoint ZIP 구성 참조 (환경 보존 전제: 변경 없음; 본 스크립트는 읽기만 함)"
+  },
+  {
+   "path": "artifacts/multimodal-g5-summary.json",
+   "sha256": "8e14b497d9b73701e44f8acf17c3a8c6f25900e5ab5c9318f4ef6b19d87ba585",
+   "bytes": 2585,
+   "role": "선행 G5 집계 참조 (환경 보존 전제: 변경 없음; 본 스크립트는 읽기만 함)"
+  },
+  {
+   "path": "sema_multimodal/run.py",
+   "sha256": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+   "bytes": 32561,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_multimodal/data.py",
+   "sha256": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+   "bytes": 11486,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_multimodal/model.py",
+   "sha256": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+   "bytes": 4180,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_multimodal/metrics.py",
+   "sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+   "bytes": 18341,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_vqa/readout_model.py",
+   "sha256": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+   "bytes": 13730,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_vqa/readout_router.py",
+   "sha256": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+   "bytes": 4638,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_vqa/vision_model.py",
+   "sha256": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+   "bytes": 11596,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  },
+  {
+   "path": "sema_vqa/expansion.py",
+   "sha256": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+   "bytes": 13390,
+   "role": "RNG/eval 경로 정적 감사 대상 코드"
+  }
+ ],
+ "script": {
+  "path": "scripts/week1_index0_parity.py",
+  "sha256": "b3db9f99cfa7156f4206823bb6041ddf0f5d5eeca03c10514cbd40680b75d2f0",
+  "bytes": 63187
+ },
+ "rng_static_audit": {
+  "definitions": "static audit, no execution; all citations re-grepped at run time",
+  "citations": {
+   "process_level_and_independent_rebuild_seeding_run_py": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "random\\.seed\\(args\\.seed\\)|np\\.random\\.seed\\(args\\.seed\\)|torch\\.manual_seed\\(args\\.seed\\)|torch\\.cuda\\.manual_seed_all\\(args\\.seed\\)",
+    "purpose": "process-level seeding with args.seed (run.py:298-302) and the independent-run model rebuild reset (run.py:394-395)",
+    "lines": [
+     298,
+     299,
+     300,
+     302,
+     394
+    ],
+    "cited_code": [
+     "random.seed(args.seed)",
+     "np.random.seed(args.seed)",
+     "torch.manual_seed(args.seed)",
+     "torch.cuda.manual_seed_all(args.seed)",
+     "torch.manual_seed(args.seed)"
+    ]
+   },
+   "phase_init_seed_formula_run_py_407_409": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "phase_seed = args\\.seed if args\\.method == \\\"independent\\\" else args\\.seed \\+ index \\* 10007",
+    "purpose": "per-phase init seed formula: independent == args.seed; CL stream phase uses seed + index*10007 -> identical instance at index 0",
+    "lines": [
+     407
+    ],
+    "cited_code": [
+     "phase_seed = args.seed if args.method == \"independent\" else args.seed + index * 10007"
+    ]
+   },
+   "phase_seed_apply_run_py_408_409": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "torch\\.manual_seed\\(phase_seed\\)|torch\\.cuda\\.manual_seed_all\\(phase_seed\\)",
+    "purpose": "the phase seed is applied by absolute reset of CPU and CUDA RNG right before expert creation",
+    "lines": [
+     408,
+     409
+    ],
+    "cited_code": [
+     "torch.manual_seed(phase_seed)",
+     "torch.cuda.manual_seed_all(phase_seed)"
+    ]
+   },
+   "expert_creation_run_py_412": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "expert = model\\.add_expert\\(\\)",
+    "purpose": "expert (LoRA bank) created right after the absolute RNG reset; consumes exactly the reset RNG stream",
+    "lines": [
+     412
+    ],
+    "cited_code": [
+     "expert = model.add_expert()"
+    ]
+   },
+   "expert_init_readout_model_py_31_33": {
+    "file": "sema_vqa/readout_model.py",
+    "pattern": "nn\\.init\\.kaiming_uniform_\\(self\\.A, a=math\\.sqrt\\(5\\)\\)",
+    "purpose": "LoRAExpert A init consumes the just-reset torch RNG; B is zeros (RNG-free) (readout_model.py:31-32)",
+    "lines": [
+     33
+    ],
+    "cited_code": [
+     "nn.init.kaiming_uniform_(self.A, a=math.sqrt(5))"
+    ]
+   },
+   "router_construction_run_py": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "FeatureRouter\\(args\\.router_memory, args\\.router_ridge, args\\.router_modality, args\\.seed\\)",
+    "purpose": "expansion-only router receives args.seed for its memory-subsample generator; the independent path has no router",
+    "lines": [
+     318
+    ],
+    "cited_code": [
+     "router = FeatureRouter(args.router_memory, args.router_ridge, args.router_modality, args.seed) if args.method == \"expand\" else None"
+    ]
+   },
+   "batch_shuffle_run_py_68_70": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "rng = random\\.Random\\(seed \\+ task \\* 1000 \\+ epoch\\)",
+    "purpose": "deterministic batch shuffle seed: seed + stream_index*1000 + epoch -> identical at index 0 (run.py:61-84)",
+    "lines": [
+     68
+    ],
+    "cited_code": [
+     "rng = random.Random(seed + task * 1000 + epoch)"
+    ]
+   },
+   "shuffle_call_run_py": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "rng\\.shuffle\\(order\\)",
+    "purpose": "the shuffle itself",
+    "lines": [
+     70
+    ],
+    "cited_code": [
+     "rng.shuffle(order)"
+    ]
+   },
+   "caption_cycling_data_py_209_212": {
+    "file": "sema_multimodal/data.py",
+    "pattern": "offset = int\\.from_bytes\\(hashlib\\.sha256\\(f\\\"\\{seed\\}/\\{image_identity\\(row\\)\\}\\\"\\.encode\\(\\)\\)\\.digest\\(\\), \\\"big\\\"\\)",
+    "purpose": "caption reference offset: sha256(seed + image identity) + epoch mod len(refs); no stream index term",
+    "lines": [
+     210
+    ],
+    "cited_code": [
+     "offset = int.from_bytes(hashlib.sha256(f\"{seed}/{image_identity(row)}\".encode()).digest(), \"big\")"
+    ]
+   },
+   "training_rows_call_run_py_445": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "batch = training_rows\\(batch, seed=args\\.seed, epoch=epoch\\)",
+    "purpose": "caption/VQA target construction per batch with global args.seed (index-free)",
+    "lines": [
+     445
+    ],
+    "cited_code": [
+     "batch = training_rows(batch, seed=args.seed, epoch=epoch)"
+    ]
+   },
+   "router_memory_subsample_readout_router_py_46_49": {
+    "file": "sema_vqa/readout_router.py",
+    "pattern": "generator = torch\\.Generator\\(\\)\\.manual_seed\\(self\\.seed \\+ 1009 \\* len\\(self\\.memory\\)\\)",
+    "purpose": "router memory subsample generator: deterministic seed; exists only for the expansion router, not the independent adapter",
+    "lines": [
+     47
+    ],
+    "cited_code": [
+     "generator = torch.Generator().manual_seed(self.seed + 1009 * len(self.memory))"
+    ]
+   },
+   "router_randperm_readout_router_py_47_49": {
+    "file": "sema_vqa/readout_router.py",
+    "pattern": "torch\\.randperm\\(len\\(features\\), generator=generator\\)",
+    "purpose": "the only torch.randperm in the path; router-only, cannot affect expert weights",
+    "lines": [
+     48
+    ],
+    "cited_code": [
+     "indices = torch.randperm(len(features), generator=generator)[:self.memory_per_task]"
+    ]
+   },
+   "replay_buffer_sampling_cl_only_run_py_478_479": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "random\\.Random\\(args\\.seed \\+ index\\)\\.sample\\(rows",
+    "purpose": "replay buffer selection (replay_lora only; not on the expand/independent index-0 path)",
+    "lines": [
+     479
+    ],
+    "cited_code": [
+     "state[\"replay\"].extend(random.Random(args.seed + index).sample(rows, min(args.replay_per_task, len(rows))))"
+    ]
+   },
+   "rng_capture_restore_run_py_100_114": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "return \\{\\\"python\\\": random\\.getstate\\(\\), \\\"numpy\\\": np\\.random\\.get_state\\(\\),",
+    "purpose": "resume captures python/numpy/torch/cuda RNG state; restore path re-enters it",
+    "lines": [
+     103
+    ],
+    "cited_code": [
+     "return {\"python\": random.getstate(), \"numpy\": np.random.get_state(),"
+    ]
+   },
+   "deterministic_algorithms_run_py_290_297": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "torch\\.use_deterministic_algorithms\\(True\\)|os\\.environ\\.setdefault\\(\\\"CUBLAS_WORKSPACE_CONFIG\\\", \\\":4096:8\\\"\\)",
+    "purpose": "deterministic kernels + cuBLAS workspace configured before the first CUDA Matmul",
+    "lines": [
+     291,
+     297
+    ],
+    "cited_code": [
+     "torch.use_deterministic_algorithms(True)",
+     "os.environ.setdefault(\"CUBLAS_WORKSPACE_CONFIG\", \":4096:8\")"
+    ]
+   },
+   "eval_dropout_disabled_readout_model_py_158_163": {
+    "file": "sema_vqa/readout_model.py",
+    "pattern": "self\\.visual_encoder\\.eval\\(\\)|self\\.text_encoder\\.eval\\(\\)",
+    "purpose": "train() forces all pretrained/encoder networks to eval: BLIP dropout consumes no RNG even while LoRA trains",
+    "lines": [
+     160,
+     161
+    ],
+    "cited_code": [
+     "self.visual_encoder.eval()",
+     "self.text_encoder.eval()"
+    ]
+   },
+   "greedy_generation_model_py_57_58": {
+    "file": "sema_multimodal/model.py",
+    "pattern": "next_token = output\\.logits\\[:, -1\\]\\.argmax\\(dim=-1\\)",
+    "purpose": "generation is argmax greedy with fixed per-row EOS/length stopping: no sampling RNG",
+    "lines": [
+     58
+    ],
+    "cited_code": [
+     "next_token = output.logits[:, -1].argmax(dim=-1)"
+    ]
+   },
+   "image_derangement_diagnostic_only_run_py_184_185": {
+    "file": "sema_multimodal/run.py",
+    "pattern": "model_rows = \\[dict\\(row, image=images\\[\\(index \\+ 1\\) % len\\(images\\)\\]\\) for index, row in enumerate\\(rows\\)\\]",
+    "purpose": "G1 shuffled diagnostic uses a fixed derangement, not RNG; not part of diagnosis 1-B",
+    "lines": [
+     185
+    ],
+    "cited_code": [
+     "model_rows = [dict(row, image=images[(index + 1) % len(images)]) for index, row in enumerate(rows)]"
+    ]
+   }
+  },
+  "absence_checks": {
+   "no_torch_dataloader_or_workers": true,
+   "no_numpy_random_distribution_consumption": true,
+   "no_torch_rand_or_randint_in_run_py": true,
+   "no_python_random_distribution_outside_local_generators": true,
+   "no_dropout_configuration_in_readout": true
+  },
+  "formula_equivalences_at_stream_index_0": {
+   "init_seed_at_index0": {
+    "expansion": "torch.manual_seed(args.seed + 0*10007) == torch.manual_seed(args.seed)",
+    "independent": "torch.manual_seed(args.seed)",
+    "data_path": "identical",
+    "basis": [
+     "phase_init_seed_run_py_407_409",
+     "expert_init_readout_model_py_31_33"
+    ]
+   },
+   "batch_shuffle_at_index0": {
+    "expansion": "random.Random(seed + 0*1000 + epoch)",
+    "independent": "random.Random(seed + epoch)",
+    "data_path": "identical per epoch",
+    "basis": [
+     "batch_shuffle_run_py_68_70"
+    ]
+   },
+   "caption_cycle_at_index0": {
+    "expansion": "sha256(seed/image) + epoch mod len(refs)",
+    "independent": "same formula instance (seed=args.seed)",
+    "data_path": "identical",
+    "basis": [
+     "caption_cycling_data_py_209_212",
+     "training_rows_call_run_py_445"
+    ]
+   },
+   "router_subsample_seed_at_index0": {
+    "expansion": "torch.Generator().manual_seed(args.seed + 1009*0) for stage 0 observe (router only)",
+    "independent": "no router exists",
+    "data_path": "router-only; cannot affect expert weights",
+    "basis": [
+     "router_memory_subsample_readout_router_py_46_49"
+    ]
+   }
+  },
+  "dataloader_worker_statement": "No torch DataLoader, num_workers or worker_init_fn exists in either audited file: training batches are explicit Python lists (epoch_batches), and feature/generation micro-batches are synchronous fixed-order lists; only the three process-level RNGs (python, numpy, torch+cuda) plus the local Random/Generator instances above consume or seed randomness on resume.",
+  "verdict_index0_vs_independent_rng_paths_identical": true
+ },
+ "diagonal_oracle_vs_independent": {
+  "cells": [
+   {
+    "order": "V_C_G_F",
+    "seed": 137,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed137/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "89d3349d2d0e567e411e38e207b6c971681d4d669ef2ab20e6c8d90d78ab82e5",
+    "independent_file_sha256": "89d3349d2d0e567e411e38e207b6c971681d4d669ef2ab20e6c8d90d78ab82e5",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.6328125,
+    "score_native_diag_raw": 33.6328125,
+    "score_independent_raw": 33.6328125,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 149,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed149/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "b86768a6aaadc0c76c99fdf713220ac5160f7eb456337a6258e44c3449be8b7c",
+    "independent_file_sha256": "b86768a6aaadc0c76c99fdf713220ac5160f7eb456337a6258e44c3449be8b7c",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.18359375,
+    "score_native_diag_raw": 33.18359375,
+    "score_independent_raw": 33.18359375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 163,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed163/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "fc794f8f15c06c2e30ae9aff0e075269d43315b602521a9a0cb7dd3a465494aa",
+    "independent_file_sha256": "fc794f8f15c06c2e30ae9aff0e075269d43315b602521a9a0cb7dd3a465494aa",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 32.5,
+    "score_native_diag_raw": 32.5,
+    "score_independent_raw": 32.5,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 179,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed179/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "d6e5feb9dbc974e5d84f4ab06e3e44c7472b4088b003e7767121cb9d79322344",
+    "independent_file_sha256": "d6e5feb9dbc974e5d84f4ab06e3e44c7472b4088b003e7767121cb9d79322344",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.90625,
+    "score_native_diag_raw": 33.90625,
+    "score_independent_raw": 33.90625,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 191,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed191/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "ad648b23fe16002ae289be516849a307bb75eb9cc90d5e94c91c7b7f801ce5ae",
+    "independent_file_sha256": "ad648b23fe16002ae289be516849a307bb75eb9cc90d5e94c91c7b7f801ce5ae",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 34.453125,
+    "score_native_diag_raw": 34.453125,
+    "score_independent_raw": 34.453125,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 211,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed211/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "dd550b151b3ffeb12c89834ebc415f36741e9ff8eb9ae66b79b0769da6f99a60",
+    "independent_file_sha256": "dd550b151b3ffeb12c89834ebc415f36741e9ff8eb9ae66b79b0769da6f99a60",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 34.1796875,
+    "score_native_diag_raw": 34.1796875,
+    "score_independent_raw": 34.1796875,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 227,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed227/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "52ebc372195507df8694aaefb3603405edb356ccafff35012e159a7b36cd4f00",
+    "independent_file_sha256": "52ebc372195507df8694aaefb3603405edb356ccafff35012e159a7b36cd4f00",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 32.71484375,
+    "score_native_diag_raw": 32.71484375,
+    "score_independent_raw": 32.71484375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 241,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_C_G_F_expand_lr0.0003_ep5_seed241/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "cf344d17df91e55dd50be2adcbe63c26869513e644b510dae6688c02209257a0",
+    "independent_file_sha256": "cf344d17df91e55dd50be2adcbe63c26869513e644b510dae6688c02209257a0",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.0859375,
+    "score_native_diag_raw": 33.0859375,
+    "score_independent_raw": 33.0859375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 137,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed137/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "c43c1b5b8a42db9cae8c241e8bdf7077b3e1deba1fc1700b25bcf0edf04b0577",
+    "independent_file_sha256": "c43c1b5b8a42db9cae8c241e8bdf7077b3e1deba1fc1700b25bcf0edf04b0577",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09060143557512253,
+    "score_native_diag_raw": 0.09060143557512253,
+    "score_independent_raw": 0.09060143557512253,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 149,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed149/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "2462a60145cd566aac6739d3468dcf07575b7473f5641a4eec28cde241382372",
+    "independent_file_sha256": "2462a60145cd566aac6739d3468dcf07575b7473f5641a4eec28cde241382372",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09632384230579924,
+    "score_native_diag_raw": 0.09632384230579924,
+    "score_independent_raw": 0.09632384230579924,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 163,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed163/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "ea6dc5b8ba1cbbdc7f642ec0a32aab1276024490f1f98c3cbced0bc793a913e4",
+    "independent_file_sha256": "ea6dc5b8ba1cbbdc7f642ec0a32aab1276024490f1f98c3cbced0bc793a913e4",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09076064230805972,
+    "score_native_diag_raw": 0.09076064230805972,
+    "score_independent_raw": 0.09076064230805972,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 179,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed179/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "642d7a5646da327d0decaf94ce20926c112236935651ff5ea0ce63ca38808251",
+    "independent_file_sha256": "642d7a5646da327d0decaf94ce20926c112236935651ff5ea0ce63ca38808251",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.08610384807394521,
+    "score_native_diag_raw": 0.08610384807394521,
+    "score_independent_raw": 0.08610384807394521,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 191,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed191/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "41d8d09c89df58609441e87c0d3f0a606ebdb211b2d2480bc689175eba081f1a",
+    "independent_file_sha256": "41d8d09c89df58609441e87c0d3f0a606ebdb211b2d2480bc689175eba081f1a",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.10757736974513157,
+    "score_native_diag_raw": 0.10757736974513157,
+    "score_independent_raw": 0.10757736974513157,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 211,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed211/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "0dea723fb54a09d4ea293587467d6223b66976ec518bfe4ddfbea1c620e121f2",
+    "independent_file_sha256": "0dea723fb54a09d4ea293587467d6223b66976ec518bfe4ddfbea1c620e121f2",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.1046432327951594,
+    "score_native_diag_raw": 0.1046432327951594,
+    "score_independent_raw": 0.1046432327951594,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 227,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed227/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "2381fe0ed54254ae54eaabd3d18868a8413f0925224d6c6d23a2fd619e026764",
+    "independent_file_sha256": "2381fe0ed54254ae54eaabd3d18868a8413f0925224d6c6d23a2fd619e026764",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.11759661012467704,
+    "score_native_diag_raw": 0.11759661012467704,
+    "score_independent_raw": 0.11759661012467704,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 241,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_G_C_V_expand_lr0.0003_ep5_seed241/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "02ec232fc4c562abd506012ad32f34dd6c7e3c51dba6c09de300663f8527b471",
+    "independent_file_sha256": "02ec232fc4c562abd506012ad32f34dd6c7e3c51dba6c09de300663f8527b471",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.10580615627091063,
+    "score_native_diag_raw": 0.10580615627091063,
+    "score_independent_raw": 0.10580615627091063,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 137,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed137/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "89d3349d2d0e567e411e38e207b6c971681d4d669ef2ab20e6c8d90d78ab82e5",
+    "independent_file_sha256": "89d3349d2d0e567e411e38e207b6c971681d4d669ef2ab20e6c8d90d78ab82e5",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.6328125,
+    "score_native_diag_raw": 33.6328125,
+    "score_independent_raw": 33.6328125,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 149,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed149/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "b86768a6aaadc0c76c99fdf713220ac5160f7eb456337a6258e44c3449be8b7c",
+    "independent_file_sha256": "b86768a6aaadc0c76c99fdf713220ac5160f7eb456337a6258e44c3449be8b7c",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.18359375,
+    "score_native_diag_raw": 33.18359375,
+    "score_independent_raw": 33.18359375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 163,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed163/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "fc794f8f15c06c2e30ae9aff0e075269d43315b602521a9a0cb7dd3a465494aa",
+    "independent_file_sha256": "fc794f8f15c06c2e30ae9aff0e075269d43315b602521a9a0cb7dd3a465494aa",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 32.5,
+    "score_native_diag_raw": 32.5,
+    "score_independent_raw": 32.5,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 179,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed179/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "d6e5feb9dbc974e5d84f4ab06e3e44c7472b4088b003e7767121cb9d79322344",
+    "independent_file_sha256": "d6e5feb9dbc974e5d84f4ab06e3e44c7472b4088b003e7767121cb9d79322344",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.90625,
+    "score_native_diag_raw": 33.90625,
+    "score_independent_raw": 33.90625,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 191,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed191/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "ad648b23fe16002ae289be516849a307bb75eb9cc90d5e94c91c7b7f801ce5ae",
+    "independent_file_sha256": "ad648b23fe16002ae289be516849a307bb75eb9cc90d5e94c91c7b7f801ce5ae",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 34.453125,
+    "score_native_diag_raw": 34.453125,
+    "score_independent_raw": 34.453125,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 211,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed211/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "dd550b151b3ffeb12c89834ebc415f36741e9ff8eb9ae66b79b0769da6f99a60",
+    "independent_file_sha256": "dd550b151b3ffeb12c89834ebc415f36741e9ff8eb9ae66b79b0769da6f99a60",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 34.1796875,
+    "score_native_diag_raw": 34.1796875,
+    "score_independent_raw": 34.1796875,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 227,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed227/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "52ebc372195507df8694aaefb3603405edb356ccafff35012e159a7b36cd4f00",
+    "independent_file_sha256": "52ebc372195507df8694aaefb3603405edb356ccafff35012e159a7b36cd4f00",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 32.71484375,
+    "score_native_diag_raw": 32.71484375,
+    "score_independent_raw": 32.71484375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 241,
+    "task_id": "V",
+    "metric": "vqav2",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/V_G_C_F_expand_lr0.0003_ep5_seed241/task_id_oracle/predictions_after_00_V.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "cf344d17df91e55dd50be2adcbe63c26869513e644b510dae6688c02209257a0",
+    "independent_file_sha256": "cf344d17df91e55dd50be2adcbe63c26869513e644b510dae6688c02209257a0",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 33.0859375,
+    "score_native_diag_raw": 33.0859375,
+    "score_independent_raw": 33.0859375,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 35.9765625,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 137,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed137/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "c43c1b5b8a42db9cae8c241e8bdf7077b3e1deba1fc1700b25bcf0edf04b0577",
+    "independent_file_sha256": "c43c1b5b8a42db9cae8c241e8bdf7077b3e1deba1fc1700b25bcf0edf04b0577",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09060143557512253,
+    "score_native_diag_raw": 0.09060143557512253,
+    "score_independent_raw": 0.09060143557512253,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 149,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed149/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "2462a60145cd566aac6739d3468dcf07575b7473f5641a4eec28cde241382372",
+    "independent_file_sha256": "2462a60145cd566aac6739d3468dcf07575b7473f5641a4eec28cde241382372",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09632384230579924,
+    "score_native_diag_raw": 0.09632384230579924,
+    "score_independent_raw": 0.09632384230579924,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 163,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed163/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "ea6dc5b8ba1cbbdc7f642ec0a32aab1276024490f1f98c3cbced0bc793a913e4",
+    "independent_file_sha256": "ea6dc5b8ba1cbbdc7f642ec0a32aab1276024490f1f98c3cbced0bc793a913e4",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.09076064230805972,
+    "score_native_diag_raw": 0.09076064230805972,
+    "score_independent_raw": 0.09076064230805972,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 179,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed179/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "642d7a5646da327d0decaf94ce20926c112236935651ff5ea0ce63ca38808251",
+    "independent_file_sha256": "642d7a5646da327d0decaf94ce20926c112236935651ff5ea0ce63ca38808251",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.08610384807394521,
+    "score_native_diag_raw": 0.08610384807394521,
+    "score_independent_raw": 0.08610384807394521,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 191,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed191/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "41d8d09c89df58609441e87c0d3f0a606ebdb211b2d2480bc689175eba081f1a",
+    "independent_file_sha256": "41d8d09c89df58609441e87c0d3f0a606ebdb211b2d2480bc689175eba081f1a",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.10757736974513157,
+    "score_native_diag_raw": 0.10757736974513157,
+    "score_independent_raw": 0.10757736974513157,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 211,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed211/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "0dea723fb54a09d4ea293587467d6223b66976ec518bfe4ddfbea1c620e121f2",
+    "independent_file_sha256": "0dea723fb54a09d4ea293587467d6223b66976ec518bfe4ddfbea1c620e121f2",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.1046432327951594,
+    "score_native_diag_raw": 0.1046432327951594,
+    "score_independent_raw": 0.1046432327951594,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 227,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed227/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "2381fe0ed54254ae54eaabd3d18868a8413f0925224d6c6d23a2fd619e026764",
+    "independent_file_sha256": "2381fe0ed54254ae54eaabd3d18868a8413f0925224d6c6d23a2fd619e026764",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.11759661012467704,
+    "score_native_diag_raw": 0.11759661012467704,
+    "score_independent_raw": 0.11759661012467704,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 241,
+    "task_id": "F",
+    "metric": "cider_d",
+    "stream_position": 0,
+    "oracle_file": "artifacts/multimodal_runs/routing_g4/F_C_G_V_expand_lr0.0003_ep5_seed241/task_id_oracle/predictions_after_00_F.jsonl",
+    "diagonal_oracle_artifact_present": true,
+    "rows": 512,
+    "ids_aligned": true,
+    "expert_field_oracle_eq_independent": true,
+    "expert_values": [
+     0
+    ],
+    "text_equal_oracle_vs_independent": 512,
+    "text_equal_native_g4_vs_independent": 512,
+    "text_equal_native_g4_vs_oracle": 512,
+    "text_equal_native_g4_vs_native_g5": 512,
+    "mismatch_ids_oracle_vs_independent": [],
+    "g5_native_count_identical_in_bytes": 14,
+    "oracle_file_sha256": "02ec232fc4c562abd506012ad32f34dd6c7e3c51dba6c09de300663f8527b471",
+    "independent_file_sha256": "02ec232fc4c562abd506012ad32f34dd6c7e3c51dba6c09de300663f8527b471",
+    "prediction_files_byte_identical": true,
+    "score_oracle_diag_raw": 0.10580615627091063,
+    "score_native_diag_raw": 0.10580615627091063,
+    "score_independent_raw": 0.10580615627091063,
+    "delta_oracle_minus_independent_raw": 0.0,
+    "delta_oracle_minus_independent_normalized": 0.0,
+    "normalizer": 0.15263336791624926,
+    "delta_native_minus_independent_raw": 0.0,
+    "o_eq_i_score_exact": true,
+    "verdict_o_eq_i": true
+   }
+  ],
+  "n_cells": 32,
+  "per_task": {
+   "V": {
+    "n_cells": 16,
+    "cells_with_exact_score": 16,
+    "cells_with_full_text_equality": 16,
+    "max_abs_delta_raw": 0.0,
+    "max_abs_delta_normalized": 0.0
+   },
+   "F": {
+    "n_cells": 16,
+    "cells_with_exact_score": 16,
+    "cells_with_full_text_equality": 16,
+    "max_abs_delta_raw": 0.0,
+    "max_abs_delta_normalized": 0.0
+   }
+  },
+  "diagonal_oracle_presence_statement": "The training-immediate (diagonal) task-ID oracle exists as a saved artifact: G5 re-evaluated every bank at each stream stage with frozen experts, and each first-task cell has task_id_oracle/predictions_after_00_<task>.jsonl with 512 aligned rows (this script asserts file presence, row counts and ID alignment). Its native counterpart at the same stage is verified equal to the original G4 training-time evaluation, so the diagonal timing itself is grounded by shipped evidence, and no substitute oracle was used."
+ },
+ "oracle_grouping_by_stream_index": {
+  "tasks": {
+   "V": {
+    "stream_positions_by_order": {
+     "F_C_G_V": 3,
+     "F_G_C_V": 3,
+     "V_C_G_F": 0,
+     "V_G_C_F": 0
+    },
+    "positions": {
+     "position_0": {
+      "orders": [
+       "V_C_G_F",
+       "V_G_C_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         33.6328125,
+         33.6328125
+        ],
+        "final_by_order": [
+         33.6328125,
+         33.6328125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         33.18359375,
+         33.18359375
+        ],
+        "final_by_order": [
+         33.18359375,
+         33.18359375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         32.5,
+         32.5
+        ],
+        "final_by_order": [
+         32.5,
+         32.5
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         33.90625,
+         33.90625
+        ],
+        "final_by_order": [
+         33.90625,
+         33.90625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         34.453125,
+         34.453125
+        ],
+        "final_by_order": [
+         34.453125,
+         34.453125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         34.1796875,
+         34.1796875
+        ],
+        "final_by_order": [
+         34.1796875,
+         34.1796875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         32.71484375,
+         32.71484375
+        ],
+        "final_by_order": [
+         32.71484375,
+         32.71484375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         33.0859375,
+         33.0859375
+        ],
+        "final_by_order": [
+         33.0859375,
+         33.0859375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "V_C_G_F",
+        "seed": 137,
+        "diag": 33.6328125,
+        "final": 33.6328125
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 137,
+        "diag": 33.6328125,
+        "final": 33.6328125
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 149,
+        "diag": 33.18359375,
+        "final": 33.18359375
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 149,
+        "diag": 33.18359375,
+        "final": 33.18359375
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 163,
+        "diag": 32.5,
+        "final": 32.5
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 163,
+        "diag": 32.5,
+        "final": 32.5
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 179,
+        "diag": 33.90625,
+        "final": 33.90625
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 179,
+        "diag": 33.90625,
+        "final": 33.90625
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 191,
+        "diag": 34.453125,
+        "final": 34.453125
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 191,
+        "diag": 34.453125,
+        "final": 34.453125
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 211,
+        "diag": 34.1796875,
+        "final": 34.1796875
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 211,
+        "diag": 34.1796875,
+        "final": 34.1796875
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 227,
+        "diag": 32.71484375,
+        "final": 32.71484375
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 227,
+        "diag": 32.71484375,
+        "final": 32.71484375
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 241,
+        "diag": 33.0859375,
+        "final": 33.0859375
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 241,
+        "diag": 33.0859375,
+        "final": 33.0859375
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       32.5,
+       32.71484375,
+       33.0859375,
+       33.18359375,
+       33.6328125,
+       33.90625,
+       34.1796875,
+       34.453125
+      ],
+      "group_distinct_values_by_seed_final": [
+       32.5,
+       32.71484375,
+       33.0859375,
+       33.18359375,
+       33.6328125,
+       33.90625,
+       34.1796875,
+       34.453125
+      ],
+      "eight_seed_mean_diag": 33.45703125,
+      "eight_seed_mean_final": 33.45703125
+     },
+     "position_3": {
+      "orders": [
+       "F_C_G_V",
+       "F_G_C_V"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         32.63671875,
+         32.63671875
+        ],
+        "final_by_order": [
+         32.63671875,
+         32.63671875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         33.359375,
+         33.359375
+        ],
+        "final_by_order": [
+         33.359375,
+         33.359375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         34.2578125,
+         34.2578125
+        ],
+        "final_by_order": [
+         34.2578125,
+         34.2578125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         32.75390625,
+         32.75390625
+        ],
+        "final_by_order": [
+         32.75390625,
+         32.75390625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         33.125,
+         33.125
+        ],
+        "final_by_order": [
+         33.125,
+         33.125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         31.953125,
+         31.953125
+        ],
+        "final_by_order": [
+         31.953125,
+         31.953125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         33.3203125,
+         33.3203125
+        ],
+        "final_by_order": [
+         33.3203125,
+         33.3203125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         31.8359375,
+         31.8359375
+        ],
+        "final_by_order": [
+         31.8359375,
+         31.8359375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_C_G_V",
+        "seed": 137,
+        "diag": 32.63671875,
+        "final": 32.63671875
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 137,
+        "diag": 32.63671875,
+        "final": 32.63671875
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 149,
+        "diag": 33.359375,
+        "final": 33.359375
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 149,
+        "diag": 33.359375,
+        "final": 33.359375
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 163,
+        "diag": 34.2578125,
+        "final": 34.2578125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 163,
+        "diag": 34.2578125,
+        "final": 34.2578125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 179,
+        "diag": 32.75390625,
+        "final": 32.75390625
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 179,
+        "diag": 32.75390625,
+        "final": 32.75390625
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 191,
+        "diag": 33.125,
+        "final": 33.125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 191,
+        "diag": 33.125,
+        "final": 33.125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 211,
+        "diag": 31.953125,
+        "final": 31.953125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 211,
+        "diag": 31.953125,
+        "final": 31.953125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 227,
+        "diag": 33.3203125,
+        "final": 33.3203125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 227,
+        "diag": 33.3203125,
+        "final": 33.3203125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 241,
+        "diag": 31.8359375,
+        "final": 31.8359375
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 241,
+        "diag": 31.8359375,
+        "final": 31.8359375
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       31.8359375,
+       31.953125,
+       32.63671875,
+       32.75390625,
+       33.125,
+       33.3203125,
+       33.359375,
+       34.2578125
+      ],
+      "group_distinct_values_by_seed_final": [
+       31.8359375,
+       31.953125,
+       32.63671875,
+       32.75390625,
+       33.125,
+       33.3203125,
+       33.359375,
+       34.2578125
+      ],
+      "eight_seed_mean_diag": 32.9052734375,
+      "eight_seed_mean_final": 32.9052734375
+     }
+    }
+   },
+   "C": {
+    "stream_positions_by_order": {
+     "F_C_G_V": 1,
+     "F_G_C_V": 2,
+     "V_C_G_F": 1,
+     "V_G_C_F": 2
+    },
+    "positions": {
+     "position_1": {
+      "orders": [
+       "F_C_G_V",
+       "V_C_G_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5240468296315572,
+         0.5240468296315572
+        ],
+        "final_by_order": [
+         0.5240468296315572,
+         0.5240468296315572
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5317786355923655,
+         0.5317786355923655
+        ],
+        "final_by_order": [
+         0.5317786355923655,
+         0.5317786355923655
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5010346862911499,
+         0.5010346862911499
+        ],
+        "final_by_order": [
+         0.5010346862911499,
+         0.5010346862911499
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5189374135603513,
+         0.5189374135603513
+        ],
+        "final_by_order": [
+         0.5189374135603513,
+         0.5189374135603513
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5223605903075246,
+         0.5223605903075246
+        ],
+        "final_by_order": [
+         0.5223605903075246,
+         0.5223605903075246
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5268265803879717,
+         0.5268265803879717
+        ],
+        "final_by_order": [
+         0.5268265803879717,
+         0.5268265803879717
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5210106594504712,
+         0.5210106594504712
+        ],
+        "final_by_order": [
+         0.5210106594504712,
+         0.5210106594504712
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         0.5144569675955517,
+         0.5144569675955517
+        ],
+        "final_by_order": [
+         0.5144569675955517,
+         0.5144569675955517
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_C_G_V",
+        "seed": 137,
+        "diag": 0.5240468296315572,
+        "final": 0.5240468296315572
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 137,
+        "diag": 0.5240468296315572,
+        "final": 0.5240468296315572
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 149,
+        "diag": 0.5317786355923655,
+        "final": 0.5317786355923655
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 149,
+        "diag": 0.5317786355923655,
+        "final": 0.5317786355923655
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 163,
+        "diag": 0.5010346862911499,
+        "final": 0.5010346862911499
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 163,
+        "diag": 0.5010346862911499,
+        "final": 0.5010346862911499
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 179,
+        "diag": 0.5189374135603513,
+        "final": 0.5189374135603513
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 179,
+        "diag": 0.5189374135603513,
+        "final": 0.5189374135603513
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 191,
+        "diag": 0.5223605903075246,
+        "final": 0.5223605903075246
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 191,
+        "diag": 0.5223605903075246,
+        "final": 0.5223605903075246
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 211,
+        "diag": 0.5268265803879717,
+        "final": 0.5268265803879717
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 211,
+        "diag": 0.5268265803879717,
+        "final": 0.5268265803879717
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 227,
+        "diag": 0.5210106594504712,
+        "final": 0.5210106594504712
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 227,
+        "diag": 0.5210106594504712,
+        "final": 0.5210106594504712
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 241,
+        "diag": 0.5144569675955517,
+        "final": 0.5144569675955517
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 241,
+        "diag": 0.5144569675955517,
+        "final": 0.5144569675955517
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       0.5010346862911499,
+       0.5144569675955517,
+       0.5189374135603513,
+       0.5210106594504712,
+       0.5223605903075246,
+       0.5240468296315572,
+       0.5268265803879717,
+       0.5317786355923655
+      ],
+      "group_distinct_values_by_seed_final": [
+       0.5010346862911499,
+       0.5144569675955517,
+       0.5189374135603513,
+       0.5210106594504712,
+       0.5223605903075246,
+       0.5240468296315572,
+       0.5268265803879717,
+       0.5317786355923655
+      ],
+      "eight_seed_mean_diag": 0.5200565453521179,
+      "eight_seed_mean_final": 0.5200565453521179
+     },
+     "position_2": {
+      "orders": [
+       "F_G_C_V",
+       "V_G_C_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.5379297424636168,
+         0.5379297424636168
+        ],
+        "final_by_order": [
+         0.5379297424636168,
+         0.5379297424636168
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.5211412645130207,
+         0.5211412645130207
+        ],
+        "final_by_order": [
+         0.5211412645130207,
+         0.5211412645130207
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.5121680157871791,
+         0.5121680157871791
+        ],
+        "final_by_order": [
+         0.5121680157871791,
+         0.5121680157871791
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.49003962782853205,
+         0.49003962782853205
+        ],
+        "final_by_order": [
+         0.49003962782853205,
+         0.49003962782853205
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.5108585303510527,
+         0.5108585303510527
+        ],
+        "final_by_order": [
+         0.5108585303510527,
+         0.5108585303510527
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.49749310106173944,
+         0.49749310106173944
+        ],
+        "final_by_order": [
+         0.49749310106173944,
+         0.49749310106173944
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.4947966827292751,
+         0.4947966827292751
+        ],
+        "final_by_order": [
+         0.4947966827292751,
+         0.4947966827292751
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.5312076443960445,
+         0.5312076443960445
+        ],
+        "final_by_order": [
+         0.5312076443960445,
+         0.5312076443960445
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_G_C_V",
+        "seed": 137,
+        "diag": 0.5379297424636168,
+        "final": 0.5379297424636168
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 137,
+        "diag": 0.5379297424636168,
+        "final": 0.5379297424636168
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 149,
+        "diag": 0.5211412645130207,
+        "final": 0.5211412645130207
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 149,
+        "diag": 0.5211412645130207,
+        "final": 0.5211412645130207
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 163,
+        "diag": 0.5121680157871791,
+        "final": 0.5121680157871791
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 163,
+        "diag": 0.5121680157871791,
+        "final": 0.5121680157871791
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 179,
+        "diag": 0.49003962782853205,
+        "final": 0.49003962782853205
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 179,
+        "diag": 0.49003962782853205,
+        "final": 0.49003962782853205
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 191,
+        "diag": 0.5108585303510527,
+        "final": 0.5108585303510527
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 191,
+        "diag": 0.5108585303510527,
+        "final": 0.5108585303510527
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 211,
+        "diag": 0.49749310106173944,
+        "final": 0.49749310106173944
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 211,
+        "diag": 0.49749310106173944,
+        "final": 0.49749310106173944
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 227,
+        "diag": 0.4947966827292751,
+        "final": 0.4947966827292751
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 227,
+        "diag": 0.4947966827292751,
+        "final": 0.4947966827292751
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 241,
+        "diag": 0.5312076443960445,
+        "final": 0.5312076443960445
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 241,
+        "diag": 0.5312076443960445,
+        "final": 0.5312076443960445
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       0.49003962782853205,
+       0.4947966827292751,
+       0.49749310106173944,
+       0.5108585303510527,
+       0.5121680157871791,
+       0.5211412645130207,
+       0.5312076443960445,
+       0.5379297424636168
+      ],
+      "group_distinct_values_by_seed_final": [
+       0.49003962782853205,
+       0.4947966827292751,
+       0.49749310106173944,
+       0.5108585303510527,
+       0.5121680157871791,
+       0.5211412645130207,
+       0.5312076443960445,
+       0.5379297424636168
+      ],
+      "eight_seed_mean_diag": 0.5119543261413075,
+      "eight_seed_mean_final": 0.5119543261413075
+     }
+    }
+   },
+   "G": {
+    "stream_positions_by_order": {
+     "F_C_G_V": 2,
+     "F_G_C_V": 1,
+     "V_C_G_F": 2,
+     "V_G_C_F": 1
+    },
+    "positions": {
+     "position_1": {
+      "orders": [
+       "F_G_C_V",
+       "V_G_C_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         36.71875,
+         36.71875
+        ],
+        "final_by_order": [
+         36.71875,
+         36.71875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "final_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         38.4765625,
+         38.4765625
+        ],
+        "final_by_order": [
+         38.4765625,
+         38.4765625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         37.6953125,
+         37.6953125
+        ],
+        "final_by_order": [
+         37.6953125,
+         37.6953125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "final_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         36.5234375,
+         36.5234375
+        ],
+        "final_by_order": [
+         36.5234375,
+         36.5234375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         36.328125,
+         36.328125
+        ],
+        "final_by_order": [
+         36.328125,
+         36.328125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_G_C_V",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         36.5234375,
+         36.5234375
+        ],
+        "final_by_order": [
+         36.5234375,
+         36.5234375
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_G_C_V",
+        "seed": 137,
+        "diag": 36.71875,
+        "final": 36.71875
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 137,
+        "diag": 36.71875,
+        "final": 36.71875
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 149,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 149,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 163,
+        "diag": 38.4765625,
+        "final": 38.4765625
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 163,
+        "diag": 38.4765625,
+        "final": 38.4765625
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 179,
+        "diag": 37.6953125,
+        "final": 37.6953125
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 179,
+        "diag": 37.6953125,
+        "final": 37.6953125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 191,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 191,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 211,
+        "diag": 36.5234375,
+        "final": 36.5234375
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 211,
+        "diag": 36.5234375,
+        "final": 36.5234375
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 227,
+        "diag": 36.328125,
+        "final": 36.328125
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 227,
+        "diag": 36.328125,
+        "final": 36.328125
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 241,
+        "diag": 36.5234375,
+        "final": 36.5234375
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 241,
+        "diag": 36.5234375,
+        "final": 36.5234375
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       35.7421875,
+       36.328125,
+       36.5234375,
+       36.71875,
+       37.6953125,
+       38.4765625
+      ],
+      "group_distinct_values_by_seed_final": [
+       35.7421875,
+       36.328125,
+       36.5234375,
+       36.71875,
+       37.6953125,
+       38.4765625
+      ],
+      "eight_seed_mean_diag": 36.71875,
+      "eight_seed_mean_final": 36.71875
+     },
+     "position_2": {
+      "orders": [
+       "F_C_G_V",
+       "V_C_G_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         38.28125,
+         38.28125
+        ],
+        "final_by_order": [
+         38.28125,
+         38.28125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         39.2578125,
+         39.2578125
+        ],
+        "final_by_order": [
+         39.2578125,
+         39.2578125
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         36.9140625,
+         36.9140625
+        ],
+        "final_by_order": [
+         36.9140625,
+         36.9140625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         36.71875,
+         36.71875
+        ],
+        "final_by_order": [
+         36.71875,
+         36.71875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         38.4765625,
+         38.4765625
+        ],
+        "final_by_order": [
+         38.4765625,
+         38.4765625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         37.890625,
+         37.890625
+        ],
+        "final_by_order": [
+         37.890625,
+         37.890625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         37.890625,
+         37.890625
+        ],
+        "final_by_order": [
+         37.890625,
+         37.890625
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_C_G_V",
+         "V_C_G_F"
+        ],
+        "diag_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "final_by_order": [
+         35.7421875,
+         35.7421875
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_C_G_V",
+        "seed": 137,
+        "diag": 38.28125,
+        "final": 38.28125
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 137,
+        "diag": 38.28125,
+        "final": 38.28125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 149,
+        "diag": 39.2578125,
+        "final": 39.2578125
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 149,
+        "diag": 39.2578125,
+        "final": 39.2578125
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 163,
+        "diag": 36.9140625,
+        "final": 36.9140625
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 163,
+        "diag": 36.9140625,
+        "final": 36.9140625
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 179,
+        "diag": 36.71875,
+        "final": 36.71875
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 179,
+        "diag": 36.71875,
+        "final": 36.71875
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 191,
+        "diag": 38.4765625,
+        "final": 38.4765625
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 191,
+        "diag": 38.4765625,
+        "final": 38.4765625
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 211,
+        "diag": 37.890625,
+        "final": 37.890625
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 211,
+        "diag": 37.890625,
+        "final": 37.890625
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 227,
+        "diag": 37.890625,
+        "final": 37.890625
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 227,
+        "diag": 37.890625,
+        "final": 37.890625
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 241,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 241,
+        "diag": 35.7421875,
+        "final": 35.7421875
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       35.7421875,
+       36.71875,
+       36.9140625,
+       37.890625,
+       38.28125,
+       38.4765625,
+       39.2578125
+      ],
+      "group_distinct_values_by_seed_final": [
+       35.7421875,
+       36.71875,
+       36.9140625,
+       37.890625,
+       38.28125,
+       38.4765625,
+       39.2578125
+      ],
+      "eight_seed_mean_diag": 37.646484375,
+      "eight_seed_mean_final": 37.646484375
+     }
+    }
+   },
+   "F": {
+    "stream_positions_by_order": {
+     "F_C_G_V": 0,
+     "F_G_C_V": 0,
+     "V_C_G_F": 3,
+     "V_G_C_F": 3
+    },
+    "positions": {
+     "position_0": {
+      "orders": [
+       "F_C_G_V",
+       "F_G_C_V"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.09060143557512253,
+         0.09060143557512253
+        ],
+        "final_by_order": [
+         0.09060143557512253,
+         0.09060143557512253
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.09632384230579924,
+         0.09632384230579924
+        ],
+        "final_by_order": [
+         0.09632384230579924,
+         0.09632384230579924
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.09076064230805972,
+         0.09076064230805972
+        ],
+        "final_by_order": [
+         0.09076064230805972,
+         0.09076064230805972
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.08610384807394521,
+         0.08610384807394521
+        ],
+        "final_by_order": [
+         0.08610384807394521,
+         0.08610384807394521
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.10757736974513157,
+         0.10757736974513157
+        ],
+        "final_by_order": [
+         0.10757736974513157,
+         0.10757736974513157
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.1046432327951594,
+         0.1046432327951594
+        ],
+        "final_by_order": [
+         0.1046432327951594,
+         0.1046432327951594
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.11759661012467704,
+         0.11759661012467704
+        ],
+        "final_by_order": [
+         0.11759661012467704,
+         0.11759661012467704
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "F_C_G_V",
+         "F_G_C_V"
+        ],
+        "diag_by_order": [
+         0.10580615627091063,
+         0.10580615627091063
+        ],
+        "final_by_order": [
+         0.10580615627091063,
+         0.10580615627091063
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "F_C_G_V",
+        "seed": 137,
+        "diag": 0.09060143557512253,
+        "final": 0.09060143557512253
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 137,
+        "diag": 0.09060143557512253,
+        "final": 0.09060143557512253
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 149,
+        "diag": 0.09632384230579924,
+        "final": 0.09632384230579924
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 149,
+        "diag": 0.09632384230579924,
+        "final": 0.09632384230579924
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 163,
+        "diag": 0.09076064230805972,
+        "final": 0.09076064230805972
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 163,
+        "diag": 0.09076064230805972,
+        "final": 0.09076064230805972
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 179,
+        "diag": 0.08610384807394521,
+        "final": 0.08610384807394521
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 179,
+        "diag": 0.08610384807394521,
+        "final": 0.08610384807394521
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 191,
+        "diag": 0.10757736974513157,
+        "final": 0.10757736974513157
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 191,
+        "diag": 0.10757736974513157,
+        "final": 0.10757736974513157
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 211,
+        "diag": 0.1046432327951594,
+        "final": 0.1046432327951594
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 211,
+        "diag": 0.1046432327951594,
+        "final": 0.1046432327951594
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 227,
+        "diag": 0.11759661012467704,
+        "final": 0.11759661012467704
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 227,
+        "diag": 0.11759661012467704,
+        "final": 0.11759661012467704
+       },
+       {
+        "order": "F_C_G_V",
+        "seed": 241,
+        "diag": 0.10580615627091063,
+        "final": 0.10580615627091063
+       },
+       {
+        "order": "F_G_C_V",
+        "seed": 241,
+        "diag": 0.10580615627091063,
+        "final": 0.10580615627091063
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       0.08610384807394521,
+       0.09060143557512253,
+       0.09076064230805972,
+       0.09632384230579924,
+       0.1046432327951594,
+       0.10580615627091063,
+       0.10757736974513157,
+       0.11759661012467704
+      ],
+      "group_distinct_values_by_seed_final": [
+       0.08610384807394521,
+       0.09060143557512253,
+       0.09076064230805972,
+       0.09632384230579924,
+       0.1046432327951594,
+       0.10580615627091063,
+       0.10757736974513157,
+       0.11759661012467704
+      ],
+      "eight_seed_mean_diag": 0.09992664214985067,
+      "eight_seed_mean_final": 0.09992664214985067
+     },
+     "position_3": {
+      "orders": [
+       "V_C_G_F",
+       "V_G_C_F"
+      ],
+      "n_banks": 16,
+      "per_seed_tables": [
+       {
+        "seed": 137,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.08679642292989158,
+         0.08679642292989158
+        ],
+        "final_by_order": [
+         0.08679642292989158,
+         0.08679642292989158
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 149,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.11202397922035376,
+         0.11202397922035376
+        ],
+        "final_by_order": [
+         0.11202397922035376,
+         0.11202397922035376
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 163,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.10515094035238123,
+         0.10515094035238123
+        ],
+        "final_by_order": [
+         0.10515094035238123,
+         0.10515094035238123
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 179,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.09767848279741234,
+         0.09767848279741234
+        ],
+        "final_by_order": [
+         0.09767848279741234,
+         0.09767848279741234
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 191,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.09547545142593805,
+         0.09547545142593805
+        ],
+        "final_by_order": [
+         0.09547545142593805,
+         0.09547545142593805
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 211,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.10365154511741269,
+         0.10365154511741269
+        ],
+        "final_by_order": [
+         0.10365154511741269,
+         0.10365154511741269
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 227,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.11786654858496212,
+         0.11786654858496212
+        ],
+        "final_by_order": [
+         0.11786654858496212,
+         0.11786654858496212
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       },
+       {
+        "seed": 241,
+        "orders": [
+         "V_C_G_F",
+         "V_G_C_F"
+        ],
+        "diag_by_order": [
+         0.10425113022678033,
+         0.10425113022678033
+        ],
+        "final_by_order": [
+         0.10425113022678033,
+         0.10425113022678033
+        ],
+        "group_exact_diag": true,
+        "group_exact_final": true,
+        "diag_equals_final": true
+       }
+      ],
+      "values_all": [
+       {
+        "order": "V_C_G_F",
+        "seed": 137,
+        "diag": 0.08679642292989158,
+        "final": 0.08679642292989158
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 137,
+        "diag": 0.08679642292989158,
+        "final": 0.08679642292989158
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 149,
+        "diag": 0.11202397922035376,
+        "final": 0.11202397922035376
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 149,
+        "diag": 0.11202397922035376,
+        "final": 0.11202397922035376
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 163,
+        "diag": 0.10515094035238123,
+        "final": 0.10515094035238123
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 163,
+        "diag": 0.10515094035238123,
+        "final": 0.10515094035238123
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 179,
+        "diag": 0.09767848279741234,
+        "final": 0.09767848279741234
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 179,
+        "diag": 0.09767848279741234,
+        "final": 0.09767848279741234
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 191,
+        "diag": 0.09547545142593805,
+        "final": 0.09547545142593805
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 191,
+        "diag": 0.09547545142593805,
+        "final": 0.09547545142593805
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 211,
+        "diag": 0.10365154511741269,
+        "final": 0.10365154511741269
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 211,
+        "diag": 0.10365154511741269,
+        "final": 0.10365154511741269
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 227,
+        "diag": 0.11786654858496212,
+        "final": 0.11786654858496212
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 227,
+        "diag": 0.11786654858496212,
+        "final": 0.11786654858496212
+       },
+       {
+        "order": "V_C_G_F",
+        "seed": 241,
+        "diag": 0.10425113022678033,
+        "final": 0.10425113022678033
+       },
+       {
+        "order": "V_G_C_F",
+        "seed": 241,
+        "diag": 0.10425113022678033,
+        "final": 0.10425113022678033
+       }
+      ],
+      "group_exact_per_seed_diag": true,
+      "group_exact_per_seed_final": true,
+      "diag_equals_final_all_cells": true,
+      "group_distinct_values_by_seed_diag": [
+       0.08679642292989158,
+       0.09547545142593805,
+       0.09767848279741234,
+       0.10365154511741269,
+       0.10425113022678033,
+       0.10515094035238123,
+       0.11202397922035376,
+       0.11786654858496212
+      ],
+      "group_distinct_values_by_seed_final": [
+       0.08679642292989158,
+       0.09547545142593805,
+       0.09767848279741234,
+       0.10365154511741269,
+       0.10425113022678033,
+       0.10515094035238123,
+       0.11202397922035376,
+       0.11786654858496212
+      ],
+      "eight_seed_mean_diag": 0.10286181258189152,
+      "eight_seed_mean_final": 0.10286181258189152
+     }
+    }
+   }
+  },
+  "caption_document_binding_8seed_means": {
+   "C|V_C_G_F": {
+    "order": "V_C_G_F",
+    "position": 1,
+    "documented_native_final_8seed_mean": 0.446388,
+    "documented_oracle_final_8seed_mean": 0.520057,
+    "recomputed_native_final_mean8": 0.44638843451170995,
+    "recomputed_oracle_final_mean8": 0.5200565453521179,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "C|F_G_C_V": {
+    "order": "F_G_C_V",
+    "position": 2,
+    "documented_native_final_8seed_mean": 0.453848,
+    "documented_oracle_final_8seed_mean": 0.511954,
+    "recomputed_native_final_mean8": 0.4538483157314132,
+    "recomputed_oracle_final_mean8": 0.5119543261413075,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "C|V_G_C_F": {
+    "order": "V_G_C_F",
+    "position": 2,
+    "documented_native_final_8seed_mean": 0.449333,
+    "documented_oracle_final_8seed_mean": 0.511954,
+    "recomputed_native_final_mean8": 0.44933282436878985,
+    "recomputed_oracle_final_mean8": 0.5119543261413075,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "C|F_C_G_V": {
+    "order": "F_C_G_V",
+    "position": 1,
+    "documented_native_final_8seed_mean": 0.448407,
+    "documented_oracle_final_8seed_mean": 0.520057,
+    "recomputed_native_final_mean8": 0.44840744586081965,
+    "recomputed_oracle_final_mean8": 0.5200565453521179,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "F|V_C_G_F": {
+    "order": "V_C_G_F",
+    "position": 3,
+    "documented_native_final_8seed_mean": 0.127488,
+    "documented_oracle_final_8seed_mean": 0.102862,
+    "recomputed_native_final_mean8": 0.1274877754044397,
+    "recomputed_oracle_final_mean8": 0.10286181258189152,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "F|F_G_C_V": {
+    "order": "F_G_C_V",
+    "position": 0,
+    "documented_native_final_8seed_mean": 0.124296,
+    "documented_oracle_final_8seed_mean": 0.099927,
+    "recomputed_native_final_mean8": 0.12429645493778393,
+    "recomputed_oracle_final_mean8": 0.09992664214985067,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "F|V_G_C_F": {
+    "order": "V_G_C_F",
+    "position": 3,
+    "documented_native_final_8seed_mean": 0.128793,
+    "documented_oracle_final_8seed_mean": 0.102862,
+    "recomputed_native_final_mean8": 0.12879265750059993,
+    "recomputed_oracle_final_mean8": 0.10286181258189152,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   },
+   "F|F_C_G_V": {
+    "order": "F_C_G_V",
+    "position": 0,
+    "documented_native_final_8seed_mean": 0.123722,
+    "documented_oracle_final_8seed_mean": 0.099927,
+    "recomputed_native_final_mean8": 0.12372196359100979,
+    "recomputed_oracle_final_mean8": 0.09992664214985067,
+    "native_within_5e-7_of_document": true,
+    "oracle_within_5e-7_of_document": true
+   }
+  },
+  "group_definition_note": "묶임 정의: 동일 (task, stream position, seed) 집합 안에서 두 order의 oracle diag/final corpus 점수가 float 수준으로 정확히 같은 값 하나로 묶이는지 검사한다. stream position이 다르면 초기화 seed 공식(seed + index*10007)과 shuffle seed 공식(seed + index*1000 + epoch) 때문에 값이 달라지는 것이 정상이며, 두 집합을 같은 그룹으로 묶지 않는다."
+ },
+ "k_decomposition_recheck": {
+  "per_task": {
+   "V": {
+    "T": -0.019255564603691627,
+    "R": -0.011587269272529843,
+    "K": -0.007668295331161784,
+    "positions_seen": [
+     0,
+     3
+    ]
+   },
+   "C": {
+    "T": -0.05211685970624952,
+    "R": -0.05108455892617536,
+    "K": -0.001032300780074158,
+    "positions_seen": [
+     1,
+     2
+    ]
+   },
+   "G": {
+    "T": -0.06722383720930233,
+    "R": -0.03015988372093021,
+    "K": -0.03706395348837213,
+    "positions_seen": [
+     1,
+     2
+    ]
+   },
+   "F": {
+    "T": 0.09242269461730698,
+    "R": 0.08280759383000277,
+    "K": 0.009615100787304216,
+    "positions_seen": [
+     0,
+     3
+    ]
+   }
+  },
+  "family": {
+   "vqa": {
+    "T": -0.04323970090649698,
+    "R": -0.020873576496730026,
+    "K": -0.022366124409766958
+   },
+   "caption": {
+    "T": 0.020152917455528732,
+    "R": 0.015861517451913706,
+    "K": 0.004291400003615029
+   }
+  },
+  "binding": {
+   "per_task_vs_prior_exact": {
+    "V": {
+     "T": {
+      "recomputed": -0.019255564603691627,
+      "prior_exact": -0.019255564604,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": -0.011587269272529843,
+      "prior_exact": -0.011587269273,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": -0.007668295331161784,
+      "prior_exact": -0.007668295331,
+      "equal_1e-9": true
+     }
+    },
+    "G": {
+     "T": {
+      "recomputed": -0.06722383720930233,
+      "prior_exact": -0.067223837209,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": -0.03015988372093021,
+      "prior_exact": -0.030159883721,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": -0.03706395348837213,
+      "prior_exact": -0.037063953488,
+      "equal_1e-9": true
+     }
+    },
+    "C": {
+     "T": {
+      "recomputed": -0.05211685970624952,
+      "prior_exact": -0.05211685970624952,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": -0.05108455892617536,
+      "prior_exact": -0.05108455892617536,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": -0.001032300780074158,
+      "prior_exact": -0.001032300780074158,
+      "equal_1e-9": true
+     }
+    },
+    "F": {
+     "T": {
+      "recomputed": 0.09242269461730698,
+      "prior_exact": 0.09242269461730698,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": 0.08280759383000277,
+      "prior_exact": 0.08280759383000277,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": 0.009615100787304216,
+      "prior_exact": 0.009615100787304216,
+      "equal_1e-9": true
+     }
+    }
+   },
+   "family_vs_prior_exact": {
+    "vqa": {
+     "T": {
+      "recomputed": -0.04323970090649698,
+      "prior_exact": -0.04323970090649698,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": -0.020873576496730026,
+      "prior_exact": -0.020873576496730026,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": -0.022366124409766958,
+      "prior_exact": -0.022366124409766958,
+      "equal_1e-9": true
+     }
+    },
+    "caption": {
+     "T": {
+      "recomputed": 0.020152917455528732,
+      "prior_exact": 0.02015291745552874,
+      "equal_1e-9": true
+     },
+     "R": {
+      "recomputed": 0.015861517451913706,
+      "prior_exact": 0.015861517451913706,
+      "equal_1e-9": true
+     },
+     "K": {
+      "recomputed": 0.004291400003615029,
+      "prior_exact": 0.004291400003615029,
+      "equal_1e-9": true
+     }
+    }
+   },
+   "document_rounded_VQA_rows": {
+    "V": {
+     "T": -0.019256,
+     "R": -0.011587,
+     "K": -0.007668
+    },
+    "G": {
+     "T": -0.067224,
+     "R": -0.03016,
+     "K": -0.037064
+    },
+    "family_vqa": {
+     "T": -0.04324,
+     "R": -0.020874,
+     "K": -0.022366
+    },
+    "family_caption": {
+     "T": 0.020153,
+     "R": 0.015862,
+     "K": 0.004291
+    }
+   }
+  },
+  "first_task_slice_note": "1-B가 검사하는 첫 task 조건은 이 분해 K(=O_diag − I)의 position 0 슬라이스이며, 첫 task 셀 자체는 diagonal 셀 절에서 독립적으로 계산한다."
+ },
+ "checkpoint_zip_parity": {
+  "method": {
+   "probe": "stdlib zipfile + inert unpickler imported from scripts/inspect_multimodal_checkpoint_zip.py",
+   "torch_load_or_model_forward_used": false,
+   "float32_decode": "stdlib array.array('f') on raw storage member bytes (byteorder handled)",
+   "bitwise_rule": "full per-storage member byte comparison; delta decode runs only when bytes differ",
+   "inventory_binding": "artifacts/multimodal-confirmation-checkpoints.json bytes + sha256 verified per member"
+  },
+  "cells": [
+   {
+    "order": "F_C_G_V",
+    "seed": 137,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed137/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed137/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed137/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 149,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed149/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed149/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed149/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 163,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed163/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed163/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed163/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 179,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed179/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed179/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed179/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 191,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed191/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed191/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed191/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 211,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed211/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed211/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed211/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 227,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed227/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed227/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed227/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_C_G_V",
+    "seed": 241,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_C_G_V_expand_lr0.0003_ep5_seed241/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed241/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed241/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 137,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed137/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed137/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed137/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 149,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed149/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed149/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed149/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 163,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed163/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed163/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed163/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 179,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed179/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed179/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed179/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 191,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed191/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed191/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed191/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 211,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed211/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed211/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed211/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 227,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed227/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed227/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed227/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "F_G_C_V",
+    "seed": 241,
+    "task_id": "F",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/F_G_C_V_expand_lr0.0003_ep5_seed241/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed241/independent_F.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/F_independent_lr0.0003_ep5_seed241/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 137,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed137/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed137/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed137/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 149,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed149/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed149/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed149/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 163,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed163/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed163/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed163/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 179,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed179/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed179/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed179/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 191,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed191/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed191/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed191/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 211,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed211/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed211/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed211/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 227,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed227/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed227/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed227/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_C_G_F",
+    "seed": 241,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed241/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed241/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed241/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 137,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed137/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed137/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed137/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 149,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed149/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed149/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed149/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 163,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed163/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed163/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed163/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 179,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed179/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed179/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed179/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 191,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed191/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed191/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed191/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 211,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed211/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed211/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed211/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 227,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed227/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed227/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed227/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   },
+   {
+    "order": "V_G_C_F",
+    "seed": 241,
+    "task_id": "V",
+    "members": {
+     "expansion_latest": "artifacts/multimodal_runs/g4/V_G_C_F_expand_lr0.0003_ep5_seed241/latest.pt",
+     "independent_adapter": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed241/independent_V.pt",
+     "independent_latest": "artifacts/multimodal_runs/g4/V_independent_lr0.0003_ep5_seed241/latest.pt"
+    },
+    "declared_num_experts": 4,
+    "expert_slot_compared": 0,
+    "tensors_expansion_slot0": 192,
+    "tensors_independent_adapter": 192,
+    "tensor_key_sets_equal": true,
+    "tensor_shapes_match": true,
+    "tensors_bitwise_equal": true,
+    "bitwise_equal_tensor_count": 192,
+    "bytes_compared": 4718592,
+    "max_abs_delta": 0.0,
+    "nonzero_delta_tensors": [],
+    "adapter_archive_matches_independent_latest": true,
+    "verdict": true
+   }
+  ],
+  "n_cells": 32,
+  "verdict_bitwise_all": true,
+  "cells_bitwise_equal": 32,
+  "cells_with_zero_delta": 32,
+  "max_abs_delta_overall": 0.0,
+  "bytes_compared_per_cell": 4718592.0,
+  "adapter_archive_matches_independent_latest_all": true
+ },
+ "conclusions": [
+  {
+   "id": "o_eq_i_diag",
+   "topic": "첫 task O=I 성립 여부",
+   "korean": "첫 task(position 0) 조건에서 학습-즉시 대각선 task-ID oracle과 independent 첫 평가가 16셀(V, orders V_C_G_F·V_G_C_F) 및 16셀(F, orders F_G_C_V·F_C_G_V) 모두에서 예측 문자열 512/512 전체 동일 + 저장된 corpus 점수 차이 0.0(raw·normalized 동시)으로 O=I 성립.",
+   "evidence": {
+    "cells": 32,
+    "v_verdict_full": true,
+    "f_verdict_full": true,
+    "v_exact_score_cells": 16,
+    "f_exact_score_cells": 16,
+    "v_full_text_cells": 16,
+    "f_full_text_cells": 16,
+    "max_abs_delta_raw": 0.0,
+    "grounded_cause": "초기화/셔플/caption 사이클 공식이 index=0에서 동일 인스턴스 + expert0↔independent adapter bitwise 동일(rng_static_audit, checkpoint_zip_parity)"
+   },
+   "diagonal_oracle_artifact": "The training-immediate (diagonal) task-ID oracle exists as a saved artifact: G5 re-evaluated every bank at each stream stage with frozen experts, and each first-task cell has task_id_oracle/predictions_after_00_<task>.jsonl with 512 aligned rows (this script asserts file presence, row counts and ID alignment). Its native counterpart at the same stage is verified equal to the original G4 training-time evaluation, so the diagonal timing itself is grounded by shipped evidence, and no substitute oracle was used.",
+   "conclusion": "O=I 성립"
+  },
+  {
+   "id": "checkpoint_parity",
+   "topic": "ZIP storage expert0 vs independent adapter",
+   "korean": "ZIP storage만으로 비교: 첫 task expert 192개 tensor×4,718,592 bytes가 independent adapter와 32/32 셀 bitwise 전부 동일(max|Δ|=0.0; independent archive/latest 두 형태 상호 일치) → 파라미터 수준에서도 O=I 성립.",
+   "evidence": {
+    "n_cells": 32,
+    "cells_bitwise_equal": 32,
+    "max_abs_delta": 0.0,
+    "bytes_per_cell": 4718592.0
+   },
+   "conclusion": "성립"
+  },
+  {
+   "id": "caption_grouping",
+   "topic": "caption oracle stream-position 묶임",
+   "korean": "caption 묶임 성립: COCO(position 1: V_C_G_F·F_C_G_V, position 2: F_G_C_V·V_G_C_F)와 Flickr(position 0: F_G_C_V·F_C_G_V, position 3: V_C_G_F·V_G_C_F)에서 동일 (task, stream position, seed) 그룹의 두 order oracle diag/final corpus 점수가 float 수준으로 정확히 같은 값 하나로 묶이며(diag==final 전부 포함) C·F 각 16 셀(총 32) 전부에서 성립. position 간 값은 초기화 seed 공식(seed + index*10007)/shuffle seed 공식(seed + index*1000 + epoch)의 코드 근거로 달라지며, 그 달라짐도 8 seed 각각에서 같은 그룹 값을 가진다.",
+   "detail": [
+    {
+     "task": "C",
+     "positions": {
+      "position_1": {
+       "orders": [
+        "F_C_G_V",
+        "V_C_G_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        0.5010346862911499,
+        0.5144569675955517,
+        0.5189374135603513,
+        0.5210106594504712,
+        0.5223605903075246,
+        0.5240468296315572,
+        0.5268265803879717,
+        0.5317786355923655
+       ],
+       "eight_seed_mean_diag": 0.5200565453521179,
+       "eight_seed_mean_final": 0.5200565453521179
+      },
+      "position_2": {
+       "orders": [
+        "F_G_C_V",
+        "V_G_C_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        0.49003962782853205,
+        0.4947966827292751,
+        0.49749310106173944,
+        0.5108585303510527,
+        0.5121680157871791,
+        0.5211412645130207,
+        0.5312076443960445,
+        0.5379297424636168
+       ],
+       "eight_seed_mean_diag": 0.5119543261413075,
+       "eight_seed_mean_final": 0.5119543261413075
+      }
+     },
+     "exact_all": true
+    },
+    {
+     "task": "F",
+     "positions": {
+      "position_0": {
+       "orders": [
+        "F_C_G_V",
+        "F_G_C_V"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        0.08610384807394521,
+        0.09060143557512253,
+        0.09076064230805972,
+        0.09632384230579924,
+        0.1046432327951594,
+        0.10580615627091063,
+        0.10757736974513157,
+        0.11759661012467704
+       ],
+       "eight_seed_mean_diag": 0.09992664214985067,
+       "eight_seed_mean_final": 0.09992664214985067
+      },
+      "position_3": {
+       "orders": [
+        "V_C_G_F",
+        "V_G_C_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        0.08679642292989158,
+        0.09547545142593805,
+        0.09767848279741234,
+        0.10365154511741269,
+        0.10425113022678033,
+        0.10515094035238123,
+        0.11202397922035376,
+        0.11786654858496212
+       ],
+       "eight_seed_mean_diag": 0.10286181258189152,
+       "eight_seed_mean_final": 0.10286181258189152
+      }
+     },
+     "exact_all": true
+    }
+   ],
+   "note": "점수는 G5 routing_audit의 저장 matrix 값; scorer 재실행 없음.",
+   "conclusion": "성립"
+  },
+  {
+   "id": "vqa_grouping",
+   "topic": "VQA oracle stream-position 묶임",
+   "korean": "VQA 동일 검사: V(position 0: V_C_G_F·V_G_C_F, position 3: F_G_C_V·F_C_G_V), G(position 1: F_G_C_V·V_G_C_F, position 2: V_C_G_F·F_C_G_V)에서 동일 그룹의 두 order oracle diag/final 점수가 float 수준으로 정확히 같아 VQA에서도 묶임 성립.",
+   "detail": [
+    {
+     "task": "V",
+     "positions": {
+      "position_0": {
+       "orders": [
+        "V_C_G_F",
+        "V_G_C_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        32.5,
+        32.71484375,
+        33.0859375,
+        33.18359375,
+        33.6328125,
+        33.90625,
+        34.1796875,
+        34.453125
+       ],
+       "eight_seed_mean_diag": 33.45703125,
+       "eight_seed_mean_final": 33.45703125
+      },
+      "position_3": {
+       "orders": [
+        "F_C_G_V",
+        "F_G_C_V"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        31.8359375,
+        31.953125,
+        32.63671875,
+        32.75390625,
+        33.125,
+        33.3203125,
+        33.359375,
+        34.2578125
+       ],
+       "eight_seed_mean_diag": 32.9052734375,
+       "eight_seed_mean_final": 32.9052734375
+      }
+     },
+     "exact_all": true
+    },
+    {
+     "task": "G",
+     "positions": {
+      "position_1": {
+       "orders": [
+        "F_G_C_V",
+        "V_G_C_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        35.7421875,
+        36.328125,
+        36.5234375,
+        36.71875,
+        37.6953125,
+        38.4765625
+       ],
+       "eight_seed_mean_diag": 36.71875,
+       "eight_seed_mean_final": 36.71875
+      },
+      "position_2": {
+       "orders": [
+        "F_C_G_V",
+        "V_C_G_F"
+       ],
+       "group_exact_diag": true,
+       "group_exact_final": true,
+       "diag_equals_final_all_cells": true,
+       "distinct_group_values_by_seed_sample": [
+        35.7421875,
+        36.71875,
+        36.9140625,
+        37.890625,
+        38.28125,
+        38.4765625,
+        39.2578125
+       ],
+       "eight_seed_mean_diag": 37.646484375,
+       "eight_seed_mean_final": 37.646484375
+      }
+     },
+     "exact_all": true
+    }
+   ],
+   "conclusion": "성립"
+  },
+  {
+   "id": "grouping_overall",
+   "topic": "묶임 종합",
+   "korean": "묶임 성립(caption=True, vqa=True)."
+  },
+  {
+   "id": "k_implication",
+   "topic": "K(=O−I) 4.4절 해석에 미치는 영향 (1–2문장)",
+   "korean": "K(4.4절 O_diag−I 잔차)의 index-0 슬라이스는 32/32 셀에서 정확히 0.0이다. 전체 family 잔차(VQA -0.022366, caption +0.004291)는 index>0에 남으며 초기화·셔플 seed 차이와 양립하는 실행 잔차로 보아야 하고, 그 차이의 인과 기여나 파라미터 전이 손상을 이번 조회만으로 확정할 수 없다.",
+   "first_task_k_exactly_zero": true,
+   "family_k_recomputed": {
+    "vqa": -0.022366124409766958,
+    "caption": 0.004291400003615029
+   }
+  },
+  {
+   "id": "cause_discipline",
+   "topic": "원인 서술 규칙",
+   "korean": "불일치/문장 불일치가 관측되어도 원인을 GPU 비결정론으로 단정하지 않는다. 관측된 크기·개수와 코드 인용 근거만 기록하며, 국지적 원인 규명은 1-D(재생성) 범위로 남긴다."
+  }
+ ]
+}

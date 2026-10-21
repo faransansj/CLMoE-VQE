@@ -1,0 +1,3 @@
+stage1 job: job_id=2583205 node=node35 partition=suma_rtx4090 gres_alloc=0 mode=fidelity
+{"report": "artifacts/stage1-fidelity.json", "gate": {"bitwise_equal": true, "max_abs_diff": 0.0, "validation_D0_matches_stage05_F_D0": true, "passed": true}}
+stage1 mode=fidelity finished

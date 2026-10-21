@@ -1,0 +1,128 @@
+{
+  "stage": "stage0.5-target-format",
+  "execution": {
+    "training": false,
+    "inference": false,
+    "scoring": false
+  },
+  "script": {
+    "path": "scripts/stage05_target_format.py",
+    "sha256": "88dfbe4d38dcbd9a6e9a38e4b7f33863ed2db85eb6d23d0ecc28864792df006c"
+  },
+  "inputs": {
+    "artifacts/multimodal-full-manifests.tar.gz": "34f96d5af66ade803d6f925a171c722f8887d5b8371875d7599ea83cda5c7a28",
+    "artifacts/multimodal-g1-raw.tar.gz": "82afff6427e0a9259d15afe5fe7deddf90338765dbb17c9b1173a1f1d93745da",
+    "artifacts/multimodal-g4-raw.tar.gz": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6",
+    "artifacts/multimodal-g5-raw.tar.gz": "73531b6c8da198706c481baf9af98f09c3198b543a53244ae6031ce4db9bfe5d"
+  },
+  "reference_formats": {
+    "C": {
+      "train": {
+        "references": 10242,
+        "ending_share": {
+          "no_terminal_punct": 0.24838898652606914,
+          "other_terminal_punct": 0.0004881859011911736,
+          "period": 0.7497559070494044,
+          "space_period": 0.0013669205233352861
+        },
+        "trailing_whitespace_share": 0.14079281390353446,
+        "capitalized_first_char_share": 0.846514352665495,
+        "contains_period_share": 0.7516110134739309
+      },
+      "validation": {
+        "references": 1280,
+        "ending_share": {
+          "no_terminal_punct": 0.25078125,
+          "period": 0.7453125,
+          "space_period": 0.00390625
+        },
+        "trailing_whitespace_share": 0.12578125,
+        "capitalized_first_char_share": 0.84296875,
+        "contains_period_share": 0.75
+      },
+      "eval": {
+        "references": 2561,
+        "ending_share": {
+          "no_terminal_punct": 0.22374072627879735,
+          "other_terminal_punct": 0.0003904724716907458,
+          "period": 0.7743069113627489,
+          "space_period": 0.0015618898867629833
+        },
+        "trailing_whitespace_share": 0.14252245216712223,
+        "capitalized_first_char_share": 0.85864896524795,
+        "contains_period_share": 0.7762592737212026
+      }
+    },
+    "F": {
+      "train": {
+        "references": 10240,
+        "ending_share": {
+          "no_terminal_punct": 0.046875,
+          "other_terminal_punct": 0.00068359375,
+          "period": 0.95244140625
+        },
+        "trailing_whitespace_share": 0.0,
+        "capitalized_first_char_share": 0.99697265625,
+        "contains_period_share": 0.9537109375
+      },
+      "validation": {
+        "references": 1280,
+        "ending_share": {
+          "no_terminal_punct": 0.0359375,
+          "period": 0.9640625
+        },
+        "trailing_whitespace_share": 0.0,
+        "capitalized_first_char_share": 0.99609375,
+        "contains_period_share": 0.9640625
+      },
+      "eval": {
+        "references": 2560,
+        "ending_share": {
+          "no_terminal_punct": 0.055859375,
+          "other_terminal_punct": 0.00078125,
+          "period": 0.943359375
+        },
+        "trailing_whitespace_share": 0.0,
+        "capitalized_first_char_share": 0.995703125,
+        "contains_period_share": 0.944921875
+      }
+    }
+  },
+  "saved_caption_prediction_punctuation": {
+    "per_archive": {
+      "multimodal-g1-raw.tar.gz": {
+        "C/contains_comma": 56,
+        "C/contains_period": 0,
+        "C/rows": 3072,
+        "F/contains_comma": 784,
+        "F/contains_period": 0,
+        "F/rows": 3072
+      },
+      "multimodal-g4-raw.tar.gz": {
+        "C/contains_comma": 32508,
+        "C/contains_period": 0,
+        "C/rows": 352256,
+        "F/contains_comma": 50801,
+        "F/contains_period": 0,
+        "F/rows": 352256
+      },
+      "multimodal-g5-raw.tar.gz": {
+        "C/contains_comma": 26649,
+        "C/contains_period": 0,
+        "C/rows": 270336,
+        "F/contains_comma": 65691,
+        "F/contains_period": 0,
+        "F/rows": 270336
+      }
+    },
+    "total": {
+      "C/contains_comma": 59213,
+      "C/contains_period": 0,
+      "C/rows": 625664,
+      "F/contains_comma": 117276,
+      "F/contains_period": 0,
+      "F/rows": 625664
+    }
+  },
+  "note": "BERT basic tokenization splits punctuation and drops whitespace, so 'x .' and 'x.' yield the same token ids; the relevant difference is presence of a terminal period before [SEP]. Mechanism linking this to non-termination is a hypothesis."
+}

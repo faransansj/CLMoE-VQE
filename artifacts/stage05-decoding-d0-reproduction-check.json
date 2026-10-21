@@ -1,0 +1,39 @@
+{
+  "stage": "stage0.5-decoding-probe",
+  "topic": "D0 decoding reproduction evidence (no saved validation predictions exist)",
+  "context": {
+    "saved_validation_predictions": "Runtime scan of multimodal-g4-raw.tar.gz and multimodal-g5-raw.tar.gz over all prediction files of the six banks found zero overlap with the Flickr validation id set (files cover the confirmation eval split only); see artifacts/stage05-decoding-probe.json d0_reproduction.saved_validation_predictions. D0 is therefore the reference decoding.",
+    "cross_run_check": "The smoke run (job 2582869, node node33, F/137 + C/137, first 16 validation rows, script sha256 8bdc6fb061397dd3db900e7f26c87f478b3653588df2e6f85053e872a2ca88c6) and the full run (job 2582900, node node35, all 6 banks, 256 rows, same script sha256) both decoded with identical checkpoints, identical micro-batch composition (8) and identical deterministic settings; D0 of the smoke must equal rows 0-15 of D0 in the full run.",
+    "comparison": "Per cell (model x 9 variants, seed 137): field-wise equality of prediction, generated_tokens and eos for rows 0..15."
+  },
+  "result": {
+    "cells_compared": 18,
+    "cells_equal": 18,
+    "detail": [
+      "F D0 equal", "F D1_b1 equal", "F D1_b2 equal", "F D1_b4 equal", "F D2_r1.2 equal",
+      "F D2_r1.5 equal", "F D3_n32 equal", "F D3_n24 equal", "F D4_period equal",
+      "C D0 equal", "C D1_b1 equal", "C D1_b2 equal", "C D1_b4 equal", "C D2_r1.2 equal",
+      "C D2_r1.5 equal", "C D3_n32 equal", "C D3_n24 equal", "C D4_period equal"
+    ],
+    "conclusion": "D0 (and every variant) is run-to-run reproducible across nodes; D0 is a valid reference decoding. Diagnostic only; no variant is selected as a method on eval."
+  },
+  "attempt_history": [
+    {"job_id": 2582546, "mode": "smoke", "outcome": "failed", "reason": "Config drift check wrongly compared scorer_locks across F and C banks (each bank records only its own task lock)", "fixed": "per-task lock comparison", "logs": ["artifacts/stage05-logs/stage05-decoding-probe-2582546.log", "artifacts/stage05-logs/stage05-decoding-probe-2582546.err.log"]},
+    {"job_id": 2582676, "mode": "smoke", "outcome": "failed", "reason": "score_all received the runs_state wrapper instead of its runs dict", "fixed": "pass runs_state['runs']", "logs": ["artifacts/stage05-logs/stage05-decoding-probe-2582676.log", "artifacts/stage05-logs/stage05-decoding-probe-2582676.err.log"]},
+    {"job_id": 2582723, "mode": "smoke", "outcome": "failed", "reason": "smoke scored the full 256-row corpus against 16-row predictions (subset/full mismatch)", "fixed": "thread the active validation slice into scoring", "logs": ["artifacts/stage05-logs/stage05-decoding-probe-2582723.log", "artifacts/stage05-logs/stage05-decoding-probe-2582723.err.log"]},
+    {"job_id": 2582869, "mode": "smoke", "outcome": "passed", "note": "16 rows x F/137 + C/137 x 9 variants; total 55.0s; smoke log has per-variant CIDEr-D", "logs": ["artifacts/stage05-logs/stage05-decoding-probe-2582869.log", "artifacts/stage05-logs/stage05-decoding-probe-2582869.err.log"]},
+    {"job_id": 2582900, "mode": "probe", "outcome": "passed", "note": "full 6 banks x 9 variants x 256 rows; total 1811.8s; report + predictions written", "logs": ["artifacts/stage05-logs/stage05-decoding-probe-2582900.log", "artifacts/stage05-logs/stage05-decoding-probe-2582900.err.log"]}
+  ],
+  "scripts": {
+    "probe_script_sha256_final": "8bdc6fb061397dd3db900e7f26c87f478b3653588df2e6f85053e872a2ca88c6",
+    "earlier_script_sha256": ["1f053a14a5158a52594f7454d5b4f949beaf1c466fa09b62cffbc0f8870467f7", "2b87038bc460ec448ab305224fb3743e20b0f32fd1734b274962cfacdb467605"],
+    "sbatch_sha256": "1ee2d37a50e21a6da7dc38c7d1de0376de1089b08ec0b9dcdb19134a67dfc310",
+    "note": "earlier sha256s are the uploaded copies used by the failed smoke attempts 2582546/2582676 (1f053a...) and 2582723 (2b8703...); their diffs are described in attempt_history"
+  },
+  "artifact_hashes": {
+    "artifacts/stage05-decoding-predictions.jsonl.gz": "9a2cbbc3acf8398633585c866ec9451e725da76fc09591d52c92f93fb76893a9",
+    "artifacts/stage05-decoding-probe.json": "5779a9d8bbdaddd92f601ea004f1da3f7f506cd9528c7d5282ca4075e2839e6a",
+    "artifacts/stage05-logs/stage05-decoding-probe-2582900-verification.jsonl": "248f6c63fad61f69c3c5cf9dfb8f91deb24cd5505512f2d6bb74fda92a57b8b1",
+    "note": "hashes of the fetched copies; this evidence file is not self-hashed (its hash changes with any edit)"
+  }
+}

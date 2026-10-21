@@ -1,0 +1,20 @@
+{
+  "script_sha256": "37256c6495c6c916fd51ade6aada3eac1e36f244a8212e947ce7eecc5c1f5646",
+  "manifest_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+  "period_token_id": 1012,
+  "sep_token_id": 102,
+  "tasks": {
+    "C": {
+      "batches_checked": 5120,
+      "batches_token_count_mismatch": 0,
+      "trained_target_occurrences": 81920,
+      "share_targets_ending_with_period_token_before_sep": 0.75115966796875
+    },
+    "F": {
+      "batches_checked": 5120,
+      "batches_token_count_mismatch": 0,
+      "trained_target_occurrences": 81920,
+      "share_targets_ending_with_period_token_before_sep": 0.95244140625
+    }
+  }
+}

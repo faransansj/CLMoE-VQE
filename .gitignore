@@ -62,3 +62,13 @@ venv/
 !/artifacts/multimodal-g5-raw.tar.gz
 !/artifacts/multimodal-g5-report.tar.gz
 !/artifacts/multimodal-g5-summary.json
+!/artifacts/stage0-*
+!/artifacts/stage05-*
+!/artifacts/stage1-*
+!/artifacts/week1-*
+!/artifacts/g4-final-flickr-eos.json
+!/artifacts/multimodal-summary-review*
+!/artifacts/multimodal-resource-review.json
+!/artifacts/multimodal-review-statistics.json
+!/artifacts/multimodal-checkpoint-zip-inspection.json
+!/artifacts/routing-review-*.json

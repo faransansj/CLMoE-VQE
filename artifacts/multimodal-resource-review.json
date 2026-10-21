@@ -1,0 +1,3716 @@
+{
+  "schema": "multimodal-resource-review/2",
+  "root": "/home/midori/Projects/CLMoE-VQE",
+  "g4_stage_rows": 800,
+  "g4_run_conditions": 224,
+  "dtypes_policy": "dtypes are read from the checkpoint storages (all torch.FloatStorage), not assumed",
+  "code_citations": {
+    "parameter_counts semantics": "sema_vqa/readout_model.py:216-228 (parameter_counts: numel counts; base includes frozen zero-output vision mixtures; experts sums bank A/B; trainable = enabled tensors)",
+    "LoRA expert layout": "sema_vqa/readout_model.py:26-36 (A=(rank,in_features), B=(out_features,rank); zero-delta init), :121-142 (old experts permanently frozen after expansion)",
+    "checkpoint = LoRA bank only + router + trainer state": "sema_vqa/readout_model.py:193-213 (checkpoint_state snapshots only LoRA tensors + metadata)",
+    "router memory counter": "sema_vqa/readout_router.py:98-99 memory_bytes() = sum(numel*element_size + 8 per feature tensor); 128x1536 fp32 features per task (observe, :30-47)",
+    "router fit params": "sema_vqa/readout_router.py:49-71 weight[1536,E]/center[1536]/prior[E]",
+    "router exists only for expand": "sema_multimodal/run.py:318 (FeatureRouter only when method == 'expand')",
+    "replay storage semantics": "sema_multimodal/run.py:524-531 replay_row_bytes = len(json.dumps(replay rows)); replay_image_bytes = on-disk size of unique referenced image files; policy 'Rows and immutable image-file references; no duplicate image copies'",
+    "replay replacement budget": "sema_multimodal/run.py:60-78 half of each actual batch is replaced (not added), only once a buffer exists (stage 0 has none)",
+    "per-stage counters": "sema_multimodal/run.py:527-538; cumulative totals exported by scripts/evaluate_multimodal_confirmation.py:1120-1133",
+    "checkpoint layout incl. optimizer": "sema_multimodal/run.py:374-380 latest.pt = {model checkpoint_state, router, state, rng, optimizer, scheduler, log_bytes}; optimizer is AdamW over trainable only, rebuilt per phase :327-332; final-archived checkpoints verified optimizer=None via direct pickle probe (scripts/inspect_multimodal_checkpoint_zip.py)",
+    "peak GPU memory": "sema_multimodal/run.py:372-373, 532 torch.cuda.max_memory_allocated, max across tasks (recorded)",
+    "feature/fit timing": "sema_multimodal/run.py:473-477 feature_seconds covers frozen-feature extraction AND router refit; router refits after every task addition",
+    "independent per-task archive": "sema_multimodal/run.py:480-486 archive per task = torch.save(model.checkpoint_state()) only; its size is recorded in independent_storage_bytes"
+  },
+  "not_recorded": {
+    "gpu_hours": "미기록 — no SLURM accounting artifact exists for the multimodal jobs (same limitation as the predecessor cohort: README.md:202, VQA_CLOSURE.md). Recorded quantities are stage seconds (training/feature/evaluation/wall) and torch.cuda.max_memory_allocated peaks.",
+    "per_sample_latency": "미기록 — no per-sample inference latency is recorded anywhere; no derived per-image latency proxies are emitted.",
+    "routing_inference_overhead": "미기록 — G5 routing CSVs contain no timing columns; recorded piece is train-time feature+fit seconds for expansion only (sema_multimodal/run.py:473-477).",
+    "preprocessed_replay_tensor_storage": "미기록(+해당 없음) — the runner persists raw rows and references raw JPEG files; it stores no preprocessed image tensors (replay rows carry the image path, vision model decodes per request: sema_vqa/vision_model.py:128-134), so any preprocessed-equivalent size would be an invented value and is not computed here.",
+    "runtime_optimizer_state": "미기록 — the archived final checkpoints store no optimizer state (verified: optimizer=None in all 256 files); the running AdamW state size was never recorded and is not estimated."
+  },
+  "references": {
+    "resources_csv": "artifacts/multimodal-g4-report/resources.csv",
+    "checkpoints_inventory": "artifacts/multimodal-confirmation-checkpoints.json",
+    "checkpoint_zip_probe": [
+      "scripts/inspect_multimodal_checkpoint_zip.py",
+      "artifacts/multimodal-checkpoint-zip-inspection.json"
+    ],
+    "development_checkpoints": "artifacts/multimodal-development-checkpoints.json",
+    "backups": "artifacts/multimodal-backups.json",
+    "execution": "artifacts/multimodal-confirmation-execution.json",
+    "g5": "artifacts/multimodal-g5-summary.json"
+  },
+  "methods": {
+    "common_cl/capacity": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 4718592,
+          "max": 4718592,
+          "mean": 4718592,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 4718592,
+          "max": 4718592,
+          "mean": 4718592,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 4718592,
+          "max": 4718592,
+          "mean": 4718592,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_image_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "raw_replay_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "sums": {
+        "steps": 81920,
+        "image_exposures": 1310720,
+        "current_exposures": 1310720,
+        "replay_exposures": 0,
+        "target_tokens": 10538644,
+        "training_seconds": 35044.20814302494,
+        "feature_seconds": 6.734766066074371e-05,
+        "evaluation_seconds": 17856.81850309833,
+        "wall_seconds": 63768.68883314263
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2651768320,
+        "max": 2679719424,
+        "mean": 2664290368,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 271.99925354011793,
+          "experts_numel": {
+            "value": 4718592,
+            "const": true
+          },
+          "active_trainable_numel": 4718592,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1095.1315044695293,
+            "feature_seconds": 2.104614395648241e-06,
+            "evaluation_seconds": 558.0255782218228,
+            "wall_seconds": 1992.7715260357072,
+            "peak_gpu_memory_bytes": 2664290368
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 273.7261651316512,
+          "experts_numel": {
+            "value": 4718592,
+            "const": true
+          },
+          "active_trainable_numel": 4718592,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1095.1315044695293,
+            "feature_seconds": 2.104614395648241e-06,
+            "evaluation_seconds": 558.0255782218228,
+            "wall_seconds": 1992.7715260357072,
+            "peak_gpu_memory_bytes": 2664290368
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 274.51464765043784,
+          "experts_numel": {
+            "value": 4718592,
+            "const": true
+          },
+          "active_trainable_numel": 4718592,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1095.1315044695293,
+            "feature_seconds": 2.104614395648241e-06,
+            "evaluation_seconds": 558.0255782218228,
+            "wall_seconds": 1992.7715260357072,
+            "peak_gpu_memory_bytes": 2664290368
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 274.89143814732233,
+          "experts_numel": {
+            "value": 4718592,
+            "const": true
+          },
+          "active_trainable_numel": 4718592,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1095.1315044695293,
+            "feature_seconds": 2.104614395648241e-06,
+            "evaluation_seconds": 558.0255782218228,
+            "wall_seconds": 1992.7715260357072,
+            "peak_gpu_memory_bytes": 2664290368
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "capacity_matched_shared",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 19090490,
+            "max": 19300602,
+            "mean": 19184216
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 18874368,
+            "max": 18874368,
+            "mean": 18874368
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 173091,
+            "max": 383169,
+            "mean": 266802.21875
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37890,
+            "max": 37950,
+            "mean": 37925.78125
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              32
+            ],
+            "alpha": [
+              64.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|32x768": 3072,
+            "lora_parameter|768x32": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    },
+    "common_cl/expansion": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 4718592,
+          "max": 4718592,
+          "mean": 4718592,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 3176586,
+        "max": 3176586,
+        "mean": 3176586,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_image_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "raw_replay_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "sums": {
+        "steps": 81920,
+        "image_exposures": 1310720,
+        "current_exposures": 1310720,
+        "replay_exposures": 0,
+        "target_tokens": 10538644,
+        "training_seconds": 34979.774540571496,
+        "feature_seconds": 3140.9502100248355,
+        "evaluation_seconds": 21811.72805957531,
+        "wall_seconds": 68505.96757343749
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2600871424,
+        "max": 2628822528,
+        "mean": 2615162944,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 270.78432345063266,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 798822,
+            "max": 798822,
+            "mean": 798822,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1093.1179543928592,
+            "feature_seconds": 98.15469406327611,
+            "evaluation_seconds": 681.6165018617285,
+            "wall_seconds": 2140.8114866699216,
+            "peak_gpu_memory_bytes": 2615162944
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 273.3907620197533,
+          "experts_numel": {
+            "value": 2359296,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 1591410,
+            "max": 1591410,
+            "mean": 1591410,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1093.1179543928592,
+            "feature_seconds": 98.15469406327611,
+            "evaluation_seconds": 681.6165018617285,
+            "wall_seconds": 2140.8114866699216,
+            "peak_gpu_memory_bytes": 2615162944
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 274.0349066531089,
+          "experts_numel": {
+            "value": 3538944,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 2383998,
+            "max": 2383998,
+            "mean": 2383998,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1093.1179543928592,
+            "feature_seconds": 98.15469406327611,
+            "evaluation_seconds": 681.6165018617285,
+            "wall_seconds": 2140.8114866699216,
+            "peak_gpu_memory_bytes": 2615162944
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 274.90796226936436,
+          "experts_numel": {
+            "value": 4718592,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 3176586,
+            "max": 3176586,
+            "mean": 3176586,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1093.1179543928592,
+            "feature_seconds": 98.15469406327611,
+            "evaluation_seconds": 681.6165018617285,
+            "wall_seconds": 2140.8114866699216,
+            "peak_gpu_memory_bytes": 2615162944
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "expand",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 22416186,
+            "max": 22715706,
+            "mean": 22560498
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 18874368,
+            "max": 18874368,
+            "mean": 18874368
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 3145728,
+            "max": 3145728,
+            "mean": 3145728
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 30736,
+            "max": 30736,
+            "mean": 30736
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 210410,
+            "max": 509942,
+            "mean": 354708.8125
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 149811,
+            "max": 149870,
+            "mean": 149837.1875
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 781,
+            "max": 781,
+            "mean": 781
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 4,
+            "max": 4,
+            "mean": 4
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              4
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 24800,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 12288,
+            "lora_parameter|768x8": 12288,
+            "router_memory_feature|128x1536": 128,
+            "router_fit|1536x4": 32,
+            "router_fit|1536": 32,
+            "router_fit|4": 32,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    },
+    "common_cl/replay": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 256,
+        "max": 256,
+        "mean": 256,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 142127,
+        "max": 145290,
+        "mean": 143338.1875,
+        "const": false
+      },
+      "replay_image_bytes_final": {
+        "min": 36678985,
+        "max": 42029040,
+        "mean": 38758830.9375,
+        "const": false
+      },
+      "raw_replay_bytes_final": {
+        "min": 36821819,
+        "max": 42172346,
+        "mean": 38902169.125,
+        "const": false
+      },
+      "sums": {
+        "steps": 81920,
+        "image_exposures": 1310720,
+        "current_exposures": 819200,
+        "replay_exposures": 491520,
+        "target_tokens": 10679082,
+        "training_seconds": 34635.72970512172,
+        "feature_seconds": 6.563379429280758e-05,
+        "evaluation_seconds": 20401.008137482335,
+        "wall_seconds": 61641.36033768405
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2563874304,
+        "max": 2644215296,
+        "mean": 2606953024,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 269.5270584139216,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 64,
+          "replay_row_bytes": 38590.1875,
+          "replay_image_bytes": 9654931.8125,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1082.3665532850537,
+            "feature_seconds": 2.051056071650237e-06,
+            "evaluation_seconds": 637.531504296323,
+            "wall_seconds": 1926.2925105526265,
+            "peak_gpu_memory_bytes": 2606953024
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 5120,
+          "training_seconds_mean": 270.1748654458679,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 128,
+          "replay_row_bytes": 71658.375,
+          "replay_image_bytes": 19154615.1875,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1082.3665532850537,
+            "feature_seconds": 2.051056071650237e-06,
+            "evaluation_seconds": 637.531504296323,
+            "wall_seconds": 1926.2925105526265,
+            "peak_gpu_memory_bytes": 2606953024
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 5120,
+          "training_seconds_mean": 271.25405794052494,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 192,
+          "replay_row_bytes": 104714.875,
+          "replay_image_bytes": 29169863.1875,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1082.3665532850537,
+            "feature_seconds": 2.051056071650237e-06,
+            "evaluation_seconds": 637.531504296323,
+            "wall_seconds": 1926.2925105526265,
+            "peak_gpu_memory_bytes": 2606953024
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 5120,
+          "training_seconds_mean": 271.4105714847392,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 256,
+          "replay_row_bytes": 143338.1875,
+          "replay_image_bytes": 38758830.9375,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1082.3665532850537,
+            "feature_seconds": 2.051056071650237e-06,
+            "evaluation_seconds": 637.531504296323,
+            "wall_seconds": 1926.2925105526265,
+            "peak_gpu_memory_bytes": 2606953024
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "replay_lora",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 5064122,
+            "max": 5275770,
+            "mean": 5168182
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 302488,
+            "max": 514154,
+            "mean": 406551.5
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37887,
+            "max": 37950,
+            "mean": 37918.5
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 256,
+            "max": 256,
+            "mean": 256
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    },
+    "common_cl/shared": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_image_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "raw_replay_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "sums": {
+        "steps": 81920,
+        "image_exposures": 1310720,
+        "current_exposures": 1310720,
+        "replay_exposures": 0,
+        "target_tokens": 10538644,
+        "training_seconds": 35124.924281054875,
+        "feature_seconds": 6.27532135695219e-05,
+        "evaluation_seconds": 17797.73444048327,
+        "wall_seconds": 59366.34549061139
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2600871424,
+        "max": 2614666752,
+        "mean": 2608085056,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 269.70726361101697,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1097.6538837829648,
+            "feature_seconds": 1.9610379240475595e-06,
+            "evaluation_seconds": 556.1792012651022,
+            "wall_seconds": 1855.198296581606,
+            "peak_gpu_memory_bytes": 2608085056
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 275.83708180569374,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1097.6538837829648,
+            "feature_seconds": 1.9610379240475595e-06,
+            "evaluation_seconds": 556.1792012651022,
+            "wall_seconds": 1855.198296581606,
+            "peak_gpu_memory_bytes": 2608085056
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 275.34187013499104,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1097.6538837829648,
+            "feature_seconds": 1.9610379240475595e-06,
+            "evaluation_seconds": 556.1792012651022,
+            "wall_seconds": 1855.198296581606,
+            "peak_gpu_memory_bytes": 2608085056
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 276.7676682312631,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 2560,
+            "training_seconds": 1097.6538837829648,
+            "feature_seconds": 1.9610379240475595e-06,
+            "evaluation_seconds": 556.1792012651022,
+            "wall_seconds": 1855.198296581606,
+            "peak_gpu_memory_bytes": 2608085056
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "shared_lora",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 4928954,
+            "max": 5130682,
+            "mean": 5015634
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 167311,
+            "max": 369068,
+            "mean": 254005.625
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37889,
+            "max": 37950,
+            "mean": 37916.375
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    },
+    "frozen_first/frozen": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_image_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "raw_replay_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "sums": {
+        "steps": 20480,
+        "image_exposures": 327680,
+        "current_exposures": 327680,
+        "replay_exposures": 0,
+        "target_tokens": 2828016,
+        "training_seconds": 8867.40341698192,
+        "feature_seconds": 5.917076487094164e-05,
+        "evaluation_seconds": 26519.49159864278,
+        "wall_seconds": 38647.95756080467
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2287334912,
+        "max": 2612416000,
+        "mean": 2453430400,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 640,
+          "image_exposures": 10240,
+          "replay_exposures": 0,
+          "training_seconds_mean": 277.106356780685,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 640,
+            "training_seconds": 277.106356780685,
+            "feature_seconds": 1.8490864022169262e-06,
+            "evaluation_seconds": 828.7341124575869,
+            "wall_seconds": 1207.748673775146,
+            "peak_gpu_memory_bytes": 2453430400
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 0,
+          "image_exposures": 0,
+          "replay_exposures": 0,
+          "training_seconds_mean": 0.0,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 0,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 640,
+            "training_seconds": 277.106356780685,
+            "feature_seconds": 1.8490864022169262e-06,
+            "evaluation_seconds": 828.7341124575869,
+            "wall_seconds": 1207.748673775146,
+            "peak_gpu_memory_bytes": 2453430400
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 0,
+          "image_exposures": 0,
+          "replay_exposures": 0,
+          "training_seconds_mean": 0.0,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 0,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 640,
+            "training_seconds": 277.106356780685,
+            "feature_seconds": 1.8490864022169262e-06,
+            "evaluation_seconds": 828.7341124575869,
+            "wall_seconds": 1207.748673775146,
+            "peak_gpu_memory_bytes": 2453430400
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 0,
+          "image_exposures": 0,
+          "replay_exposures": 0,
+          "training_seconds_mean": 0.0,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 0,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 0,
+          "replay_row_bytes": 0,
+          "replay_image_bytes": 0,
+          "run_final_totals": {
+            "steps": 640,
+            "training_seconds": 277.106356780685,
+            "feature_seconds": 1.8490864022169262e-06,
+            "evaluation_seconds": 828.7341124575869,
+            "wall_seconds": 1207.748673775146,
+            "peak_gpu_memory_bytes": 2453430400
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "frozen_first",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 4808058,
+            "max": 5545978,
+            "mean": 5159138
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 46409,
+            "max": 784331,
+            "mean": 397503.90625
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37894,
+            "max": 37950,
+            "mean": 37922.09375
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    },
+    "independent/independent": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 1,
+        "max": 1,
+        "mean": 1,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_image_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "raw_replay_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "sums": {
+        "steps": 20480,
+        "image_exposures": 327680,
+        "current_exposures": 327680,
+        "replay_exposures": 0,
+        "target_tokens": 2634661,
+        "training_seconds": 8638.961990768323,
+        "feature_seconds": 1.3241777196526527e-05,
+        "evaluation_seconds": 2717.7602583732223,
+        "wall_seconds": 14386.564149246435
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2287334912,
+        "max": 2612416000,
+        "mean": 2443543168,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 153008832,
+      "stage_growth": [],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "independent",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 4801274,
+            "max": 4884922,
+            "mean": 4825932
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 39647,
+            "max": 123297,
+            "mean": 64294.46875
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37901,
+            "max": 37950,
+            "mean": 37925.53125
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        },
+        "independent_archive": {
+          "variant": "independent",
+          "file_kind": "independent_archive",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 4781526,
+            "max": 4781526,
+            "mean": 4781526
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 23925,
+            "max": 23925,
+            "mean": 23925
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 38961,
+            "max": 38961,
+            "mean": 38961
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 196,
+            "max": 196,
+            "mean": 196
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072
+          }
+        }
+      }
+    },
+    "tuned_replay/tuned_replay": {
+      "n_runs": 32,
+      "stages_per_run": {
+        "min": 4,
+        "max": 4,
+        "mean": 4,
+        "const": true
+      },
+      "parameter_counts_final": {
+        "base_numel": {
+          "min": 361837439,
+          "max": 361837439,
+          "mean": 361837439,
+          "const": true
+        },
+        "experts_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "active_trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        },
+        "trainable_numel": {
+          "min": 1179648,
+          "max": 1179648,
+          "mean": 1179648,
+          "const": true
+        }
+      },
+      "router_memory_bytes_final": {
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "const": true
+      },
+      "replay_images_stored_final": {
+        "min": 256,
+        "max": 256,
+        "mean": 256,
+        "const": true
+      },
+      "replay_row_bytes_final": {
+        "min": 142127,
+        "max": 145290,
+        "mean": 143338.1875,
+        "const": false
+      },
+      "replay_image_bytes_final": {
+        "min": 36678985,
+        "max": 42029040,
+        "mean": 38758830.9375,
+        "const": false
+      },
+      "raw_replay_bytes_final": {
+        "min": 36821819,
+        "max": 42172346,
+        "mean": 38902169.125,
+        "const": false
+      },
+      "sums": {
+        "steps": 163840,
+        "image_exposures": 2621440,
+        "current_exposures": 1638400,
+        "replay_exposures": 983040,
+        "target_tokens": 21354806,
+        "training_seconds": 70175.32156205236,
+        "feature_seconds": 6.827991455793381e-05,
+        "evaluation_seconds": 20517.4656444696,
+        "wall_seconds": 101973.07278467075
+      },
+      "peak_gpu_memory_bytes": {
+        "min": 2567970304,
+        "max": 2644215296,
+        "mean": 2607894784,
+        "const": false
+      },
+      "independent_storage_bytes_sum": 0,
+      "stage_growth": [
+        {
+          "stage_index": 0,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 1280,
+          "image_exposures": 20480,
+          "replay_exposures": 0,
+          "training_seconds_mean": 545.3288305024798,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 64,
+          "replay_row_bytes": 38590.1875,
+          "replay_image_bytes": 9654931.8125,
+          "run_final_totals": {
+            "steps": 5120,
+            "training_seconds": 2192.978798814136,
+            "feature_seconds": 2.1337473299354315e-06,
+            "evaluation_seconds": 641.170801389675,
+            "wall_seconds": 3186.658524520961,
+            "peak_gpu_memory_bytes": 2607894784
+          }
+        },
+        {
+          "stage_index": 1,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 1280,
+          "image_exposures": 20480,
+          "replay_exposures": 10240,
+          "training_seconds_mean": 549.4322887233211,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 128,
+          "replay_row_bytes": 71658.375,
+          "replay_image_bytes": 19154615.1875,
+          "run_final_totals": {
+            "steps": 5120,
+            "training_seconds": 2192.978798814136,
+            "feature_seconds": 2.1337473299354315e-06,
+            "evaluation_seconds": 641.170801389675,
+            "wall_seconds": 3186.658524520961,
+            "peak_gpu_memory_bytes": 2607894784
+          }
+        },
+        {
+          "stage_index": 2,
+          "task_ids": [
+            "C",
+            "G"
+          ],
+          "steps": 1280,
+          "image_exposures": 20480,
+          "replay_exposures": 10240,
+          "training_seconds_mean": 549.096796077225,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 192,
+          "replay_row_bytes": 104714.875,
+          "replay_image_bytes": 29169863.1875,
+          "run_final_totals": {
+            "steps": 5120,
+            "training_seconds": 2192.978798814136,
+            "feature_seconds": 2.1337473299354315e-06,
+            "evaluation_seconds": 641.170801389675,
+            "wall_seconds": 3186.658524520961,
+            "peak_gpu_memory_bytes": 2607894784
+          }
+        },
+        {
+          "stage_index": 3,
+          "task_ids": [
+            "F",
+            "V"
+          ],
+          "steps": 1280,
+          "image_exposures": 20480,
+          "replay_exposures": 10240,
+          "training_seconds_mean": 549.1208835111102,
+          "experts_numel": {
+            "value": 1179648,
+            "const": true
+          },
+          "active_trainable_numel": 1179648,
+          "router_memory_bytes": {
+            "min": 0,
+            "max": 0,
+            "mean": 0,
+            "const": true
+          },
+          "replay_images_stored": 256,
+          "replay_row_bytes": 143338.1875,
+          "replay_image_bytes": 38758830.9375,
+          "run_final_totals": {
+            "steps": 5120,
+            "training_seconds": 2192.978798814136,
+            "feature_seconds": 2.1337473299354315e-06,
+            "evaluation_seconds": 641.170801389675,
+            "wall_seconds": 3186.658524520961,
+            "peak_gpu_memory_bytes": 2607894784
+          }
+        }
+      ],
+      "checkpoint_probe_exact": {
+        "latest": {
+          "variant": "tuned_replay",
+          "file_kind": "latest.pt",
+          "n_files": 32,
+          "serialized_bytes": {
+            "n": 32,
+            "min": 5071994,
+            "max": 5277818,
+            "mean": 5182010
+          },
+          "lora_parameter_bytes": {
+            "n": 32,
+            "min": 4718592,
+            "max": 4718592,
+            "mean": 4718592
+          },
+          "router_memory_feature_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "router_fit_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "optimizer_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "rng_state_bytes": {
+            "n": 32,
+            "min": 5072,
+            "max": 5072,
+            "mean": 5072
+          },
+          "other_storage_bytes": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "data_pkl_metadata_bytes": {
+            "n": 32,
+            "min": 310347,
+            "max": 516186,
+            "mean": 420379.59375
+          },
+          "version_byteorder_bytes": {
+            "n": 32,
+            "min": 48,
+            "max": 48,
+            "mean": 48
+          },
+          "zip_overhead_bytes": {
+            "n": 32,
+            "min": 37891,
+            "max": 37948,
+            "mean": 37918.40625
+          },
+          "zip_members": {
+            "n": 32,
+            "min": 198,
+            "max": 198,
+            "mean": 198
+          },
+          "optimizer_state_dict": {
+            "None": 32
+          },
+          "scheduler_state_dict": {
+            "None": 32
+          },
+          "replay_rows_stored": {
+            "n": 32,
+            "min": 256,
+            "max": 256,
+            "mean": 256
+          },
+          "router_int_labels_total": {
+            "n": 32,
+            "min": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "declared_model": {
+            "rank": [
+              8
+            ],
+            "alpha": [
+              16.0
+            ],
+            "num_experts": [
+              1
+            ]
+          },
+          "storage_dtypes_all": {
+            "torch.FloatStorage": 6144,
+            "torch.ByteStorage": 64
+          },
+          "shapes_by_category": {
+            "lora_parameter|8x768": 3072,
+            "lora_parameter|768x8": 3072,
+            "rng_state|5056": 32,
+            "rng_state|16": 32
+          }
+        }
+      }
+    }
+  },
+  "validations": {
+    "g4_total_steps_vs_execution_recorded": {
+      "computed": 532480,
+      "recorded": 532480,
+      "match": true
+    },
+    "g4_training_runs": {
+      "computed": 224,
+      "recorded": 224,
+      "match": true
+    },
+    "g4_stage_rows": {
+      "computed": 800,
+      "recorded": 800,
+      "match": true
+    },
+    "confirmation_checkpoint_inventory": {
+      "sum_of_files": 2300068352,
+      "recorded_tar_bytes": 2300518400,
+      "tar_padding_delta": 450048
+    },
+    "development_checkpoint_inventory": {
+      "sum_of_files": 1058318264,
+      "recorded_tar_bytes": 1058508800,
+      "tar_padding_delta": 190536,
+      "file_count": {
+        "computed": 108,
+        "recorded": 108,
+        "match": true
+      }
+    },
+    "serialized_composition_identity_per_file": {
+      "all_identity": true
+    },
+    "expansion_router_memory_recorded_equals_exact": {
+      "recorded_stage_means": [
+        798822,
+        1591410,
+        2383998,
+        3176586
+      ],
+      "exact_components": [
+        798822,
+        1591410,
+        2383998,
+        3176586
+      ],
+      "match": true,
+      "ancillary": "stage feature+labels 786,440/task; weight 6,144/expert; center 6,144; prior 4/expert; JSON 90"
+    },
+    "archived_optimizer_state": {
+      "capacity_matched_shared|latest.pt": {
+        "None": 32
+      },
+      "expand|latest.pt": {
+        "None": 32
+      },
+      "frozen_first|latest.pt": {
+        "None": 32
+      },
+      "independent|independent_archive": {
+        "None": 32
+      },
+      "independent|latest.pt": {
+        "None": 32
+      },
+      "replay_lora|latest.pt": {
+        "None": 32
+      },
+      "shared_lora|latest.pt": {
+        "None": 32
+      },
+      "tuned_replay|latest.pt": {
+        "None": 32
+      }
+    },
+    "archived_dtype_histogram": {
+      "capacity_matched_shared|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "expand|latest.pt": {
+        "torch.FloatStorage": 24800,
+        "torch.ByteStorage": 64
+      },
+      "frozen_first|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "independent|independent_archive": {
+        "torch.FloatStorage": 6144
+      },
+      "independent|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "replay_lora|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shared_lora|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "tuned_replay|latest.pt": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      }
+    }
+  },
+  "development_checkpoints": {
+    "g1": {
+      "independent/independent_archive": {
+        "n_files": 16,
+        "bytes_min": 4781526,
+        "bytes_max": 4781526,
+        "bytes_mean": 4781526
+      },
+      "independent/latest.pt": {
+        "n_files": 16,
+        "bytes_min": 4801338,
+        "bytes_max": 4887226,
+        "bytes_mean": 4824202
+      }
+    },
+    "g2": {
+      "capacity-matched shared/latest.pt": {
+        "n_files": 2,
+        "bytes_min": 9533562,
+        "bytes_max": 9547578,
+        "bytes_mean": 9540570
+      },
+      "expansion/latest.pt": {
+        "n_files": 2,
+        "bytes_min": 11179706,
+        "bytes_max": 11188346,
+        "bytes_mean": 11184026
+      },
+      "replay LoRA/latest.pt": {
+        "n_files": 2,
+        "bytes_min": 4891898,
+        "bytes_max": 4903610,
+        "bytes_mean": 4897754
+      },
+      "shared LoRA/latest.pt": {
+        "n_files": 2,
+        "bytes_min": 4813818,
+        "bytes_max": 4826042,
+        "bytes_mean": 4819930
+      }
+    },
+    "g3": {
+      "capacity-matched shared/latest.pt": {
+        "n_files": 16,
+        "bytes_min": 19029498,
+        "bytes_max": 19137786,
+        "bytes_mean": 19076170
+      },
+      "expansion/latest.pt": {
+        "n_files": 16,
+        "bytes_min": 22342138,
+        "bytes_max": 22508026,
+        "bytes_mean": 22420534
+      },
+      "frozen-first/latest.pt": {
+        "n_files": 4,
+        "bytes_min": 4807994,
+        "bytes_max": 5187002,
+        "bytes_mean": 4994138
+      },
+      "replay LoRA/latest.pt": {
+        "n_files": 16,
+        "bytes_min": 5010554,
+        "bytes_max": 5140218,
+        "bytes_mean": 5076202
+      },
+      "shared LoRA/latest.pt": {
+        "n_files": 16,
+        "bytes_min": 4847994,
+        "bytes_max": 4974202,
+        "bytes_mean": 4912438
+      }
+    }
+  },
+  "g5_summary": {
+    "scope": "Exploratory frozen-bank routing diagnostics; no primary significance is claimed and no model or config is re-selected from these scores.",
+    "parent_banks": 32,
+    "conditions": 160,
+    "audited_predictions": 1081344,
+    "aggregation": "Equal-weight mean of the four fixed orders and eight seeds; exploratory, no new significance test or selection.",
+    "variants": {
+      "native_joint": {
+        "family_normalized_final": {
+          "vqa": 0.9725403536348256,
+          "caption": 0.7433785745731301,
+          "balanced": 0.8579594641039778
+        },
+        "other_expert_fraction": {
+          "all": 0.2388153076171875,
+          "vqa": 0.279510498046875,
+          "caption": 0.1981201171875
+        },
+        "other_family_fraction": {
+          "all": 0.0001983642578125,
+          "vqa": 0.000396728515625,
+          "caption": 0.0
+        }
+      },
+      "image_only": {
+        "family_normalized_final": {
+          "vqa": 0.5016158419185415,
+          "caption": 0.4192429654901881,
+          "balanced": 0.4604294037043648
+        },
+        "other_expert_fraction": {
+          "all": 0.58740234375,
+          "vqa": 0.70635986328125,
+          "caption": 0.46844482421875
+        },
+        "other_family_fraction": {
+          "all": 0.3968658447265625,
+          "vqa": 0.4522705078125,
+          "caption": 0.341461181640625
+        }
+      },
+      "question_only": {
+        "family_normalized_final": {
+          "vqa": 0.9750928354543847,
+          "caption": 0.6530557794947804,
+          "balanced": 0.8140743074745825
+        },
+        "other_expert_fraction": {
+          "all": 0.3855133056640625,
+          "vqa": 0.271026611328125,
+          "caption": 0.5
+        },
+        "other_family_fraction": {
+          "all": 0.0,
+          "vqa": 0.0,
+          "caption": 0.0
+        }
+      },
+      "family_restricted_joint": {
+        "family_normalized_final": {
+          "vqa": 0.9731363075398328,
+          "caption": 0.7433785745731301,
+          "balanced": 0.8582574410564815
+        },
+        "other_expert_fraction": {
+          "all": 0.238677978515625,
+          "vqa": 0.27923583984375,
+          "caption": 0.1981201171875
+        },
+        "other_family_fraction": {
+          "all": 0.0,
+          "vqa": 0.0,
+          "caption": 0.0
+        }
+      },
+      "task_id_oracle": {
+        "family_normalized_final": {
+          "vqa": 1.0145652633638866,
+          "caption": 0.7114156352974838,
+          "balanced": 0.8629904493306851
+        },
+        "other_expert_fraction": {
+          "all": 0.0,
+          "vqa": 0.0,
+          "caption": 0.0
+        },
+        "other_family_fraction": {
+          "all": 0.0,
+          "vqa": 0.0,
+          "caption": 0.0
+        }
+      }
+    }
+  },
+  "recorded_shared_assets": {
+    "image_dataset": {
+      "path": "/scratch2/faransansj/multimodal_data_full_20261013/selected_images_v2.tar",
+      "images": 11264,
+      "bytes": 1730877440,
+      "sha256": "9c13a157b1a8c1663b4299c551607bab62f18432efda2006504ba0bbdf44dcef",
+      "local_path": "artifacts/multimodal-selected-images-v2.tar"
+    },
+    "blip_assets": {
+      "path": "/scratch2/faransansj/multimodal_data_full_20261013/locked_blip_assets.tar",
+      "files": 12,
+      "bytes": 2116055040,
+      "sha256": "fb1c2b3ddceba0bc4471ac71d88fcd401f0aad3689ec448b8072658feaddf06c",
+      "local_path": "artifacts/multimodal-locked-blip-assets.tar"
+    },
+    "development_checkpoints": {
+      "file_count": 108,
+      "archive": {
+        "path": "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-development-checkpoints.tar",
+        "bytes": 1058508800,
+        "sha256": "fc875a95fd183324f6efd007ec43ec87a05a6d42aca5a1c3186d2007aae014a9"
+      },
+      "local_path": "artifacts/multimodal-development-checkpoints.tar"
+    },
+    "confirmation_checkpoints": {
+      "file_count": 256,
+      "bytes": 2300518400,
+      "sha256": "6b288479429c8498b2e517a22175486ce16fae4ca1c342f7c7e76f2007b8cb38",
+      "local_path": "artifacts/multimodal-confirmation-checkpoints.tar",
+      "remote_path": "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-confirmation-checkpoints.tar",
+      "inventory": "artifacts/multimodal-confirmation-checkpoints.json"
+    }
+  },
+  "serialized_checkpoint_exact_probe": {
+    "capacity_matched_shared|latest.pt": {
+      "variant": "capacity_matched_shared",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 19090490,
+        "max": 19300602,
+        "mean": 19184216
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 18874368,
+        "max": 18874368,
+        "mean": 18874368
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 173091,
+        "max": 383169,
+        "mean": 266802.21875
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37890,
+        "max": 37950,
+        "mean": 37925.78125
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          32
+        ],
+        "alpha": [
+          64.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|32x768": 3072,
+        "lora_parameter|768x32": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "expand|latest.pt": {
+      "variant": "expand",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 22416186,
+        "max": 22715706,
+        "mean": 22560498
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 18874368,
+        "max": 18874368,
+        "mean": 18874368
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 3145728,
+        "max": 3145728,
+        "mean": 3145728
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 30736,
+        "max": 30736,
+        "mean": 30736
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 210410,
+        "max": 509942,
+        "mean": 354708.8125
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 149811,
+        "max": 149870,
+        "mean": 149837.1875
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 781,
+        "max": 781,
+        "mean": 781
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 4,
+        "max": 4,
+        "mean": 4
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          4
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 24800,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 12288,
+        "lora_parameter|768x8": 12288,
+        "router_memory_feature|128x1536": 128,
+        "router_fit|1536x4": 32,
+        "router_fit|1536": 32,
+        "router_fit|4": 32,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "frozen_first|latest.pt": {
+      "variant": "frozen_first",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 4808058,
+        "max": 5545978,
+        "mean": 5159138
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 46409,
+        "max": 784331,
+        "mean": 397503.90625
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37894,
+        "max": 37950,
+        "mean": 37922.09375
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "independent|independent_archive": {
+      "variant": "independent",
+      "file_kind": "independent_archive",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 4781526,
+        "max": 4781526,
+        "mean": 4781526
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 23925,
+        "max": 23925,
+        "mean": 23925
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 38961,
+        "max": 38961,
+        "mean": 38961
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 196,
+        "max": 196,
+        "mean": 196
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072
+      }
+    },
+    "independent|latest.pt": {
+      "variant": "independent",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 4801274,
+        "max": 4884922,
+        "mean": 4825932
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 39647,
+        "max": 123297,
+        "mean": 64294.46875
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37901,
+        "max": 37950,
+        "mean": 37925.53125
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "replay_lora|latest.pt": {
+      "variant": "replay_lora",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 5064122,
+        "max": 5275770,
+        "mean": 5168182
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 302488,
+        "max": 514154,
+        "mean": 406551.5
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37887,
+        "max": 37950,
+        "mean": 37918.5
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 256,
+        "max": 256,
+        "mean": 256
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "shared_lora|latest.pt": {
+      "variant": "shared_lora",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 4928954,
+        "max": 5130682,
+        "mean": 5015634
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 167311,
+        "max": 369068,
+        "mean": 254005.625
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37889,
+        "max": 37950,
+        "mean": 37916.375
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    },
+    "tuned_replay|latest.pt": {
+      "variant": "tuned_replay",
+      "file_kind": "latest.pt",
+      "n_files": 32,
+      "serialized_bytes": {
+        "n": 32,
+        "min": 5071994,
+        "max": 5277818,
+        "mean": 5182010
+      },
+      "lora_parameter_bytes": {
+        "n": 32,
+        "min": 4718592,
+        "max": 4718592,
+        "mean": 4718592
+      },
+      "router_memory_feature_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "router_fit_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "optimizer_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "rng_state_bytes": {
+        "n": 32,
+        "min": 5072,
+        "max": 5072,
+        "mean": 5072
+      },
+      "other_storage_bytes": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "data_pkl_metadata_bytes": {
+        "n": 32,
+        "min": 310347,
+        "max": 516186,
+        "mean": 420379.59375
+      },
+      "version_byteorder_bytes": {
+        "n": 32,
+        "min": 48,
+        "max": 48,
+        "mean": 48
+      },
+      "zip_overhead_bytes": {
+        "n": 32,
+        "min": 37891,
+        "max": 37948,
+        "mean": 37918.40625
+      },
+      "zip_members": {
+        "n": 32,
+        "min": 198,
+        "max": 198,
+        "mean": 198
+      },
+      "optimizer_state_dict": {
+        "None": 32
+      },
+      "scheduler_state_dict": {
+        "None": 32
+      },
+      "replay_rows_stored": {
+        "n": 32,
+        "min": 256,
+        "max": 256,
+        "mean": 256
+      },
+      "router_int_labels_total": {
+        "n": 32,
+        "min": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "declared_model": {
+        "rank": [
+          8
+        ],
+        "alpha": [
+          16.0
+        ],
+        "num_experts": [
+          1
+        ]
+      },
+      "storage_dtypes_all": {
+        "torch.FloatStorage": 6144,
+        "torch.ByteStorage": 64
+      },
+      "shapes_by_category": {
+        "lora_parameter|8x768": 3072,
+        "lora_parameter|768x8": 3072,
+        "rng_state|5056": 32,
+        "rng_state|16": 32
+      }
+    }
+  },
+  "recorded_result_archives": [
+    {
+      "file": "multimodal-confirmation-audit-revision.json",
+      "bytes": 1962
+    },
+    {
+      "file": "multimodal-confirmation-checkpoints.json",
+      "bytes": 52414
+    },
+    {
+      "file": "multimodal-g4-raw.tar.gz",
+      "bytes": 51854913
+    },
+    {
+      "file": "multimodal-g4-report.tar.gz",
+      "bytes": 7814897
+    },
+    {
+      "file": "multimodal-g4-statistics.json",
+      "bytes": 40004
+    },
+    {
+      "file": "multimodal-g5-raw.tar.gz",
+      "bytes": 25281748
+    },
+    {
+      "file": "multimodal-g5-report.tar.gz",
+      "bytes": 2284150
+    },
+    {
+      "file": "multimodal-g5-summary.json",
+      "bytes": 2585
+    }
+  ],
+  "replay_distinction_recorded_only": {
+    "replay_policy_recorded_in_run": "Rows and immutable image-file references; no duplicate image copies (sema_multimodal/run.py:531)",
+    "row_bytes": "recorded replay_row_bytes: JSON of the buffer rows (image path + question; caption rows carry answer/references)",
+    "image_bytes": "recorded replay_image_bytes: bytes of the unique on-disk JPEG files referenced by the buffer rows; these are the same shared-dataset files (11,264 images, 1,730,877,440 B recorded) — zero duplicated image bytes",
+    "preprocessed_replay": "the buffer stores no preprocessed tensor form; any preprocessed-equivalent size would be unrecorded -> 미기록",
+    "router_feature_bytes_per_image_recorded_shape": "128x1536 fp32 per task in checkpoint storage (exact: 786,432 B/task tensor + int label) — verified inside latest.pt"
+  },
+  "local_artifact_storage": {
+    "files": [
+      {
+        "file": "multimodal-g1-raw.tar.gz",
+        "bytes": 803308,
+        "present": true
+      },
+      {
+        "file": "multimodal-g2-raw.tar.gz",
+        "bytes": 441762,
+        "present": true
+      },
+      {
+        "file": "multimodal-g3-raw.tar.gz",
+        "bytes": 12390060,
+        "present": true
+      },
+      {
+        "file": "multimodal-g4-raw.tar.gz",
+        "bytes": 51854913,
+        "present": true
+      },
+      {
+        "file": "multimodal-g5-raw.tar.gz",
+        "bytes": 25281748,
+        "present": true
+      },
+      {
+        "file": "multimodal-g1-report.json",
+        "bytes": 1264636,
+        "present": true
+      },
+      {
+        "file": "multimodal-g2-report.json",
+        "bytes": 294713,
+        "present": true
+      },
+      {
+        "file": "multimodal-g3-report.json",
+        "bytes": 10835584,
+        "present": true
+      },
+      {
+        "file": "multimodal-g4-report.tar.gz",
+        "bytes": 7814897,
+        "present": true
+      },
+      {
+        "file": "multimodal-g4-statistics.json",
+        "bytes": 40004,
+        "present": true
+      },
+      {
+        "file": "multimodal-g5-report.tar.gz",
+        "bytes": 2284150,
+        "present": true
+      },
+      {
+        "file": "multimodal-g5-summary.json",
+        "bytes": 2585,
+        "present": true
+      },
+      {
+        "file": "multimodal-full-manifests.tar.gz",
+        "bytes": 9104839,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-lock.json",
+        "bytes": 198747,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-source.tar.gz",
+        "bytes": 253935,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-checkpoints.json",
+        "bytes": 52414,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-checkpoints.tar",
+        "bytes": 2300518400,
+        "present": true
+      },
+      {
+        "file": "multimodal-checkpoint-zip-inspection.json",
+        "bytes": 655205,
+        "present": true
+      },
+      {
+        "file": "multimodal-development-checkpoints.json",
+        "bytes": 21681,
+        "present": true
+      },
+      {
+        "file": "multimodal-development-checkpoints.tar",
+        "bytes": 1058508800,
+        "present": true
+      },
+      {
+        "file": "multimodal-routing-validation-audit.json",
+        "bytes": 295670,
+        "present": true
+      },
+      {
+        "file": "multimodal-routing-validation-raw.tar.gz",
+        "bytes": 380320,
+        "present": true
+      },
+      {
+        "file": "multimodal-routing-validation-execution.json",
+        "bytes": 1750,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-environment.json",
+        "bytes": 4493,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-execution.json",
+        "bytes": 3068,
+        "present": true
+      },
+      {
+        "file": "multimodal-confirmation-audit-revision.json",
+        "bytes": 1962,
+        "present": true
+      },
+      {
+        "file": "multimodal-backups.json",
+        "bytes": 1797,
+        "present": true
+      },
+      {
+        "file": "multimodal-selected-images-v2.tar",
+        "bytes": 1730877440,
+        "present": true
+      },
+      {
+        "file": "multimodal-locked-blip-assets.tar",
+        "bytes": 2116055040,
+        "present": true
+      }
+    ],
+    "report_dirs": {
+      "multimodal-g4-report": {
+        "bytes": 60132936
+      },
+      "multimodal-g5-report": {
+        "bytes": 18828791
+      }
+    }
+  }
+}

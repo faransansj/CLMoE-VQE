@@ -1,5 +1,12 @@
 # Continual VQA with expandable experts
 
+## 공개 작업 스냅샷
+
+- 연구 해석·한계: [멀티모달 연구 정리](MULTIMODAL_RESEARCH_SUMMARY.md).
+- 후속 진단·실험 계획: [논문화 실행 계획](멀티모달%20CL%20논문화%20실행%20계획.md), [P0 사전등록](preregistration-p0-strip.md).
+- 최근 실행 결과: [Stage 0 Flickr 진단](artifacts/stage0-flickr-expert-diagnosis.json), [Stage 0.5 decoding probe](artifacts/stage05-decoding-probe.json), [Stage 1 period-strip](artifacts/stage1-period-strip.json), [Stage 1 fidelity](artifacts/stage1-fidelity.json).
+- 코드·설정·결과 보고서·압축 예측·실행 증거를 공개한다. 모델 checkpoint, 원본 이미지, 다운로드 캐시와 가상환경은 포함하지 않는다. 문서의 서버 절대 경로는 실행 당시 provenance이며 공개 저장소에 해당 파일이 있다는 의미가 아니다.
+
 **VQA 실험 종료:** 8-seed readout confirmation 128개 학습과 160개 routing 조건을 완료했다. 최종 판정·산출물 무결성 확인·남은 제한은 [VQA_CLOSURE.md](VQA_CLOSURE.md)에 정리했다. 아래 결과와 기존 원 산출물은 후속 연구에서 덮어쓰지 않는다.
 
 **후속 멀티모달 CL 연구 완료:** 공개 HF Flickr30k를 통합해 G1~G3 개발92개, 새8-seed G4 confirmation224개 학습과 G5 routing160조건을 완료했다. G4/G5 원 예측 각각1,409,024개/1,081,344개를 독립 재채점했다. **Expansion은 shared·capacity 대비 우수하지만 replay 대비 종합 성공 기준은 두 family 모두 미충족**이다. Caption은 common replay에, 두 family 모두 tuned replay에 유의하게 열세이며 Flickr 후속16조건 모두 음의 gain이다. 테스트308개 통과; pre-eval lock 보존과 post-eval 감사/출력 코드 교정 이력도 공개한다. [설계](MULTIMODAL_DESIGN.md), [실험계획·최종 결과](MULTIMODAL_EXPERIMENTS.md), [설정](configs/multimodal_research.json). 기존 VQA 결과는 변경하지 않는다.

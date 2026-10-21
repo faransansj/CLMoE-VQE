@@ -1,0 +1,1752 @@
+{
+  "affected_runs_if_bug_confirmed": {
+    "note": "버그 미확인이므로 G1-G5 재실행 범위 산정은 트리거되지 않았다. (참고: 계획 문서상 버그 확정 시 최악 G4 전체 재실행 약 120h GPU 추정은 본 판정에서는 적용되지 않는다.)",
+    "triggered": false
+  },
+  "conclusion": "버그 없음",
+  "conclusion_scope": {
+    "checked": [
+      "C/F manifest reference 수·길이 분포, list-문자열 파싱 흔적, empty/duplicate reference(전체 28,143 ref)",
+      "Flickr CSV(pinned revision) 내부 split vs 실제 사용 이미지 ID 2,816개 전수 대조 및 기대 수량(29,000/1,014/1,000)",
+      "Flickr 사용 이미지 2,816개 실제 바이트 SHA256 vs manifest(로컬 tar 재검증)",
+      "G4 최종 Flickr 예측 50건 + 전체 reference AI assistant 정성 검수(12건은 실제 이미지 대조)",
+      "metrics.py train-IDF/토크나이저/reference 구조의 C/F 동일성 정적 검사 + C/F scorer lock 대조",
+      "frozen base/independent/expansion의 기존 점수 Flickr:COCO 비율 일관성"
+    ],
+    "not_checked": [
+      "COCO 원본(captions_train2014/val2014.json)과의 재대조는 미수행; COCO는 사용 manifest 수준에서 검증",
+      "near-duplicate 및 BLIP 사전학습 데이터와의 이미지 중복(원 summary의 한계 그대로)",
+      "절대 CIDEr-D 수준의 문헌 비교 - 본 파이프라인은 DF 코퍼스를 task train 2,048장으로 고정해 표준 eval-corpus DF와 달라 문헌 값과 직접 비교 불가",
+      "G5 라우팅 품질 자체의 평가(1-C/라우팅 분석 범위)"
+    ],
+    "verdict": "데이터 파이프라인(reference 파싱·split 매핑·이미지 대응·scorer 코드 경로)과 기존 점수 내부 일관성에서 Flickr 고장의 증거가 없다. 낮은 점수의 원인은 이번 조회만으로 확정하지 않는다. 표본에서 reference와 다른 내용 및 반복 생성이 관찰되지만 학습량·IDF·라우팅의 인과 기여는 미검증이다. Frozen base F/C 비율과 학습 후 비율도 서로 달라 단순한 데이터셋 간 고정 배율로 해석하지 않는다."
+  },
+  "evidence": {
+    "confirmation_lock": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-confirmation-lock.json",
+      "sha256": "4294af072de6385c28192829b60edab5f8d4d24fec1fd4c927b7c3ee1c1f2161"
+    },
+    "flickr_converted_annotations": {
+      "availability": "examined",
+      "bytes": 24183685,
+      "path": "/home/midori/week1_flickr_inputs/dataset_flickr30k.json",
+      "sha256": "414d88ea3bf650d96b9315895d68f69bd07e3b497562936376141955d2feccd8"
+    },
+    "flickr_csv": {
+      "availability": "examined",
+      "bytes": 12896305,
+      "expected_revision": "2b239befc81b6e3f035ce6bd52f5f4d60f5625f7",
+      "path": "/home/midori/week1_flickr_inputs/flickr_annotations_30k.csv",
+      "sha256": "395990db603ab8bafd5c7ab2746b22058bb1e75b78b3eb56ad755931364ac137"
+    },
+    "flickr_sources_json": {
+      "availability": "examined",
+      "caption_count_claim": 155070,
+      "image_count_claim": 31014,
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-flickr30k-sources.json",
+      "sha256": "053f0fff7b2ca78d18839bbf9528a62d45770ebfab1619f6cf2d5554a21826f3"
+    },
+    "g1_normalizers_json": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-g1-normalizers.json",
+      "sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928"
+    },
+    "g4_raw_tar": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-g4-raw.tar.gz",
+      "sha256": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6"
+    },
+    "g4_report_tasks_csv": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-g4-report/tasks.csv",
+      "sha256": "46a50f7b7b752518e89bb290334c81642a9b0cd24e5e432fcc78f6919fbb60d6"
+    },
+    "g4_run_config_member": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-g4-raw.tar.gz::artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed137/config.json",
+      "sha256": "e7daf4e0a887a525e67b43f263ef0da09626c6d10b31c402dc0ce771ed147936"
+    },
+    "g4_run_predictions_member": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-g4-raw.tar.gz::artifacts/multimodal_runs/g4/V_C_G_F_expand_lr0.0003_ep5_seed137/predictions_after_03_F.jsonl",
+      "rows": 512,
+      "sha256": "f83d78cb6eb4c268642dd7af9e17dbb36875a63d335d1bec06ee1b80c1c0289b"
+    },
+    "manifest": {
+      "availability": "examined",
+      "container_sha256": "34f96d5af66ade803d6f925a171c722f8887d5b8371875d7599ea83cda5c7a28",
+      "lock_expectation_sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-full-manifests.tar.gz::multimodal_data_full_20261013/manifest_v2.json",
+      "sha256": "c501786957b9aa7260feabd780d561160abbf53e4bcb722a2375a76179f90b39"
+    },
+    "selected_images_tar": {
+      "availability": "examined",
+      "note": "Flickr30k 멤버 2,816개 전부 실제 바이트 해시를 manifest image_sha256과 대조",
+      "path": "/home/midori/Projects/CLMoE-VQE/artifacts/multimodal-selected-images-v2.tar",
+      "sha256": "9c13a157b1a8c1663b4299c551607bab62f18432efda2006504ba0bbdf44dcef",
+      "verified_members": 2816
+    },
+    "static_source_data.py": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/sema_multimodal/data.py",
+      "sha256": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4"
+    },
+    "static_source_metrics.py": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/sema_multimodal/metrics.py",
+      "sha256": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78"
+    },
+    "static_source_prepare_flickr30k_hf.py": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/scripts/prepare_flickr30k_hf.py",
+      "sha256": "d8686e94738476fd826e052697f19dd4a42135ac1940f9cff687b8583127092f"
+    },
+    "static_source_prepare_multimodal_data.py": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/scripts/prepare_multimodal_data.py",
+      "sha256": "ebbf8bde0a772f55842aa2910127cd5815d86b49ee76f83636d2800b5926858e"
+    },
+    "static_source_run.py": {
+      "availability": "examined",
+      "path": "/home/midori/Projects/CLMoE-VQE/sema_multimodal/run.py",
+      "sha256": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46"
+    },
+    "week1_flickr_sanity_script": {
+      "obtained_from_conversion": "Yonsei-DC1:/scratch2/faransansj/multimodal_sources_20261013/flickr30k_hf/dataset_flickr30k.json (2026-10-16 scp, 읽기 전용)",
+      "obtained_from_flickr_csv": "Yonsei-DC1:/scratch2/faransansj/multimodal_sources_20261013/flickr30k_hf/flickr_annotations_30k.csv (2026-10-16 scp, 읽기 전용)",
+      "path": "/home/midori/Projects/CLMoE-VQE/scripts/week1_flickr_sanity.py",
+      "sha256": "db89871a993652760a826a47fb1a6036ac7299c376e388159c36c579cd1bfd29"
+    }
+  },
+  "flickr_revision": "2b239befc81b6e3f035ce6bd52f5f4d60f5625f7",
+  "generated_at_utc": "2026-10-16T09:35:58+00:00",
+  "python": "3.14.7",
+  "schema_version": 1,
+  "sections": {
+    "existing_score_ratios_flickr_over_coco": {
+      "eval_split": "eval",
+      "expansion": {
+        "C_mean": 0.44949425511818314,
+        "F_mean": 0.12607471285845834,
+        "ratio_F_over_C_row_mean": 0.2808959535362317,
+        "ratio_F_over_C_seed_aggregated_mean": 0.2805955999518924,
+        "seed_aggregated_ratios": [
+          0.26134421014574183,
+          0.2738987990574994,
+          0.2758654275744248,
+          0.2829305423439049,
+          0.28289226334541934,
+          0.2794973972659566,
+          0.31561672253249784,
+          0.27271943734969484
+        ]
+      },
+      "frozen_base_pre": {
+        "C": 0.024704499993472042,
+        "F": 0.04037343436296091,
+        "constant_across_seeds": true,
+        "ratio_F_over_C": 1.634254260301939
+      },
+      "g1_validation_normalizers": {
+        "C": 0.6802684683477754,
+        "F": 0.15263336791624926,
+        "ratio_F_over_C": 0.2243722515714459,
+        "seed": 17,
+        "split": "validation"
+      },
+      "g4_eval_vs_g1_validation_observation": "validation과 eval에서 독립 F/C 비율이 0.224(validation) vs 0.193(eval), C는 0.680→0.517, F는 0.153→0.100으로 모두 낮아진다. G1과 G4는 split뿐 아니라 seed 집합도 다르므로 이를 split 난이도 차이로 귀속할 수 없으며, 비율만으로 버그를 배제하지 않는다.",
+      "independent": {
+        "C_mean": 0.516707677417248,
+        "C_per_seed": [
+          0.5253025329084993,
+          0.5125944888093814,
+          0.516437519596486,
+          0.5101746561447809,
+          0.4983523331032795,
+          0.4978171298472035,
+          0.5386393044175453,
+          0.534343454510808
+        ],
+        "F_mean": 0.09992664214985067,
+        "F_per_seed": [
+          0.09060143557512253,
+          0.09632384230579924,
+          0.09076064230805972,
+          0.08610384807394521,
+          0.10757736974513157,
+          0.1046432327951594,
+          0.11759661012467704,
+          0.10580615627091063
+        ],
+        "ratio_F_over_C_max": 0.2183216285188091,
+        "ratio_F_over_C_mean": 0.1934136829305151,
+        "ratio_F_over_C_min": 0.16877327604746808
+      },
+      "native_units": "CIDEr-D pycocoevalcap 1.2 scale x1, train-IDF(task train 2,048 images)",
+      "score_source": "artifacts/multimodal-g4-report/tasks.csv (기록된 점수 재사용; 새 채점 없음)"
+    },
+    "flickr_csv_split_audit": {
+      "atypical_examples": [
+        {
+          "caption": "A picture of a sidewalk in a city with people and cars. &nbsp;",
+          "img_id": "1973",
+          "split": "train"
+        },
+        {
+          "caption": "A man in a green apron roasts a pig over coals .`",
+          "img_id": "17286",
+          "split": "train"
+        },
+        {
+          "caption": "A man and a woman on a motorcycle .`",
+          "img_id": "17342",
+          "split": "train"
+        },
+        {
+          "caption": "A young man, wearing a hoodie and a backpack, walks down an urban street .`",
+          "img_id": "19718",
+          "split": "train"
+        },
+        {
+          "caption": "People on a highway celebrating( I honestly don't know )",
+          "img_id": "24992",
+          "split": "train"
+        },
+        {
+          "caption": "Men washing windows on a building .`",
+          "img_id": "25971",
+          "split": "train"
+        },
+        {
+          "caption": "An elderly woman walks past walls and doors covered with graffiti .`",
+          "img_id": "26148",
+          "split": "train"
+        },
+        {
+          "caption": "A skilled surfer rides a very large wave;",
+          "img_id": "28758",
+          "split": "train"
+        }
+      ],
+      "atypical_trailing_caption_rows": 8,
+      "caption_whitespace_token_max": 78,
+      "caption_whitespace_token_mean": 12.2719,
+      "captions_per_image_violations": 0,
+      "captions_total": 155070,
+      "conversion_json_vs_csv_mismatched_rows": 0,
+      "csv_duplicate_rows_among_used_train_images": [
+        "2500567791",
+        "3552796830",
+        "4164879525",
+        "4902710339"
+      ],
+      "csv_split_counts": {
+        "test": 1000,
+        "train": 29000,
+        "val": 1014
+      },
+      "csv_within_image_duplicate_rows_by_split": {
+        "train": 34
+      },
+      "empty_captions_in_csv": 0,
+      "expected_mirror_counts": {
+        "test": 1000,
+        "train": 29000,
+        "val": 1014
+      },
+      "images_total": 31014,
+      "manifest_image_sha256_vs_sources_json_mismatches": [],
+      "manifest_rows_with_within_row_duplicate": [
+        "flickr30k/train/2500567791",
+        "flickr30k/train/4902710339",
+        "flickr30k/train/3552796830",
+        "flickr30k/train/4164879525"
+      ],
+      "manifest_to_csv_mapping": {
+        "checked_rows": 2816,
+        "mismatches": []
+      },
+      "recurring_identical_captions_across_images": 391,
+      "sentids_total_unique": [
+        155070,
+        155070
+      ],
+      "used_image_split_coverage": {
+        "test": {
+          "pool_available": 1000,
+          "used": 512,
+          "used_subset_of_pool": true
+        },
+        "train": {
+          "pool_available": 29000,
+          "used": 2304,
+          "used_subset_of_pool": true
+        },
+        "val": {
+          "pool_available": 1014,
+          "used": 0,
+          "used_subset_of_pool": true
+        }
+      },
+      "used_split_totals": {
+        "test": 512,
+        "train": 2304
+      }
+    },
+    "flickr_used_image_bytes": {
+      "mismatches": [],
+      "verified_members": 2816
+    },
+    "metrics_static_inspection": {
+      "c_f_lock_equal_keys": [
+        "bleu_scorer_sha256",
+        "bleu_source_sha256",
+        "cider_source_sha256",
+        "idf_source",
+        "implementation_sha256",
+        "metric",
+        "n",
+        "numpy",
+        "pycocoevalcap",
+        "scale",
+        "sigma",
+        "tokenizer",
+        "tokenizer_jar_sha256",
+        "tokenizer_wrapper_sha256",
+        "train_documents",
+        "units"
+      ],
+      "c_f_lock_expected_differing_keys": [
+        "document_frequency_sha256",
+        "train_reference_sha256"
+      ],
+      "eval_rows_used_for_idf": false,
+      "scorer_code_comment": "COCO와 Flickr는 동일 TaskScorer/sta:코드 경로(metric==cider_d, family==caption, n=4, sigma=6.0, Stanford CoreNLP 3.4.1 PTB -preserveLines -lowerCase, 고정 DF=task train 참조만 사용, train_documents=2048)를 공유한다. 토크나이저·pycocoevalcap 1.2·BLEU 소스 해시도 C/F 각 런 config에서 동일하며 task 간 차이는 train corpus 내용(train_reference_sha256, document_frequency_sha256)과 점수뿐이다.",
+      "static_checks": {
+        "caption_rows_keep_all_references": true,
+        "cider_constants_shared": true,
+        "flickr_refs_from_official_raw_only": true,
+        "flickr_split_recipe_pinned": true,
+        "idf_corpus_is_task_train_only": true,
+        "manifest_reference_validation": true,
+        "no_eval_rows_in_idf_path": true,
+        "reference_structure_single_validator": true,
+        "score_uses_shared_tokenize_and_cider": true,
+        "single_fixed_cider_definition": true,
+        "single_tokenize_definition": true,
+        "task_scorer_built_identically_for_c_and_f": true,
+        "tokenizer_is_stanford_ptb_preserve_lines": true
+      },
+      "train_documents": {
+        "C": 2048,
+        "F": 2048
+      }
+    },
+    "reference_distributions": {
+      "C": {
+        "eval": {
+          "anomalies": {
+            "duplicate_examples": [],
+            "duplicate_within_row": 0,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 4,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 52.4,
+          "refcount_histogram": {
+            "5": 511,
+            "6": 1
+          },
+          "refcount_max": 6,
+          "refcount_mean": 5.002,
+          "refcount_min": 5,
+          "references_total": 2561,
+          "rows": 512,
+          "whitespace_token_max": 36,
+          "whitespace_token_mean": 10.4444,
+          "whitespace_token_median": 10,
+          "whitespace_token_min": 7,
+          "whitespace_token_p95": 14
+        },
+        "family": "caption",
+        "metric": "cider_d",
+        "source": "coco_captions",
+        "split_policy": "all caption references preserved; one row per image",
+        "train": {
+          "anomalies": {
+            "duplicate_examples": [
+              {
+                "count": 2,
+                "id": "coco_captions/train2014/7757",
+                "reference": "A man on a surf board riding a wave."
+              },
+              {
+                "count": 2,
+                "id": "coco_captions/train2014/535860",
+                "reference": "Two giraffes are walking along a grassy field."
+              }
+            ],
+            "duplicate_within_row": 2,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 47,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 52.6,
+          "refcount_histogram": {
+            "5": 2046,
+            "6": 2
+          },
+          "refcount_max": 6,
+          "refcount_mean": 5.001,
+          "refcount_min": 5,
+          "references_total": 10242,
+          "rows": 2048,
+          "whitespace_token_max": 47,
+          "whitespace_token_mean": 10.4603,
+          "whitespace_token_median": 10.0,
+          "whitespace_token_min": 7,
+          "whitespace_token_p95": 15
+        },
+        "validation": {
+          "anomalies": {
+            "duplicate_examples": [],
+            "duplicate_within_row": 0,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 0,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 52.4,
+          "refcount_histogram": {
+            "5": 256
+          },
+          "refcount_max": 5,
+          "refcount_mean": 5.0,
+          "refcount_min": 5,
+          "references_total": 1280,
+          "rows": 256,
+          "whitespace_token_max": 30,
+          "whitespace_token_mean": 10.4414,
+          "whitespace_token_median": 10.0,
+          "whitespace_token_min": 7,
+          "whitespace_token_p95": 14
+        }
+      },
+      "F": {
+        "eval": {
+          "anomalies": {
+            "duplicate_examples": [],
+            "duplicate_within_row": 0,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 0,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 63.6,
+          "refcount_histogram": {
+            "5": 512
+          },
+          "refcount_max": 5,
+          "refcount_mean": 5.0,
+          "refcount_min": 5,
+          "references_total": 2560,
+          "rows": 512,
+          "whitespace_token_max": 68,
+          "whitespace_token_mean": 12.3227,
+          "whitespace_token_median": 11.0,
+          "whitespace_token_min": 2,
+          "whitespace_token_p95": 22
+        },
+        "family": "caption",
+        "metric": "cider_d",
+        "source": "flickr30k",
+        "split_policy": "CSV row split preserved; all five captions per image",
+        "train": {
+          "anomalies": {
+            "duplicate_examples": [
+              {
+                "count": 2,
+                "id": "flickr30k/train/2500567791",
+                "reference": "A black cow and a brown cow being chased by a dog"
+              },
+              {
+                "count": 2,
+                "id": "flickr30k/train/4902710339",
+                "reference": "A woman in a blue dress is walking down the street."
+              },
+              {
+                "count": 2,
+                "id": "flickr30k/train/3552796830",
+                "reference": "Two men in camouflage pants are running past a parking lot."
+              },
+              {
+                "count": 2,
+                "id": "flickr30k/train/4164879525",
+                "reference": "A little girl is playing with bubbles."
+              }
+            ],
+            "duplicate_within_row": 4,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 1,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 63.6,
+          "refcount_histogram": {
+            "5": 2048
+          },
+          "refcount_max": 5,
+          "refcount_mean": 5.0,
+          "refcount_min": 5,
+          "references_total": 10240,
+          "rows": 2048,
+          "whitespace_token_max": 50,
+          "whitespace_token_mean": 12.3596,
+          "whitespace_token_median": 11.0,
+          "whitespace_token_min": 2,
+          "whitespace_token_p95": 22
+        },
+        "validation": {
+          "anomalies": {
+            "duplicate_examples": [],
+            "duplicate_within_row": 0,
+            "empty_references": 0,
+            "identical_reference_strings_recurring_across_rows": 0,
+            "list_string_reference_rows": 0
+          },
+          "char_mean": 63.8,
+          "refcount_histogram": {
+            "5": 256
+          },
+          "refcount_max": 5,
+          "refcount_mean": 5.0,
+          "refcount_min": 5,
+          "references_total": 1280,
+          "rows": 256,
+          "whitespace_token_max": 53,
+          "whitespace_token_mean": 12.3969,
+          "whitespace_token_median": 11.0,
+          "whitespace_token_min": 3,
+          "whitespace_token_p95": 22
+        }
+      }
+    },
+    "sample_50_final_flickr_predictions": {
+      "full_512_generation_flag_counts": {
+        "eos_true_and_not_limit": 316,
+        "limit_reached": 196,
+        "other": 0
+      },
+      "notes_method": "AI assistant 의미 판독(예측+전체 reference 전부, 12건은 실제 이미지 대조); 사람 평가 아님; 노트는 스크립트에 정적 임베딩",
+      "run": "V_C_G_F_expand_lr0.0003_ep5_seed137",
+      "sampled_ids": [
+        "flickr30k/test/2755362721",
+        "flickr30k/test/4983587808",
+        "flickr30k/test/4146886427",
+        "flickr30k/test/5931115247",
+        "flickr30k/test/302289651",
+        "flickr30k/test/2472980433",
+        "flickr30k/test/3483071906",
+        "flickr30k/test/3799701220",
+        "flickr30k/test/198534816",
+        "flickr30k/test/2978735290",
+        "flickr30k/test/2069110603",
+        "flickr30k/test/1043910339",
+        "flickr30k/test/7099368287",
+        "flickr30k/test/47529535",
+        "flickr30k/test/4971580248",
+        "flickr30k/test/475816542",
+        "flickr30k/test/4892698507",
+        "flickr30k/test/6995905943",
+        "flickr30k/test/270263570",
+        "flickr30k/test/5506383509",
+        "flickr30k/test/529101401",
+        "flickr30k/test/4692834620",
+        "flickr30k/test/2064792226",
+        "flickr30k/test/3487979741",
+        "flickr30k/test/136693281",
+        "flickr30k/test/7292785488",
+        "flickr30k/test/3432637363",
+        "flickr30k/test/4463538995",
+        "flickr30k/test/286084055",
+        "flickr30k/test/2778313163",
+        "flickr30k/test/3613264553",
+        "flickr30k/test/2863539038",
+        "flickr30k/test/2451114871",
+        "flickr30k/test/4930533574",
+        "flickr30k/test/6099093979",
+        "flickr30k/test/7151070637",
+        "flickr30k/test/2289762817",
+        "flickr30k/test/4035354150",
+        "flickr30k/test/2709044515",
+        "flickr30k/test/2900560501",
+        "flickr30k/test/435054077",
+        "flickr30k/test/4655102365",
+        "flickr30k/test/2572712647",
+        "flickr30k/test/697490420",
+        "flickr30k/test/4688197510",
+        "flickr30k/test/1989609",
+        "flickr30k/test/2131161531",
+        "flickr30k/test/4520820052",
+        "flickr30k/test/2445442929",
+        "flickr30k/test/4706166634"
+      ],
+      "samples": [
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 모래 트랙을 달리는 회색 개(경주 조끼 착용, 방마구) 두 마리. ref 1-5는 트랙·모래·회색 개 경주를 정확히 기술(5/5 일치). pred는 개 달리기는 맞지만 grass/ball은 이미지에 없다. 모델 오류(부분 불일치), reference 데이터 이상 없음.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 13,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2755362721",
+          "index": 1,
+          "prediction": "a dog running in the grass with a ball in its mouth",
+          "references": [
+            "A muzzled greyhound dog wearing yellow and black is running on the track.",
+            "A race dog's feet dig in the mud as he makes his way around a curve.",
+            "Sand is kicked up as two animals run.",
+            "Two dogs on a wet, sandy track.",
+            "A greyhound racing."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 노란 벽 앞 노트북 작업하는 금발 흰옷 여성과 음료. ref 1-5 일치(2번 ref는 1인칭 독백형 원문 특이 문장이 그대로 보존되어 있음). pred는 여성+노트북까지는 맞으나 없는 남성 커피를 넣고 64토큰 한도 도달 후 shirt 색 단어 반복 루프. 부분+루프, 데이터 문제 아님.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4983587808",
+          "index": 2,
+          "prediction": "a woman in a white shirt is sitting on a chair with a laptop and a cup of coffee in her hand, and a man in a blue shirt is standing next to her, in a white shirt, blue shirt, and a black shirt, and white shirt, and white shirt, and a black shirt, and white",
+          "references": [
+            "A woman with blond-hair is sitting in a booth with a drink working on her laptop.",
+            "As I slave over this assignment, I cautiously click on the answer!",
+            "A woman working on her computer in front of a bright yellow wall.",
+            "Woman sitting at a table while working on her laptop computer.",
+            "A woman in a white shirt working on her laptop."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 1,
+          "expert_note": "이미지확인: 터키 디너를 에워싼 6인 가족. ref 1-5 일치(식사 인원 6명 명시). pred woman/plate of food/drink는 주제만 유지하고 인원·상황을 잃음. 라우팅이 C expert(expert=1)로 간 케이스 — 라우트 결과만 영향.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 15,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4146886427",
+          "index": 3,
+          "prediction": "a woman sitting at a table with a plate of food and a drink",
+          "references": [
+            "People are gathered around the table filled with food.",
+            "A family is sitting at a table ready to eat dinner.",
+            "6 people are gathered around to eat a big dinner.",
+            "A family having a turkey dinner.",
+            "A happy family at thanksgiving."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 롤러블레이더 여아(헬멧·보호대)로 일치. pred woman+child 산책 묘사로 보행자형 일반_caption, 장비 정보 누락+64토큰 반복. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/5931115247",
+          "index": 4,
+          "prediction": "a woman in a white shirt is walking down a sidewalk with a child in a red jacket and a blue jacket on her back, and a child in a blue jacket on her arms behind her back, and a white shirt, and a white shirt, blue and a white shirt, blue, and black background, and white",
+          "references": [
+            "A child wearing rollerblades, knee pads, a helmet, and elbow pads is skating down a paved path.",
+            "A young girl rollerblades, while protected by many pads and pillows.",
+            "A girl with normal and improvised safety gear rollerblades.",
+            "A child is rollerblading with a lot of pads.",
+            "Young girl rollerblading with safety gear."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 무릎에 아기(흰 모자)를 두고 샌드위치 먹는 남성. ref 1-5 정확. pred는 없는 노트북·여성을 말하는 완전 불일치+루프. 모델 오류, ref와 이미지는 정확.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/302289651",
+          "index": 5,
+          "prediction": "a man in a blue shirt is sitting on a chair with a laptop and a cup of coffee in his hand, and a woman in a blue shirt is sitting on the other chair behind him, and a blue shirt is holding a white shirt and a blue shirt with a black shirt and a red shirt with a white shirt",
+          "references": [
+            "A man in sunglasses is eating and holding a baby wearing a white bucket hat.",
+            "A man in sunglasses is eating something while he has a girl on his lap.",
+            "A man eating a sandwich with his baby daughter in his lap.",
+            "A man eating and holding a baby with a white hat on.",
+            "Man eats while holding a baby"
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 오토바이 위어리 트릭 트랙 기술로 일치. pred skateboard street로 차량 오분류. 불일치, 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 10,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2472980433",
+          "index": 6,
+          "prediction": "a man riding a skateboard down a street",
+          "references": [
+            "The motorcycle is being ridden on a track whilst pulling a wheelie.",
+            "A man riding a motorcycle is performing a trick at a track.",
+            "A man puts his motorcycle up on its rear wheel on a track.",
+            "A man stands on his motorcycle while doing a wheelie.",
+            "A man doing tricks on a motorcycle"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 아이들 줄다리기+코치 기술로 일치. pred는 아이들 노는 장면까지 유지하나 밧줄을 공·구조물로 대체. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 21,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/3483071906",
+          "index": 7,
+          "prediction": "a group of children are playing in a playground with a ball and a small wooden structure in the background",
+          "references": [
+            "A group of kids with an adult in the background coaching them while they are pulling on a green rope.",
+            "Several young boys are pulling a rope in a park.",
+            "Little kids are playing a game of tug-of-war.",
+            "Children fight to win a tug-of-war battle.",
+            "Children are playing tug-of-war."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 가게에서 가죽 가공하는 두 남성으로 일치. pred는 노트북·의자로 오기술+64토큰 반복. 불일치, 모델 오류.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/3799701220",
+          "index": 8,
+          "prediction": "a man in a blue shirt is sitting on a chair with a laptop and a man in a blue shirt is sitting on a chair with a laptop and a laptop in front of a table in front of a chair behind him, and a table, and a chair, and a window, and a window, and a wall",
+          "references": [
+            "Two middle-aged Asian men with mustaches working with animal hides in a shop.",
+            "Two men are crafting items in a workshop with tools.",
+            "Two men working in a small factory.",
+            "Two men are working in a shop.",
+            "Two men are busy working."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 홈플레이트 상황의 소프트볼 타자·캐처·심판. ref 1-5(Pride 마룬 유니폼, 홈플레이트) 정확. pred는 농구 인도어로 종목 오분류. reference가 정확함을 명시적으로 보여주는 케이스.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 11,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/198534816",
+          "index": 9,
+          "prediction": "a group of young people playing basketball in a gymnasium",
+          "references": [
+            "A softball player dressed in a maroon and gold uniform, at home plate with a catcher and umpire, prepares to run after hitting the ball.",
+            "A Pride softball team member hits the ball and runs towards first base while the umpire and catcher watch the ball.",
+            "A girl dressed in a red uniform is hitting a softball with a bat while a catcher and home plate umpire look on.",
+            "A woman runs after making a hit in women's softball, the catcher rises to her feet.",
+            "Girl hits a ball and the catcher looks on."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 두 아이 축구공+점프·네트 일치. pred는 아이+공+잔디 유지(단일 인원 축소). 부분 일치.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 13,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2978735290",
+          "index": 10,
+          "prediction": "a young boy is playing with a soccer ball in the grass",
+          "references": [
+            "A little boy in the air above another boy on the ground where a soccer ball lies at his feet with the soccer net behind them.",
+            "A boy makes a jumping dive toward another boy with a soccer ball near.",
+            "Two children are playing, one is jumping in the air.",
+            "The boy jumps onto his soccer player brother.",
+            "A boy jumps on another boy."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 가방(노란 오브젝트) 차기 카라테 수련으로 일치. pred는 기타 연주로 동작/대상 오분류. 불일치, 모델 오류.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 11,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2069110603",
+          "index": 11,
+          "prediction": "a man in a blue shirt is playing a guitar",
+          "references": [
+            "A man in a blue shirt is kicking a yellow object while other students are practicing karate in the background.",
+            "A man in white pants and a blue shirt is kicking a yellow boxing bag.",
+            "A man is practicing his kicks on a punching bag in a gym.",
+            "Man in a blue shirt practicing karate.",
+            "A man kicking a workout bag."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 야구 홈플레이트 달리기+태그 상황 일치. pred는 야구 주제 유지하나 반복 문구(repeated_trigram) 생성 후 64토큰 한도. 부분+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": true
+          },
+          "id": "flickr30k/test/1043910339",
+          "index": 12,
+          "prediction": "a man is throwing a baseball at a baseball game in a stadium with a crowd watching from the sidelines watching from the sidelines of the field and a fence as the sidelines of the field and a fence to the end of the field of the field of the field, and a baseball, in the end of the",
+          "references": [
+            "A baseball player in red leaps into the air to avoid a player in blue, who is shortly behind him as he catches the ball, while other blue team members look on in the background.",
+            "A boy in a red uniform is attempting to avoid getting out at home plate, while the catcher in the blue uniform is attempting to catch him.",
+            "A baseball player coming into home plate with knee held high and the catcher right in front of him waiting for the ball.",
+            "A baseball player attempting to score a run before the catcher tags the player out.",
+            "A baseball catcher trying to tag a base runner in a baseball game."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 헤더 경합 공중 충돌로 일치. pred는 공중 속 공+인물 주제를 잘 잡음(의미상 가장 근접한 케이스 중 하나), 단 색 단어 반복+한도 도달. 양호(주제 일치)+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": true
+          },
+          "id": "flickr30k/test/7099368287",
+          "index": 13,
+          "prediction": "a man in a blue shirt is playing a game of soccer with a ball in the air and a man in the air in the air behind him, in the air, and a white shirt, and a red shirt, and a white shirt, and black shirt, and white shirt, and white shirt, and white shirt",
+          "references": [
+            "Two soccer players on different teams collide in midair while jumping towards the ball.",
+            "Two football players compete for the ball while another teammate looks on.",
+            "Two men are jumping and colliding in the air while two other men look on.",
+            "Soccer players are jumping in the air to hit the ball with their heads.",
+            "Two football players, jumping in attempt to win a header."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 등에 동생 짊어진 아프리카 아이 일치. pred는 잔디밭에 선 소년 - 짊어진 상황 누락. 불일치(인물·야외만 유지).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 27,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/47529535",
+          "index": 14,
+          "prediction": "a young boy is standing in the middle of a field of grass and a tree in the background is a blue sky and white sky",
+          "references": [
+            "An african child carries an infant in swaddling cloth on her back.",
+            "A child carries his younger sibling in a cloth sling on his back.",
+            "A small African child carries a younger child on his back.",
+            "African girl with a small boy tied to her back by fabric.",
+            "A young boy giving his brother a piggyback ride"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 전부 검은 복장+가방에 검은 그립을 든 여성 거리. ref 1-5 일치. pred는 검은 재킷+가방은 유지하나 남성·빨간 우산을 추가. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 23,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4971580248",
+          "index": 15,
+          "prediction": "a man in a black jacket is walking down the street with a red umbrella and a black bag on his shoulder",
+          "references": [
+            "A woman in an all black outfit holds her glasses while she stands in the street in front of a sandwich board advertising menu items.",
+            "A woman dressed in black boots, black jacket, and a black hat wonders who is taking this picture of her.",
+            "A woman wearing black pants and black jacket is holding a pair of glasses.",
+            "A woman wearing all black and carrying a black bag on sidewalk",
+            "A woman wearing all black looking at something."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 검은 개+갈색 개가 축구공을 가지고 노는 장면 일치. pred는 개+공+잔디 유지하나 한 마리로 축소, mouth 가정 추가. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 14,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/475816542",
+          "index": 16,
+          "prediction": "a dog is running through the grass with a ball in its mouth",
+          "references": [
+            "A large black dog and a large yellow dog appear to be playing with a soccer ball.",
+            "The black dog is by a soccer ball and the brown dog is running.",
+            "A black and a brown dog are running toward the camera.",
+            "A black dog and a brown dog with a ball.",
+            "A black and a yellow dog"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 채소 시장 거리 노점 판매 일치. pred는 사람들+음식 탁자 언급으로 시장 주제를 일부 유지하나 시장/노점 정보 손실. 부분. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 11,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4892698507",
+          "index": 17,
+          "prediction": "a group of people standing around a table with food",
+          "references": [
+            "A very busy market street with lots of people looking at different things.",
+            "The woman in the red pant suit and white hat is selling her produce.",
+            "People are walking through a vegetable stall filled market.",
+            "Different kind of people roaming around in a public market",
+            "A group of people at an outdoor fruit market"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 모래 필드 구기 경기+관중석 일치. pred는 구단·구경까지 유지하나 농구 경기장이나 모래사장 오분류. 부분 불일치.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 37,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/6995905943",
+          "index": 18,
+          "prediction": "two men are playing a game of basketball in a stadium with a crowd watching them and a man in the background watching the game from the sidelines of the sidelines of the field",
+          "references": [
+            "A team plays ball in the sand as a few spectators look on from the stands.",
+            "Two teams of boys playing football in the sand.",
+            "The team of men are playing a game in the sand.",
+            "A group of men playing a game of rugby.",
+            "Young men playing football."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 숲 인접 공지에서 얽혀노는 두 갈색 개 일치. pred는 개 유지하나 공·풀로 대체. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 14,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/270263570",
+          "index": 19,
+          "prediction": "a dog is running through the grass with a ball in its mouth",
+          "references": [
+            "Two brown and white dogs play roughly in a clearing of a wooded area.",
+            "Two dogs are biting each other in the woods.",
+            "Two brown dogs playing in a rough manner.",
+            "Two brown dogs fight on the leafy ground.",
+            "Two brown dogs wearing collars fighting."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 4명 아이들(옷 색 명시) 노는 그룹 일치. pred는 반복 문구 picture of a picture로 붕괴, 특히 옷 색 반복. 64토큰 한도 도달. 부분 이상 루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": true
+          },
+          "id": "flickr30k/test/5506383509",
+          "index": 20,
+          "prediction": "a little girl is sitting on a chair with a toy in her hand and a little boy is sitting on a chair with a toy in her hand, and a toy in front of her hand, and a picture of a picture of a picture of a picture of a picture of a child's, a child's",
+          "references": [
+            "4 kids playing, one in a red dress one in a pink shirt, one in a white shirt and a little boy with his arm through a green toy.",
+            "One young girl in a dress, and three young children leaning against a wall.",
+            "Four Asian kids sit on a bench and wave and smile to the camera.",
+            "A group of children playing and having a good time.",
+            "Young children playing with paper."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 부두에서 물로 도약하는 소년 일치. pred는 도약+물 유지, surfboard 추가, boy→man. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 15,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/529101401",
+          "index": 21,
+          "prediction": "a man is jumping in the air with a surfboard in the water",
+          "references": [
+            "A young boy is leaping off a pier into the water, his leg thrust out.",
+            "The boy wearing swimming trunks is jumping off a pier into a lake.",
+            "A young boy jumps off of a wooden dock and into the water.",
+            "A little boy jumping off of a dock into a lake.",
+            "A boy jump kicks off a dock into a lake."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 빨간 슈트 남성과 하고자하는 여성의 스트리트 댄스. ref 1-5(빨간 두 사람 댄스) 정확. pred는 검은 셔츠+팻말이 없는 관중 묘사로 완전 불일치. ref는 정확하므로 데이터 이상 없음.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 29,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4692834620",
+          "index": 22,
+          "prediction": "a man in a black shirt is standing in front of a crowd of people wearing black clothing and holding a sign that says no one is going",
+          "references": [
+            "A man in a red suit is dancing with a woman in a red skirt, in the street.",
+            "A man with a red suit is dancing with a lady.",
+            "A homely looking woman is doing a dance.",
+            "The two man are dancing in the street.",
+            "Two people, dressed in red, dancing."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 화려하게 꾸민 자전거 둘 탑승+사진 찍는 여성 일치. pred 자전거 부유 유지, 옷 색 반복+한도 도달. 부분+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2064792226",
+          "index": 23,
+          "prediction": "a man in a blue shirt is riding a bike down a street with a woman in a red shirt and a woman in a white shirt behind him are walking down the street with a red jacket and a red jacket and a red jacket and a white shirt and a red jacket and a white shirt with a black jacket and white",
+          "references": [
+            "A girl sits on a decorated bike with a younger boy while another girl takes a picture.",
+            "A girl is taking a picture of a girl and guy on a colorfully decorated pink bike.",
+            "Two people ride a colorful bike while a blond woman takes their picture.",
+            "Two people ridding a colorfully decorated bicycle.",
+            "Two people on a bicycle are posing for a picture"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 고속 코너 dust 트랙 자전거 라이더 일치. pred는 사람+자전거+흙길을 잘 유지(각도 정보 누락). 부분 일치로 양호.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 21,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/3487979741",
+          "index": 24,
+          "prediction": "a man in a blue shirt is riding a bike on a dirt road with a mountain in the background",
+          "references": [
+            "There is a person in a green shirt riding a bike at an extreme angle in a rural area.",
+            "A cyclist is leaning a mountain bike around a bend on a dirt track.",
+            "A person riding a bike sideways through a dirt path.",
+            "A man in a green shirt rides a bike in the woods.",
+            "A blurred picture on a bicyclist."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 father/daughter가 나무 심기+아들 삽 든 일치. pred는 man+woman 벤치 아기 반묶 문장으로 완전 불일치. eos로 끝났는 데도 주제를 놓침. 모델 오류.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 29,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/136693281",
+          "index": 25,
+          "prediction": "a man and a woman are sitting on a bench in a park, one of them is holding a baby and the other is holding a baby",
+          "references": [
+            "A father and daughter holding a young tree upright, ready to be planted, as the son stands to their side wielding a shovel.",
+            "A father-figure and two children outside their home doing yard work such as using a hoe on the grass and planting a tree.",
+            "A man and a little girl in a grassy area are planting a tree while a little boy off to the side is holding a hoe.",
+            "Two small children with older man plating a tree.",
+            "A man and two children are planting a tree."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 벽돌 건물 옆 레일 스케이트보드 그라인드 흰옷 남성. ref 1-5(레일/걸작 기술) 정확. pred는 blue shirt+skateboard 유지, 레일 그라인드를 놓치고 park 잘못 지명. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 30,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/7292785488",
+          "index": 26,
+          "prediction": "a man in a blue shirt is standing on a skateboard in the middle of a park, with a blue sky and white sky background behind him",
+          "references": [
+            "A man in a blue shirt rides a skateboard along a railing not far from a brick wall.",
+            "A young man in a blue shirt grinds a rail on a skateboard in an urban area.",
+            "A man in a blue shirt and jeans grinds down a rail on his skateboard.",
+            "A man in a blue shirt is skateboarding.",
+            "Man, skateboarding"
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 투라드 남성+경찰 둘+흰 천막 쓰레기봉투 일치. pred는 남성+군중 방향 유지, 투란/경찰/천막 누락. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 32,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/3432637363",
+          "index": 27,
+          "prediction": "a man in a black shirt is standing on a sidewalk with a large group of people in the background holding up signs and pointing at something in the same direction",
+          "references": [
+            "Turbaned man and two police officers stand in front of a white canopy and a pile of garbage bags",
+            "A man in a turban looks at two police officers who are near a tent and a pile of refuse.",
+            "Two officers with orange jackets stand outside a white tent with onlookers.",
+            "Two police officers observe while a crowd gathers outside a white tarp.",
+            "Men with hats on stand outside of a white tent."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 빨간 점퍼 여성 다채로운 리본(트윌링) 일치. pred는 남성+잔디+프리스비로 완전 오분류. 불일치. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 13,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4463538995",
+          "index": 28,
+          "prediction": "a man is standing in the grass with a frisbee",
+          "references": [
+            "A woman holds sticks attached to large striped banners, causing one to launch its banner in a wide loop through the air.",
+            "A person in a red jacket with black pants holding rainbow ribbons.",
+            "A woman in the red jacket is holding two multicolored ribbons.",
+            "A person wearing a red jacket holding rainbow streamers.",
+            "A woman twirling multicolored ribbons"
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 두세 사람 와인 대화 거실 일치. pred는 man+woman 벤치+아기 반복 문장으로 불일치. eos인 데도 주점 손실.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 27,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/286084055",
+          "index": 29,
+          "prediction": "a man and a woman are sitting on a bench in a park, one is holding a baby and the other is holding a baby",
+          "references": [
+            "An adult couple is talking with a younger girl, and they are all smiling.",
+            "Three people are having a conversation in a living room.",
+            "One man and two women having a discussion over white wine",
+            "Three people are talking while two of them are drinking.",
+            "A man and two girls are talking and drinking wine."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 청소(비담 쓸기) 여성들 일치. pred는 벤치 남녀 지도 보기로 불일치. 그리고 후미 정수 토큰 ,7 현상(디코더 아티팩트 후보) 관측. 불일치+아티팩트.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 31,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2778313163",
+          "index": 30,
+          "prediction": "a man and a woman are sitting on a bench in a park, looking at a map of the area and a woman is standing beside them,7",
+          "references": [
+            "A woman in a blue t-shirt and jeans is sweeping concrete.",
+            "A young woman with a black shirt and jeans sweeping.",
+            "A young woman sweeping with a straw broom.",
+            "A woman sweeps the foundation of a house.",
+            "Individuals are building a house."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 돌 언덕 위 흰 개, 하늘 배경. ref 1-5(흰 개+산지 암색 지면) 정확. pred는 자전거 타는 남성으로 완전 불일치. reference 정확성과 예측 오차가 선명히 분리된 케이스.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 14,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/3613264553",
+          "index": 31,
+          "prediction": "a man is riding a bike down a dirt path in the woods",
+          "references": [
+            "White dog on mountainside turns to face something offstage, sky in background.",
+            "A white dog is on a large rocky surface at a high elevation.",
+            "White dog standing on rock in front of blue sky",
+            "A white dog is walking on top of a mountain.",
+            "A white dog is walking on a rocky hillside."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 실외 꼬치 구이 조리 남성 일치. pred는 식탁 음식 와인 자리로 완전 불일치(요리 정보 상실). 모델 오류.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 26,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2863539038",
+          "index": 32,
+          "prediction": "a man in a blue shirt is sitting at a table with a plate of food and a glass of wine in front of him",
+          "references": [
+            "An Asian man is cooking several meat on a stick.",
+            "A balding man is cooking some meat on a stick.",
+            "An Asian man is cooking food outdoors.",
+            "A kitchen staff is preparing food.",
+            "A man preparing food on a grill."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "이미지확인: 색상 리본 버튼 달린 회색 개 4마리 트랙 경주(방마구, 기계 토끼 러어). ref 1-5(색상 유니폼+개 목줄+경주 트랙) 정확. pred는 말 탄 사람들로 완전 불일치. eos로 끝났는데도 주제를 아예 못 잡음 — 데이터 이상 없음, 모델 제한.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 10,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2451114871",
+          "index": 33,
+          "prediction": "a group of people riding horses in a field",
+          "references": [
+            "Greyhounds racing chasing a mechanical rabbit around the track.",
+            "Four dogs in blue, green, red and black jerseys are racing.",
+            "Dogs with muzzles are racing around a sandy track.",
+            "Four dogs race around a turn.",
+            "Dogs run at a dog racetrack."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 오래된 자전거로 짐 실은 노인 busy 거리 일치. pred는 거리+남성 유지, 자전거→서있는 skateboard로 변형. 부분. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 12,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4930533574",
+          "index": 34,
+          "prediction": "a man is standing on a sidewalk with a skateboard",
+          "references": [
+            "An old man in dirty clothes rides a bike loaded with possessions down a busy city street.",
+            "An old skinny man wearing the dirty white shirt riding on a bicycle on the street",
+            "Old man riding a bicycle while a black Honda SUV drives by in the background.",
+            "A gentleman is riding his bike in the city.",
+            "Old man riding a bike down the street."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 계단에서 공예품+인형 판매 여성(개 동행 일부 ref) 일치. pred는 여성+앉음 유지, 판매 대신 남성·옷 반복. 부분+루프(64토큰 한도).",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/6099093979",
+          "index": 35,
+          "prediction": "a woman in a black dress is sitting on a bench with a man in a black shirt and a white shirt and a black hat, and a black jacket, hat, and a black jacket, and a white shirt, and a black jacket, and a black shirt, and a white shirt, and a black shirt,",
+          "references": [
+            "A woman is sitting on some stairs outside with several baskets filled with craft items and miniature dolls at her feet and next to her for sale.",
+            "A woman is sitting on the steps looking at a collection of trinkets.",
+            "Woman and dog selling her wares on the old building steps outside.",
+            "A woman sits in a market where she sells goods with her dog.",
+            "Woman in white dress selling items on the stairs."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 도시 마라톤 주자들 + 쌍둥이 고층빌딩 일치. pred는 도시+여러 사람 유지, 달리기→걷기 오류. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 18,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/7151070637",
+          "index": 36,
+          "prediction": "a group of people are walking down a street with a crowd of people in the background",
+          "references": [
+            "A crowd of people run a marathon in a cityscape with two skyscrapers in the background.",
+            "Multiple people in running outfits are running with a cityscape in the background.",
+            "A group of runners are running towards two identical skyscrapers.",
+            "A large group of people are running a marathon through a city.",
+            "Many people run in a marathon through a city."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 빨간 셔츠 남성 야외 테이블 식사(타코) 일치. pred는 검은 셔츠 남성 반복 루프, 빨간 셔츠/음식 누락. repeated_trigram+64토큰 한도. 불일치+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": true
+          },
+          "id": "flickr30k/test/2289762817",
+          "index": 37,
+          "prediction": "a man in a black shirt is sitting on a bench with a woman in a black shirt and a white shirt and a man in a black shirt are sitting on a white shirt and a black shirt and a black shirt and a white shirt with a black shirt and white shirt and a black shirt and white shirt and white shirt",
+          "references": [
+            "A man in a red shirt is smiling with food in front of him while seated at a table on an outside deck.",
+            "A man sits in an outdoor cafe finishing a meal.",
+            "A man in a red shirt is about to eat a taco.",
+            "A man eating at an outdoor restaurant",
+            "A man in a red shirt is eating."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 비키니 여성이 선글라스 남성에 음료 따르기 일치. pred는 검은 셔츠 여성 벤치+아이, 후미 ,7 아티팩트. 불일치.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 31,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4035354150",
+          "index": 38,
+          "prediction": "a woman in a black shirt is sitting on a bench with a child in a blue shirt and a white shirt, and a black hat, and7",
+          "references": [
+            "A lady in a bikini is pouring a drink into a red cup for a man who is wearing trunks and sunglasses.",
+            "Brunette woman in a white bikini pouring a drink into a man's cup.",
+            "A woman is standing in a bikini serving a man a drink.",
+            "A woman in a bikini is pouring a drink for a man.",
+            "A woman in a bikini pours a drink for a man."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 셰프 불 팔리는 팬 조리 일치. pred는 노트북 화면+ i am 반복, 불 글 조리 누락. 불일치+루프(64토큰 한도), 디코더 잔여 토큰 후보.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2709044515",
+          "index": 39,
+          "prediction": "a man in a blue shirt is sitting on a chair and working on a laptop with a blue background and a blue and white sign that reads, i amoko, i am, i, am, am, am, am, am, am, am, am, am, am, am, am, am",
+          "references": [
+            "A man in a chef's uniform holding a large skillet over a stove, with fire coming out of the skillet.",
+            "A man wearing all white (including a bandanna) cooking something and making a huge flame.",
+            "A man with a mustache and beard is holding a frying pan that has flames rising from it.",
+            "A man watches a pan catch fire while cooking in the kitchen.",
+            "A man in a white shirt is holding a flaming pot."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 솜브레로 청년들 술한잔(테이크 촬영) 일치. pred는 식탁+음료 유지, 술/모자 정보 손실. 부분. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 16,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2900560501",
+          "index": 40,
+          "prediction": "a man and woman are sitting at a table with a cake and a drink",
+          "references": [
+            "A group of young people take shots in a Mexican setting.",
+            "A group of people at a restaurant about to take shots.",
+            "Young people in sombreros enjoy shots and drinks.",
+            "A group of people taking shots at a restaurant.",
+            "People wearing sombreros drink shots happily."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 잔디밭 여러 개와 앉은 여성(곁에 purse) 일치. pred는 여성+여러 개 유지, 옷 색 반복+한도 도달. 부분+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/435054077",
+          "index": 41,
+          "prediction": "a woman in a blue shirt is sitting on a bench with a dog and a dog in a park, and a man in a blue shirt is sitting on a red shirt and white shirt and black jacket and white shirt is holding a red leash and a black dog in a red jacket and a red jacket and white dog,",
+          "references": [
+            "There are several dogs in the field where the girl with the ponytail is sitting down.",
+            "A young woman sits crosslegged beside her purse on the grass among a crowd of dogs.",
+            "A girl in a gray shirt and brown hair relaxes on the lawn as dogs bound around her.",
+            "A woman sitting next to her purse watching dogs at the park.",
+            "Woman sitting in the grass with many dogs around her."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 도시 분수대 주변 군중 일치. pred는 군중+거리 유지, 가상의 간판 no people's land 텍스트 자작. 부분.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 25,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4655102365",
+          "index": 42,
+          "prediction": "a group of people are walking down a street with a sign that says'no people's land'in the background",
+          "references": [
+            "A small crowd of people are walking around an city's outdoor fountain.",
+            "People are standing in front of a sculpture surrounded by water.",
+            "Group of people near a water fountain and a city skyline.",
+            "A group of people stand in the park of a city.",
+            "Several pedestrians in front of a fountain."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 파란 음악정(스탠드 앞) 여성 성가대 일치. pred는 농구 경기+빨간 셔츠 남성 반복 - 불일치+루프(64토큰 한도).",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2572712647",
+          "index": 43,
+          "prediction": "a group of people are playing a game of basketball in a room with a crowd watching them and a man in a red shirt is standing in front of a crowd of people in the background holding a red and a red shirt and a white shirt and a red shirt and a red shirt with a black shirt and a white shirt",
+          "references": [
+            "A group of young girls all dressed in blue shirts with black pants are standing around in a music room.",
+            "A group of young girls wearing blue tops and black skirts standing behind blue music stands.",
+            "A group of young female musicians are wearing black skirts and blue shirts.",
+            "A choir group is gathered together in a church.",
+            "A group of children prepare to perform."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 1,
+          "expert_note": "이미지확인: 노란 카약·짐 옆으로 걸어가는 알몸 남성(수영복). ref 1-5(노란 카약+짐+수영복) 정확. pred는 서핑을 타는 파도로 불일치. 라우팅 C expert(expert=1). ref는 정확.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 13,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/697490420",
+          "index": 44,
+          "prediction": "a man riding a surfboard on a wave in the ocean",
+          "references": [
+            "A man in swimming trunks walking down to his belongings that are piled on a yellow canoe.",
+            "A man in swimming trunks walking toward bright yellow and orange kayaks.",
+            "A man in a bathing suit stands near a yellow kayak.",
+            "A shirtless man walks toward a yellow kayak.",
+            "Man prepares to take a kayak ride."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 1,
+          "expert_note": "이미지확인: 청록-흰 체커리 외벽의 De Neude 가게 앞 길 걷는 남성(붉은 셔츠). ref 1-5(가게 간판 표기 포함) 정확. pred는 남성+거리 유지, 상점 설명 누락, 자전거 보행자 혼동. 부분. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 11,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4688197510",
+          "index": 45,
+          "prediction": "a man is walking down the street with a bike",
+          "references": [
+            "A man in a red shirt walks past a turquoise and white checkered food establishment called \"32 De Neude.\"",
+            "A man wearing a red t-shirt and jeans is walking outside a shop with green and white checkered walls.",
+            "A street corner with stores and two men walking the sidewalk.",
+            "A picture of a storefront with a few people passing by.",
+            "A man in a red shirt walking down a city street."
+          ],
+          "visual_inspection": true
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 에스컬레이터 수리+도구 전달 남성 일치. pred는 벤치+식물 장식+후미 ,7 아티팩트. 불일치.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 31,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/1989609",
+          "index": 46,
+          "prediction": "a man in a blue shirt is sitting on a bench with a green plant in his lap, and a blue shirt is standing next to him,7",
+          "references": [
+            "A man wearing blue coveralls is handing a tool to another person.",
+            "A man in a navy blue jacket holding a tool in his dirty hand.",
+            "A man in a work uniform passing a tool to another person.",
+            "Man in a blue jumpsuit attempts to repair an escalator.",
+            "A man with a mustache works on a broken escalator."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 안경 웃는 여성 소파 경보 일치. pred는 흰 셔츠+노트북 커피+남성 옷 색 반복 - 불일치+루프(64토큰 한도).",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2131161531",
+          "index": 47,
+          "prediction": "a woman in a white shirt is sitting on a couch with a laptop and a cup of coffee in her hand, and a man in a blue shirt is sitting in a black shirt and white shirt and a black shirt with a white shirt and a black shirt with a white shirt and a black shirt, and white shirt,",
+          "references": [
+            "A woman wearing a black and white shirt, glasses and has a ring on her right hand, is smiling, while sitting on what appears to be a sofa with a blanket throw on the back of it.",
+            "This lady has heard a funny joke and laughing.",
+            "A woman sitting with a great big smile.",
+            "Lady with glasses sitting and smiling.",
+            "A woman in a sweater is laughing."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 금빛 긴 점퍼 여성 지하철 승강장 일치. pred는 흰 셔츠+빨간 우산 거리 걷기로 불일치(장소/복장 오류). eos.",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 19,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4520820052",
+          "index": 48,
+          "prediction": "a woman in a white shirt is walking down the street with a red umbrella over her shoulder",
+          "references": [
+            "A middle-aged woman with middle length brown hair in khaki pants, a long-sleeve blue shirt, and a long long gold jacket is walking in the subway station.",
+            "A woman in her early fifties walks by herself in the subway, another woman is not far behind.",
+            "Woman in a gold jacket walking on a New York subway platform.",
+            "The woman in the gold coat hurries to catch the subway.",
+            "A woman in a gold jacket waiting in the subway."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 3,
+          "expert_note": "ref 1-5 뒤 군중을 돌아본 테이블 남성 일치. pred는 앉은 남성 유지, 음식/군중 누락+벤치 반복 루프(64토큰 한도). 부분+루프.",
+          "generation": {
+            "empty": false,
+            "eos": false,
+            "generated_tokens": 64,
+            "limit_reached": true,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/2445442929",
+          "index": 49,
+          "prediction": "a man in a blue shirt is sitting on a bench with a laptop and a coffee mug in his hand while he is reading a book in a park with a green background of trees and a bench outside of grass and a bench with a bench and a bench outside of trees and a bench with a bench, and a bench",
+          "references": [
+            "A man in a checked shirt is sitting at a table looking back at a group of people behind him.",
+            "A man sitting at a picnic table with a tray and partially consumed beer in front of him.",
+            "A man sits at a wooden table and looks away to a crowd of people.",
+            "A man sits at a table outside and looks toward the horizon.",
+            "A man sits at a table outdoors and watches people."
+          ],
+          "visual_inspection": false
+        },
+        {
+          "expert": 1,
+          "expert_note": "ref 1-5 흰·빨강 깃발이 달린 대형 건물을 지나 달리는 두 소녀 일치. pred는 거리 간판+버스로 인물 누락. 불일치. 라우팅 C expert(expert=1).",
+          "generation": {
+            "empty": false,
+            "eos": true,
+            "generated_tokens": 13,
+            "limit_reached": false,
+            "max_new_tokens": 64,
+            "repeated_trigram": false
+          },
+          "id": "flickr30k/test/4706166634",
+          "index": 50,
+          "prediction": "a street sign on a city street with a bus passing by",
+          "references": [
+            "Two girls running down the street in front of a large building with white and red flags by the door.",
+            "Two young girls run on a sidewalk outside of a brick building with banners on it.",
+            "Two children play on the street outside an old building.",
+            "Two people walk on the sidewalk past a brick building.",
+            "Two people are running along side a building."
+          ],
+          "visual_inspection": false
+        }
+      ],
+      "seed": 20261016,
+      "selection": "randrange over 512 sorted eval ids without replacement",
+      "size": 50,
+      "stage": "after_03_F (final)",
+      "visual_inspected_count": 12
+    }
+  },
+  "stage": "week1-1A-flickr-sanity"
+}

@@ -1,0 +1,122 @@
+stage05 decoding probe job: job_id=2582869 node=node33 partition=suma_rtx4090 gres_alloc=0
+{
+  "mode": "smoke",
+  "rows": 16,
+  "banks": [
+    "C/137",
+    "F/137"
+  ],
+  "variants": {
+    "C/137/D0": {
+      "cider_d": 0.089722,
+      "eos_rate": 1.0,
+      "mean_length": 12.1875,
+      "contains_period_share": 0.0
+    },
+    "C/137/D1_b1": {
+      "cider_d": 0.079648,
+      "eos_rate": 1.0,
+      "mean_length": 11.0,
+      "contains_period_share": 0.0
+    },
+    "C/137/D1_b2": {
+      "cider_d": 0.083428,
+      "eos_rate": 1.0,
+      "mean_length": 10.3125,
+      "contains_period_share": 0.0
+    },
+    "C/137/D1_b4": {
+      "cider_d": 0.083175,
+      "eos_rate": 1.0,
+      "mean_length": 10.125,
+      "contains_period_share": 0.0
+    },
+    "C/137/D2_r1.2": {
+      "cider_d": 0.076324,
+      "eos_rate": 1.0,
+      "mean_length": 11.375,
+      "contains_period_share": 0.0
+    },
+    "C/137/D2_r1.5": {
+      "cider_d": 0.087639,
+      "eos_rate": 1.0,
+      "mean_length": 10.875,
+      "contains_period_share": 0.0
+    },
+    "C/137/D3_n32": {
+      "cider_d": 0.089722,
+      "eos_rate": 1.0,
+      "mean_length": 12.1875,
+      "contains_period_share": 0.0
+    },
+    "C/137/D3_n24": {
+      "cider_d": 0.089722,
+      "eos_rate": 1.0,
+      "mean_length": 12.1875,
+      "contains_period_share": 0.0
+    },
+    "C/137/D4_period": {
+      "cider_d": 0.089722,
+      "eos_rate": 1.0,
+      "mean_length": 12.1875,
+      "contains_period_share": 0.0
+    },
+    "F/137/D0": {
+      "cider_d": 0.05746,
+      "eos_rate": 0.625,
+      "mean_length": 37.6875,
+      "contains_period_share": 0.0
+    },
+    "F/137/D1_b1": {
+      "cider_d": 0.113998,
+      "eos_rate": 0.9375,
+      "mean_length": 21.9375,
+      "contains_period_share": 0.0
+    },
+    "F/137/D1_b2": {
+      "cider_d": 0.121011,
+      "eos_rate": 0.9375,
+      "mean_length": 19.0625,
+      "contains_period_share": 0.0
+    },
+    "F/137/D1_b4": {
+      "cider_d": 0.175956,
+      "eos_rate": 1.0,
+      "mean_length": 11.875,
+      "contains_period_share": 0.0
+    },
+    "F/137/D2_r1.2": {
+      "cider_d": 0.057997,
+      "eos_rate": 0.875,
+      "mean_length": 29.9375,
+      "contains_period_share": 0.0
+    },
+    "F/137/D2_r1.5": {
+      "cider_d": 0.111478,
+      "eos_rate": 1.0,
+      "mean_length": 23.25,
+      "contains_period_share": 0.0
+    },
+    "F/137/D3_n32": {
+      "cider_d": 0.07942,
+      "eos_rate": 0.5625,
+      "mean_length": 23.9375,
+      "contains_period_share": 0.0
+    },
+    "F/137/D3_n24": {
+      "cider_d": 0.125383,
+      "eos_rate": 0.5,
+      "mean_length": 20.1875,
+      "contains_period_share": 0.0
+    },
+    "F/137/D4_period": {
+      "cider_d": 0.05746,
+      "eos_rate": 0.625,
+      "mean_length": 37.6875,
+      "contains_period_share": 0.0
+    }
+  },
+  "decode_seconds": 39.442,
+  "total_seconds": 55.027
+}
+stage05_decoding_probe mode=smoke finished

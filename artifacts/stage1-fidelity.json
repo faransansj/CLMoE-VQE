@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "stage": "stage1-fidelity",
+  "mode": "fidelity",
+  "seed": 137,
+  "started_utc": "2026-10-20T06:37:49Z",
+  "finished_utc": "2026-10-20T06:47:34Z",
+  "runtime_seconds_total": 584.966,
+  "scheduler": {
+    "slurm_job_id": "2583205",
+    "slurm_env": {
+      "SLURM_NODELIST": "node35",
+      "SLURM_JOB_PARTITION": "suma_rtx4090",
+      "SLURM_CPUS_PER_TASK": "4",
+      "SLURM_MEM_PER_NODE": "49152",
+      "SLURM_TIMELIMIT": null,
+      "SLURM_QOS": null
+    },
+    "scontrol": {
+      "JobId": "2583205",
+      "Partition": "suma_rtx4090",
+      "NodeList": "node35",
+      "TresPerNode": "gres/gpu:1",
+      "NumCPUs": "4",
+      "QOS": "base_qos",
+      "StartTime": "2026-10-20T15:37:49",
+      "JobState": "RUNNING"
+    }
+  },
+  "tool": {
+    "path": "scripts/stage1_period_strip_train.py",
+    "sha256": "3cc2bbbc4b91045d2d9e695cb777145dbe2cce12924b111f9e36b1b3445c66db"
+  },
+  "unpatched_training": {
+    "output_dir": "artifacts/multimodal_runs/stage1_period_strip/fidelity_seed137",
+    "wall_seconds": 485.357,
+    "resources": {
+      "steps": 640,
+      "image_exposures": 10240,
+      "target_tokens": 154156,
+      "current_exposures": 10240,
+      "replay_exposures": 0,
+      "training_seconds": 267.2213516999036,
+      "feature_seconds": 2.998858690261841e-07,
+      "evaluation_seconds": 90.19881292246282,
+      "independent_storage_bytes": 4781526,
+      "wall_seconds": 485.2940969802439,
+      "peak_gpu_memory_bytes": 2604398080
+    },
+    "pre_task_scores": [
+      0.04067362351813495
+    ],
+    "matrix": [
+      [
+        0.11204806468189267
+      ]
+    ],
+    "metrics": {
+      "tasks": {
+        "F": {
+          "family": "caption",
+          "metric": "cider_d",
+          "units": "native_cider_d",
+          "final": 0.11204806468189267,
+          "post_train": 0.11204806468189267,
+          "AF": null,
+          "pre_to_post_gain": 0.07137444116375771
+        }
+      },
+      "families": {
+        "caption": {
+          "tasks": [
+            "F"
+          ],
+          "units": "native_cider_d",
+          "native_AF": null,
+          "native_subsequent_gain": null
+        }
+      }
+    }
+  },
+  "adapter_comparison": {
+    "bitwise_equal": true,
+    "tensors_compared": 192,
+    "max_abs_diff": 0.0,
+    "scalar_fields": {
+      "rank": {
+        "mine": 8,
+        "g4": 8,
+        "equal": true
+      },
+      "alpha": {
+        "mine": 16.0,
+        "g4": 16.0,
+        "equal": true
+      },
+      "num_experts": {
+        "mine": 1,
+        "g4": 1,
+        "equal": true
+      },
+      "active_expert": {
+        "mine": 0,
+        "g4": 0,
+        "equal": true
+      },
+      "trainable_expert": {
+        "mine": 0,
+        "g4": 0,
+        "equal": true
+      },
+      "training": {
+        "mine": true,
+        "g4": true,
+        "equal": true
+      }
+    },
+    "differing_preview": [],
+    "mine_sha256": "547390a2c05cd883aa2ca38b9c508dd83620617ed44474c5b9437fd94ac45df3",
+    "g4_sha256": "f65d61252faf22940a2598412f529dee32894aca46c40a473ff9c17a94df014e",
+    "g4_expected_sha256": "f65d61252faf22940a2598412f529dee32894aca46c40a473ff9c17a94df014e",
+    "g4_sha_matches_binding": true
+  },
+  "gate": {
+    "bitwise_equal": true,
+    "max_abs_diff": 0.0,
+    "validation_D0_matches_stage05_F_D0": true,
+    "passed": true
+  },
+  "settings_diff_vs_g4_config": {
+    "eval_split": {
+      "stage1": "validation",
+      "g4": "eval"
+    }
+  },
+  "fidelity_validation_D0_summary": {
+    "rows": 256,
+    "eos_rate": 0.5390625,
+    "period_stop_rate": 0.0,
+    "limit_rate": 0.4609375,
+    "mean_length": 40.4140625,
+    "repeated_trigram_rate": 0.10546875,
+    "empty_rate": 0.0,
+    "contains_period_share": 0.0,
+    "period_argmax_rows": 0,
+    "period_argmax_steps_total": 0,
+    "cider_d": 0.112048,
+    "bleu4": 0.061546,
+    "per_image_mean": 0.112048,
+    "paired_vs_F_D0_same_seed": {
+      "rows": 256,
+      "mean": -0.0
+    },
+    "paired_vs_C_D0_same_seed": {
+      "rows": 256,
+      "mean": -0.053681
+    },
+    "paired_vs_F_D0_both_eos": {
+      "rows": 138,
+      "mean": -0.0
+    },
+    "paired_vs_C_D0_both_eos": {
+      "rows": 138,
+      "mean": 0.023198
+    },
+    "d0_diagnostics": {
+      "all": {
+        "rows": 256,
+        "sep_max_prob": {
+          "rows": 256,
+          "p10": 0.014361,
+          "median": 0.033095,
+          "p90": 0.085446
+        },
+        "period_max_prob": {
+          "rows": 256,
+          "p10": 6.5e-05,
+          "median": 8.5e-05,
+          "p90": 9.9e-05
+        },
+        "sep_top2_at_some_step_share": 0.7265625,
+        "sep_top1_at_some_step_share": 0.5390625,
+        "period_top2_at_some_step_share": 0.0,
+        "period_top1_at_some_step_share": 0.0,
+        "sep_best_rank_median": 0.0,
+        "period_best_rank_median": 1251.0
+      },
+      "eos_rows": {
+        "rows": 138,
+        "sep_max_prob": {
+          "rows": 138,
+          "p10": 0.020473,
+          "median": 0.043333,
+          "p90": 0.126714
+        },
+        "period_max_prob": {
+          "rows": 138,
+          "p10": 7.1e-05,
+          "median": 8.8e-05,
+          "p90": 0.000101
+        },
+        "sep_top2_at_some_step_share": 1.0,
+        "sep_top1_at_some_step_share": 1.0,
+        "period_top2_at_some_step_share": 0.0,
+        "period_top1_at_some_step_share": 0.0,
+        "sep_best_rank_median": 0.0,
+        "period_best_rank_median": 1267.0
+      },
+      "non_eos_rows": {
+        "rows": 118,
+        "sep_max_prob": {
+          "rows": 118,
+          "p10": 0.011192,
+          "median": 0.023347,
+          "p90": 0.040538
+        },
+        "period_max_prob": {
+          "rows": 118,
+          "p10": 6.4e-05,
+          "median": 8.1e-05,
+          "p90": 9.6e-05
+        },
+        "sep_top2_at_some_step_share": 0.4067796610169492,
+        "sep_top1_at_some_step_share": 0.0,
+        "period_top2_at_some_step_share": 0.0,
+        "period_top1_at_some_step_share": 0.0,
+        "sep_best_rank_median": 2.0,
+        "period_best_rank_median": 1243.5
+      }
+    }
+  },
+  "labels": {
+    "training": true,
+    "diagnostic_only": true,
+    "note": "fidelity gate for the strip runs; the confirmation eval split was never generated or scored"
+  }
+}

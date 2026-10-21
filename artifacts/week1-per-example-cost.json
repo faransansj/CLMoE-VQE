@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "generated_by": {
+    "note": "scheduler/cost provenance for week-1 item 1-C per-example rescoring; created on request of the parent after the final verified run; no existing output or script was modified",
+    "created_at_local": "2026-10-16",
+    "author_agent": "PerExampleRescore (worker)"
+  },
+  "final_run": {
+    "slurm_job_id": 2557502,
+    "partition": "dell_rtx3090",
+    "submitted_at_local": "2026-10-16 ~20:49 KST (session receipt: 'Submitted batch job 2557502')",
+    "stdout_stderr_log_copy": "artifacts/week1-rescore-2557502.log (raw copy, 124 bytes; SLURM merges stderr into --output when --error is unset)",
+    "sbatch_script_copy": "artifacts/week1-rescore-2557502.sbatch (raw copy, 486 bytes)",
+    "directives": {
+      "job_name": "w1rescore",
+      "partition": "dell_rtx3090",
+      "gres": "gpu:1",
+      "cpus_per_task": 4,
+      "mem": "32G",
+      "time_limit": "0-02:00:00",
+      "output": "/home/faransansj/CLMoE-Multimodal-20261013/week1-rescore-%j.log"
+    },
+    "script_execution": {
+      "script_sha256_at_execution": "baf73c570bcc2e8989d50a177084cd2c4154285c55be60313d79d62736a5521e",
+      "python": "3.12.14 (remote .venv cpython, uv-managed)",
+      "numpy": "1.26.4",
+      "pycocoevalcap": "1.2",
+      "java": "openjdk 22.0.2 (/opt/ohpc/pub/apps/java/22.0.2/bin, PATH-prefixed in job script)",
+      "torch": "never imported (envelope static_import_scan.torch_free=true, model_modules_loaded=[])",
+      "in_script_measured_wall_seconds": 329.021,
+      "in_script_scoring_loop_seconds": 312.062,
+      "rows_written": 212992,
+      "corpora_scored": 416,
+      "script_exit": 0
+    },
+    "scheduler_evidence_quality": {
+      "sacct": "UNAVAILABLE: 'sacct: error: Problem talking to the database: Connection refused' (slurmdbd :6819 refused from login node; verified 2026-10-16 for all attempt job ids) — no scheduler-side accounting records could be exported",
+      "scontrol": "job record purged on re-query ('slurm_load_jobs error: Invalid job id specified'); a partial snapshot captured before purge is embedded below verbatim; NodeList/AllocTRES/Start/End were cut by the capture command (head -3) and are therefore unrecorded",
+      "log_file": "raw final-run log preserved (124 bytes, copied above); intermediate attempt logs were deleted by my own cleanup chains between submissions and are not recoverable"
+    },
+    "scontrol_snapshot_2557502_partial_verbatim": "JobId=2557502 JobName=w1rescore\n   UserId=faransansj(10692) GroupId=ys_ms(10000) MCS_label=N/A\n   Priority=6088 Nice=0 Account=ys_ms QOS=base_qos WCKey=*\n(capture truncated at 3 lines; remainder unrecorded)",
+    "measured_allocation_wall": {
+      "definition": "wall time the allocation was held, measured outside the script",
+      "final_job_job_elapsed_seconds_approx": 335,
+      "measurement_method": "session watcher (squeue poll loop, 30 s granularity, started at submission; returned after completion); log/artifact mtimes 20:49->20:54 bound it",
+      "job_elapsed_seconds_exact": "unrecorded (sacct unavailable, scontrol purged)",
+      "in_script_wall_seconds_exact": 329.021,
+      "gpu_seconds_held_final_job_approx": 335,
+      "note": "gpu:1 was allocated but the process never initializes CUDA (no torch import), so the GPU sat idle while 4 CPUs + 32G RAM did the work"
+    }
+  },
+  "gpu_allocation_rationale": {
+    "cluster_constraint": "every SLURM partition on Yonsei-DC1 is a GPU partition (sinfo 2026-10-16: base_suma_rtx3090*, dell_rtx3090, big_suma_rtx3090, suma_a6000, suma_rtx4090, suma_a100, gigabyte_a6000(_bio); all list GRES GPUs; no CPU-only queue exists)",
+    "session_constraint": "the assignment required SLURM sbatch for remote compute and forbade CUDA_VISIBLE_DEVICES declarations",
+    "conclusion": "The submitted CPU-only job explicitly requested --gres=gpu:1; this reserved a GPU unnecessarily for this workload. Listing GPU partitions does not establish that CPU-only allocations on those partitions are forbidden. Whether this reservation was required by cluster policy was not verified; do not attribute the overhead to a proven cluster constraint.",
+    "sinfo_verbatim_2026_10_16": "PARTITION AVAIL TIMELIMIT GRES\nbase_suma_rtx3090* up 14-00:00:00 gpu:RTX3090:7\nbase_suma_rtx3090* up 14-00:00:00 gpu:RTX3090:8\ndell_rtx3090 up 14-00:00:00 gpu:RTX3090:8\nbig_suma_rtx3090 up 14-00:00:00 gpu:RTX3090:8\nsuma_a6000 up 14-00:00:00 gpu:A6000:8\nsuma_rtx4090 up 14-00:00:00 gpu:RTX4090:6\nsuma_a100 up 21-00:00:00 gpu:a100:8\ngigabyte_a6000_bio up 14-00:00:00 gpu:A6000:8"
+  },
+  "attempts_ledger": [
+    {
+      "job_id": 2557367,
+      "state": "CANCELLED by user (me)",
+      "elapsed_seconds_approx": 79,
+      "evidence": "session receipt 'Submitted batch job 2557367'; watcher probe 'RUNNING 1:19' immediately before scancel",
+      "cause": "deliberate cancel: the script was updated mid-run (static import scan added) and I wanted the single official run to carry the complete script",
+      "log_kept": false,
+      "script_state": "pre-static-scan version; no outputs written"
+    },
+    {
+      "job_id": 2557370,
+      "state": "FAILED (script exit 1)",
+      "elapsed_seconds_approx": 300,
+      "evidence": "watcher-captured traceback: KeyError: 'C_independent_lr0.0003_ep5_seed137' at rows_write phase (BANK_ORDERS lacked independent run directory names)",
+      "cause": "code bug in the row-writer only; scoring and aggregation phases had completed",
+      "log_kept": false,
+      "script_state": "sha differs from final; partial rows file deleted before next submission"
+    },
+    {
+      "job_id": 2557401,
+      "state": "COMPLETED, script exit 1 (envelope status=fail, failures=1)",
+      "elapsed_seconds_approx": 325,
+      "in_script_wall_seconds": 319.911,
+      "evidence": "log tail captured by watcher: 'FAIL: caption diag own-route text mismatches expected 0, got 20'",
+      "cause": "wrong author expectation: caption-diagonal own-route text mismatches are 20 (16 shared F@stage3 occurrences + 4 additional), not 0; compute itself had max fresh-vs-stored parity 0.0",
+      "log_kept": false,
+      "script_state": "pre mismatch_totals/registry-marker version"
+    },
+    {
+      "job_id": 2557455,
+      "state": "COMPLETED, script exit 1 (envelope status=fail, failures=1)",
+      "elapsed_seconds_approx": 325,
+      "in_script_wall_seconds": 319.911,
+      "evidence": "same expectation check still failing (mismatch totals not yet restructured)",
+      "cause": "same wrong expectation; outputs written and later overwritten by the final run",
+      "log_kept": false,
+      "script_state": "pre registry-category-provenance fix"
+    },
+    {
+      "job_id": 2557484,
+      "state": "COMPLETED, script exit 0 (envelope status=pass, failures=0)",
+      "elapsed_seconds_approx": 340,
+      "in_script_wall_seconds": 334.554,
+      "evidence": "local verification harness caught two residual bookkeeping issues the in-run checks did not assert: registry double-listed the 16 shared F@stage3 rows under category 'diag' (batch1-scope count 46 instead of 62) and batch1_manifest_crosscheck unavailable (manifest copy not yet on the remote)",
+      "cause": "residual registry categorization + missing remote manifest; scoring/parity all clean (max fresh-vs-stored 0.0)",
+      "log_kept": false,
+      "script_state": "pre category-provenance fix"
+    },
+    {
+      "job_id": 2557502,
+      "state": "COMPLETED, script exit 0 (envelope status=pass, failures=0)",
+      "elapsed_seconds_approx": 335,
+      "in_script_wall_seconds": 329.021,
+      "evidence": "raw log preserved (artifacts/week1-rescore-2557502.log); local verification PASS including 62/62 batch1 crosscheck and parity maxima 0.0",
+      "cause": "final accepted run",
+      "log_kept": true,
+      "script_state": "sha256 baf73c570bcc2e8989d50a177084cd2c4154285c55be60313d79d62736a5521e"
+    }
+  ],
+  "attempt_totals": {
+    "sbatch_submissions": 6,
+    "completed_with_usable_outputs": 3,
+    "completed_then_superseded": 2,
+    "cancelled_by_me": 1,
+    "hard_failures": 1,
+    "expectation_failures_corrected_in_place": 2,
+    "gpu_seconds_held_total_approx": 1704,
+    "gpu_minutes_total_approx": 28.4,
+    "approximation_note": "per-attempt elapsed values are session-watcher measurements at 30 s squeue poll granularity plus queue lag; sacct records are unavailable, so exact TRES-weighted accounting could not be exported",
+    "retries_were_code_fixes_only": "no model, scorer, or method changes at any point; all six runs used identical frozen inputs and the identical scorer protocol"
+  },
+  "extra_resources": {
+    "per_job_allocation": "cpus-per-task=4, mem=32G, gres=gpu:1, time 0-02:00:00 (actual usage ~5.5 min per completed run)",
+    "transfers": "scripts + 3 output artifacts (~7 MB) scp'd back; artifacts/week1-batch1-cases.json (495,447 bytes) and extracted audit JSONs (g4 59,222,169 B; g5 18,531,754 B) copied to the remote run root for the in-run crosschecks and stored-value sources; no dataset or model downloads",
+    "remote_side_files_left_in_place": [
+      "/home/faransansj/CLMoE-Multimodal-20261013/scripts/week1_per_example_rescore.py",
+      "/home/faransansj/CLMoE-Multimodal-20261013/scripts/w1rescore.sbatch",
+      "/home/faransansj/CLMoE-Multimodal-20261013/week1-rescore-2557502.log",
+      "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/week1-per-example-{rescore.json,scores.jsonl.gz,report.md} (copies of the local outputs)",
+      "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/week1-batch1-cases.json (read-only copy)",
+      "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-g4-report/audit.json (copy)",
+      "/home/faransansj/CLMoE-Multimodal-20261013/artifacts/multimodal-g5-report/routing_audit.json (copy)"
+    ],
+    "cleanup": "remote /tmp smoke scripts removed; intermediate attempt logs were removed by my own inter-submission cleanup chains (recorded here as a provenance gap)"
+  },
+  "bindings": {
+    "final_outputs_sha256": {
+      "artifacts/week1-per-example-rescore.json": "22acf26c0477d1f7bfbe5d3c56ef0185c8eb9d420a15251b8a2044d60b3dadb8",
+      "artifacts/week1-per-example-scores.jsonl.gz": "cf74c2fdf946ea49419d922bcb64e627fd26e53dcae3542a3b6bc6adf5d612f3",
+      "artifacts/week1-per-example-report.md": "db002ec1d2666003192cb254c21873c0463e540b2248fc341d65b87809f949f6"
+    },
+    "executed_script_sha256": "baf73c570bcc2e8989d50a177084cd2c4154285c55be60313d79d62736a5521e",
+    "note": "executed-script sha and the output hashes above are the provenance record of MY delivery (job 2557502). After handover the parent owns the script and outputs and may correct them (e.g. caption_diagnostics cohort fix); post-handover hashes will differ from these and are recorded by the parent, not by this file",
+    "verified_at_handover": {
+      "local_verify": "python3 scripts/week1_per_example_verify.py -> VERIFICATION: PASS (against the 2557502 outputs)",
+      "batch1_crosscheck": "62/62 keys matched, 62/62 prediction texts byte-agree"
+    },
+    "cost_file_inputs": [
+      "artifacts/week1-rescore-2557502.sbatch (raw copy)",
+      "artifacts/week1-rescore-2557502.log (raw copy)",
+      "session watcher records (squeue probes, tracebacks, receipts)",
+      "sinfo snapshot 2026-10-16",
+      "partial scontrol snapshot of 2557502 captured pre-purge"
+    ]
+  }
+}

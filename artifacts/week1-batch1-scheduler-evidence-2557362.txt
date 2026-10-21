@@ -1,0 +1,67 @@
+sacct: error: slurm_persist_conn_open_without_init: failed to open persistent connection to host:localhost:6819: Connection refused
+sacct: error: Sending PersistInit msg: Connection refused
+sacct: error: Problem talking to the database: Connection refused
+JobId=2557362 JobName=week1batch1
+   UserId=faransansj(10692) GroupId=ys_ms(10000) MCS_label=N/A
+   Priority=6088 Nice=0 Account=ys_ms QOS=base_qos WCKey=*
+   JobState=COMPLETED Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:03:27 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-10-16T20:17:38 EligibleTime=2026-10-16T20:17:38
+   AccrueTime=2026-10-16T20:17:38
+   StartTime=2026-10-16T20:24:16 EndTime=2026-10-16T20:27:43 Deadline=N/A
+   PreemptEligibleTime=2026-10-16T20:24:16 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-16T20:24:16 Scheduler=Main
+   Partition=suma_rtx4090 AllocNode:Sid=login1:4087032
+   ReqNodeList=(null) ExcNodeList=cs-gpu-01,node40
+   NodeList=node36
+   BatchHost=node36
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=4,mem=48G,node=1,billing=4,gres/gpu=1
+   AllocTRES=cpu=4,node=1,billing=4,gres/gpu=1,gres/gpu:rtx4090=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=48G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/home/faransansj/CLMoE-Multimodal-20261013/week1-batch1-runtime/submit_20261016T111738Z.sbatch
+   WorkDir=/home/faransansj/CLMoE-Multimodal-20261013
+   StdErr=/home/faransansj/CLMoE-Multimodal-20261013/artifacts/week1-batch1/20261016T111738Z/week1-batch1-2557362.err.log
+   StdIn=/dev/null
+   StdOut=/home/faransansj/CLMoE-Multimodal-20261013/artifacts/week1-batch1/20261016T111738Z/week1-batch1-2557362.log
+   Power=
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu:4
+   
+
+
+# Additional sacct retry after merge (2026-10-16T11:35Z local):
+# sacct -j 2557362 --parsable2 --format=JobID,JobName,State,Elapsed,Start,End,ExitCode,NodeList,AllocTRES,Partition
+# -> slurm_persist_conn_open_without_init: failed to open persistent connection to host:localhost:6819: Connection refused
+#    (slurmdbd unreachable from the DC1 login node at merge and retry time)
+# Allocation evidence therefore comes from `scontrol show job 2557362` (slurmctld):
+#   JobState=COMPLETED NodeList=node36 NumCPUs=4 AllocTRES=cpu=4,node=1,billing=4,gres/gpu=1,gres/gpu:rtx4090=1
+#   StartTime=2026-10-16T20:24:16 EndTime=2026-10-16T20:27:43 (AllocElapsedSeconds=207)
+
+# Failed attempt evidence (no new inference performed for this review):
+# 2557282 (RUNID 20261016T105453Z, node35, log mtimes 19:55->19:56Z): executed script sha
+#   560c4b7fefe9e9c33fb198af20ee6821935269cd2f988fceac023086bc180c14; crashed at the FIRST bank's
+#   pre-inference whole-model digest (AttributeError in _tensor_digest on a non-tensor state_dict
+#   entry) AFTER checkpoint load and all file/asset/manifest verifications, BEFORE any batch-1 row:
+#   0 generated rows. logs: artifacts/week1-batch1-run2557282.log / .err.log
+# 2557297 (RUNID 20261016T105906Z, log mtimes 20:08->20:09Z): executed script sha
+#   3ae201f1eb475536d6462eea5ef3bdc0faf54d8e81652483aa52eb1a75b322ea; completed all verifications,
+#   loaded the first bank, ran runner.routed_predictions for exactly ONE row and crashed while
+#   building the prediction record (KeyError occurrence_ids) before writing any line:
+#   1 generated row (unpersisted, text not recorded). First row by the deterministic iteration order
+#   (banks sorted, entries by (task,row_id)) computed from week1-batch1-cases.json:
+#   bank F_C_G_V_expand_lr0.0003_ep5_seed137, task C, stage after_03, row coco_captions/val2014/... (see scripts/week1_batch1_regenerate.py run).
+#   logs: artifacts/week1-batch1-run2557297.log / .err.log
+# Allocation costs of the failed attempts: slurmdbd (sacct) remained unreachable (Connection refused
+#   localhost:6819) and scontrol retains no completed-job record for 2557282/2557297 (queried 2026-10-16T20:4xZ),
+#   so scheduler-side per-attempt allocation accounting is NOT available; only file-mtime windows above
+#   (each <= ~1 min of allocation) bound them. Successful run 2557362: 207s allocation wall from scontrol.
+# Executed-script provenance snapshot for the successful GPU run: artifacts/week1-batch1-executed-script-2557362.py
+#   sha256 7c80cc394823adf1f448a070349921445bae7633b45458edf833b01b2f6bd7a2 == remote runtime copy
+#   /home/faransansj/CLMoE-Multimodal-20261013/week1-batch1-runtime/week1_batch1_regenerate.py
+#   (current local scripts/week1_batch1_regenerate.py 991bb... differs only in the local merge subcommand,
+#   which never ran on the GPU node).

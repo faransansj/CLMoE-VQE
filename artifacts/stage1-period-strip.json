@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "stage": "stage1-period-strip",
+  "labels": {
+    "diagnostic_only": true,
+    "single_factor": "only the training target changed: caption answers lost trailing whitespace and ONE terminal '.'; training path, data order, scorer, references and all other settings identical to G4 independent F",
+    "variant_selected_as_method_on_eval": false,
+    "causal_scope": "single-factor contrast conditional on this pipeline, the 640-step budget and the validation split; no claim beyond it",
+    "confirmation_eval_split_read_for_generation_or_scoring": false
+  },
+  "mode": "strip",
+  "started_utc": "2026-10-20T07:30:58Z",
+  "finished_utc": "2026-10-20T07:53:07Z",
+  "runtime_seconds_total": 1329.274,
+  "scheduler": {
+    "slurm_job_id": "2583796",
+    "slurm_env": {
+      "SLURM_NODELIST": "node33",
+      "SLURM_JOB_PARTITION": "suma_rtx4090",
+      "SLURM_CPUS_PER_TASK": "4",
+      "SLURM_MEM_PER_NODE": "49152",
+      "SLURM_TIMELIMIT": null,
+      "SLURM_QOS": null
+    },
+    "scontrol": {
+      "JobId": "2583796",
+      "Partition": "suma_rtx4090",
+      "NodeList": "node33",
+      "TresPerNode": "gres/gpu:1",
+      "NumCPUs": "4",
+      "QOS": "base_qos",
+      "StartTime": "2026-10-20T16:30:58",
+      "JobState": "RUNNING"
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-5.14.0-427.22.1.el9_4.x86_64-x86_64-with-glibc2.34"
+  },
+  "tool": {
+    "path": "scripts/stage1_period_strip_train.py",
+    "sha256": "3cc2bbbc4b91045d2d9e695cb777145dbe2cce12924b111f9e36b1b3445c66db"
+  },
+  "fidelity_gate": {
+    "report": "artifacts/stage1-fidelity.json",
+    "sha256": "02af68b8d58e032a7d506d094f6219a58cff8ef02e75771733eedc932a3be679",
+    "gate": {
+      "bitwise_equal": true,
+      "max_abs_diff": 0.0,
+      "validation_D0_matches_stage05_F_D0": true,
+      "passed": true
+    }
+  },
+  "probe_inputs": {
+    "predictions_gz": {
+      "path": "artifacts/stage05-decoding-predictions.jsonl.gz",
+      "sha256": "9a2cbbc3acf8398633585c866ec9451e725da76fc09591d52c92f93fb76893a9"
+    },
+    "probe_report_sha256": "5779a9d8bbdaddd92f601ea004f1da3f7f506cd9528c7d5282ca4075e2839e6a"
+  },
+  "data": {
+    "task": "F",
+    "split": "validation",
+    "rows": 256,
+    "images_byte_verified": 256,
+    "train_rows": 2048
+  },
+  "target_transform": {
+    "strip": "rstrip(); remove ONE terminal '.'; caption answers only",
+    "scoring_references_untouched": true,
+    "applied_via": "runtime monkeypatch of sema_multimodal.data.training_rows (no sema_* source edit)"
+  },
+  "runs": {
+    "STRIP/137": {
+      "run_dir": "artifacts/multimodal_runs/stage1_period_strip/strip_seed137",
+      "run_label": "strip_seed137",
+      "seed": 137,
+      "config_sha256": "f137618ccc8079010abdc81e85621919debe0c734fd3007510aa69d54b43bda8",
+      "latest_sha256": "0b661921577f463e5a23c3b8d8b915e1992255f6e2159b5c14c2230d339908e2",
+      "adapter_proof": {
+        "whole_model_digest_pre": "8db69f89f46f43d186fd4f8a2f80d2d84c04462124c06f6375c6e5fa4bd73616",
+        "whole_model_digest_post": "8db69f89f46f43d186fd4f8a2f80d2d84c04462124c06f6375c6e5fa4bd73616",
+        "whole_model_identical_pre_post": true,
+        "expert_digest_pre": "97608fe21479274f0932a39f0119f0aa579852ffcc60a762019ba05d1613eb07",
+        "expert_digest_post": "97608fe21479274f0932a39f0119f0aa579852ffcc60a762019ba05d1613eb07",
+        "expert_tensors_identical_pre_post": true
+      },
+      "decode_seconds": 29.805,
+      "variant_seconds": {
+        "D0": 15.272,
+        "D1_b4": 11.945
+      },
+      "peak_gpu_bytes": 1582443520,
+      "results": {
+        "D0": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 11.2734375,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.273658,
+            "bleu4": 0.17459,
+            "per_image_mean": 0.273658,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.16161
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.107929
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 138,
+              "mean": 0.113794
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.107929
+            },
+            "d0_diagnostics": {
+              "all": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.234403,
+                  "median": 0.452033,
+                  "p90": 0.696084
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12222.0
+              },
+              "eos_rows": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.234403,
+                  "median": 0.452033,
+                  "p90": 0.696084
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12222.0
+              },
+              "non_eos_rows": {
+                "rows": 0
+              }
+            }
+          }
+        },
+        "D1_b4": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 8.75390625,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.194688,
+            "bleu4": 0.16886,
+            "per_image_mean": 0.194688,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.08264
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.02896
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 138,
+              "mean": 0.030328
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.02896
+            }
+          }
+        }
+      }
+    },
+    "STRIP/149": {
+      "run_dir": "artifacts/multimodal_runs/stage1_period_strip/strip_seed149",
+      "run_label": "strip_seed149",
+      "seed": 149,
+      "config_sha256": "434d53c9622d022d7dbe4f09dbb2efe5e5d4b0119c197fe9c6833b180f0dc993",
+      "latest_sha256": "1d0072a0d779e02bc4e9333fc9f092ff8fcae8c834de5ae8120839fd229a4a5a",
+      "adapter_proof": {
+        "whole_model_digest_pre": "3e45322175bf5d2b5638f92eac41bc92fdd142e402e6ab774e2ae87726cda680",
+        "whole_model_digest_post": "3e45322175bf5d2b5638f92eac41bc92fdd142e402e6ab774e2ae87726cda680",
+        "whole_model_identical_pre_post": true,
+        "expert_digest_pre": "fb209a2b09dcd5669a40a8f5b3b7dca99f353179f4056639a6305509cc0f2cda",
+        "expert_digest_post": "fb209a2b09dcd5669a40a8f5b3b7dca99f353179f4056639a6305509cc0f2cda",
+        "expert_tensors_identical_pre_post": true
+      },
+      "decode_seconds": 32.772,
+      "variant_seconds": {
+        "D0": 16.859,
+        "D1_b4": 13.3
+      },
+      "peak_gpu_bytes": 1584804864,
+      "results": {
+        "D0": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 11.7578125,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.260069,
+            "bleu4": 0.170062,
+            "per_image_mean": 0.260069,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.1551
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.10915
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 156,
+              "mean": 0.108879
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.10915
+            },
+            "d0_diagnostics": {
+              "all": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.211033,
+                  "median": 0.45615,
+                  "p90": 0.710117
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12426.5
+              },
+              "eos_rows": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.211033,
+                  "median": 0.45615,
+                  "p90": 0.710117
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12426.5
+              },
+              "non_eos_rows": {
+                "rows": 0
+              }
+            }
+          }
+        },
+        "D1_b4": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 9.65234375,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.222589,
+            "bleu4": 0.179976,
+            "per_image_mean": 0.222589,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.11762
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.07167
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 156,
+              "mean": 0.056795
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.07167
+            }
+          }
+        }
+      }
+    },
+    "STRIP/163": {
+      "run_dir": "artifacts/multimodal_runs/stage1_period_strip/strip_seed163",
+      "run_label": "strip_seed163",
+      "seed": 163,
+      "config_sha256": "6d2dfa89059e2c2a43ba64b6842598b8913676ea4728b7a7e7e5c66d4786d687",
+      "latest_sha256": "23ba9ecbba2ce2538e723388a2b40f65ce8773bd6f990567ab966cac5bc27008",
+      "adapter_proof": {
+        "whole_model_digest_pre": "0b622542d5e66149f54f3ba937f7f2842808685befb561b7105c19ae4d4be555",
+        "whole_model_digest_post": "0b622542d5e66149f54f3ba937f7f2842808685befb561b7105c19ae4d4be555",
+        "whole_model_identical_pre_post": true,
+        "expert_digest_pre": "652535ad1f10fe98b41c30b73d3f2fd0e44648ef207e56d1afc4c20bf677ad84",
+        "expert_digest_post": "652535ad1f10fe98b41c30b73d3f2fd0e44648ef207e56d1afc4c20bf677ad84",
+        "expert_tensors_identical_pre_post": true
+      },
+      "decode_seconds": 30.011,
+      "variant_seconds": {
+        "D0": 15.247,
+        "D1_b4": 12.221
+      },
+      "peak_gpu_bytes": 1582443520,
+      "results": {
+        "D0": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 11.359375,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.306117,
+            "bleu4": 0.185317,
+            "per_image_mean": 0.306117,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.19909
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.149232
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 136,
+              "mean": 0.147893
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.149232
+            },
+            "d0_diagnostics": {
+              "all": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.243508,
+                  "median": 0.45218,
+                  "p90": 0.668955
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12185.0
+              },
+              "eos_rows": {
+                "rows": 256,
+                "sep_max_prob": {
+                  "rows": 256,
+                  "p10": 0.243508,
+                  "median": 0.45218,
+                  "p90": 0.668955
+                },
+                "period_max_prob": {
+                  "rows": 256,
+                  "p10": 3e-06,
+                  "median": 3e-06,
+                  "p90": 4e-06
+                },
+                "sep_top2_at_some_step_share": 1.0,
+                "sep_top1_at_some_step_share": 1.0,
+                "period_top2_at_some_step_share": 0.0,
+                "period_top1_at_some_step_share": 0.0,
+                "sep_best_rank_median": 0.0,
+                "period_best_rank_median": 12185.0
+              },
+              "non_eos_rows": {
+                "rows": 0
+              }
+            }
+          }
+        },
+        "D1_b4": {
+          "summary": {
+            "rows": 256,
+            "eos_rate": 1.0,
+            "period_stop_rate": 0.0,
+            "limit_rate": 0.0,
+            "mean_length": 8.96875,
+            "repeated_trigram_rate": 0.0,
+            "empty_rate": 0.0,
+            "contains_period_share": 0.0,
+            "period_argmax_rows": 0,
+            "period_argmax_steps_total": 0,
+            "cider_d": 0.220607,
+            "bleu4": 0.185415,
+            "per_image_mean": 0.220607,
+            "paired_vs_F_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.11358
+            },
+            "paired_vs_C_D0_same_seed": {
+              "rows": 256,
+              "mean": 0.063722
+            },
+            "paired_vs_F_D0_both_eos": {
+              "rows": 136,
+              "mean": 0.053682
+            },
+            "paired_vs_C_D0_both_eos": {
+              "rows": 256,
+              "mean": 0.063722
+            }
+          }
+        }
+      }
+    }
+  },
+  "korean_summary": [
+    "- STRIP/137: D0 EOS 도달률 1.000, 한계 도달률 0.000, 평균 길이 11.27, 반복 3-gram 0.000, CIDEr-D 0.2737; '.' argmax 0단계.",
+    "- STRIP/137 EOS 행 256행: [SEP] 최고확률 중앙값 0.4520, top-2 비율 1.000; '.' 최고확률 중앙값 0.0000, top-2 비율 0.000.",
+    "- STRIP/137 paired Δ (validation 256장, 동일 이미지): stage0.5 F-D0 대비 +0.1616 (both-EOS 0.113794, n=138); C-D0 대비 +0.1079 (both-EOS 0.107929, n=256).",
+    "- STRIP/137 D1(EOS 바이어스+4, 참고용): EOS 1.000, CIDEr-D 0.1947, F-D0 대비 Δ +0.0826.",
+    "- STRIP/149: D0 EOS 도달률 1.000, 한계 도달률 0.000, 평균 길이 11.76, 반복 3-gram 0.000, CIDEr-D 0.2601; '.' argmax 0단계.",
+    "- STRIP/149 EOS 행 256행: [SEP] 최고확률 중앙값 0.4561, top-2 비율 1.000; '.' 최고확률 중앙값 0.0000, top-2 비율 0.000.",
+    "- STRIP/149 paired Δ (validation 256장, 동일 이미지): stage0.5 F-D0 대비 +0.1551 (both-EOS 0.108879, n=156); C-D0 대비 +0.1091 (both-EOS 0.10915, n=256).",
+    "- STRIP/149 D1(EOS 바이어스+4, 참고용): EOS 1.000, CIDEr-D 0.2226, F-D0 대비 Δ +0.1176.",
+    "- STRIP/163: D0 EOS 도달률 1.000, 한계 도달률 0.000, 평균 길이 11.36, 반복 3-gram 0.000, CIDEr-D 0.3061; '.' argmax 0단계.",
+    "- STRIP/163 EOS 행 256행: [SEP] 최고확률 중앙값 0.4522, top-2 비율 1.000; '.' 최고확률 중앙값 0.0000, top-2 비율 0.000.",
+    "- STRIP/163 paired Δ (validation 256장, 동일 이미지): stage0.5 F-D0 대비 +0.1991 (both-EOS 0.147893, n=136); C-D0 대비 +0.1492 (both-EOS 0.149232, n=256).",
+    "- STRIP/163 D1(EOS 바이어스+4, 참고용): EOS 1.000, CIDEr-D 0.2206, F-D0 대비 Δ +0.1136.",
+    "- 단일 요인 대조(학습 타깃 마침표 제거) 결과이며, eval(확인 평가) 분할 방법 선택 없음; 원인 해석은 이 대조 범위 안에서만 유지."
+  ]
+}

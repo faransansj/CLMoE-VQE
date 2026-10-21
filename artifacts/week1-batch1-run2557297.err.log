@@ -1,0 +1,13 @@
+BertLMHeadModel has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Traceback (most recent call last):
+  File "/home/faransansj/CLMoE-Multimodal-20261013/week1-batch1-runtime/week1_batch1_regenerate.py", line 1136, in <module>
+    main()
+  File "/home/faransansj/CLMoE-Multimodal-20261013/week1-batch1-runtime/week1_batch1_regenerate.py", line 1128, in main
+    command_regenerate(args)
+  File "/home/faransansj/CLMoE-Multimodal-20261013/week1-batch1-runtime/week1_batch1_regenerate.py", line 844, in command_regenerate
+    "occurrence_ids": list(occurrences_by_key[entry["compute_key"]]["occurrence_ids"]),
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'occurrence_ids'

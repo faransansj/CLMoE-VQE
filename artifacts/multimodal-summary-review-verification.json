@@ -1,0 +1,187 @@
+{
+  "scope": "Document review and existing artifact aggregation only. No training, model inference, scorer rerun, new significance tests, or commits.",
+  "document": "MULTIMODAL_RESEARCH_SUMMARY.md",
+  "before_sha256": "e9b97c7593b9764c42ebf892bebba3e651c5b9e3c02a53b48f4a1e13faa0a9d1",
+  "after_sha256": "44bd7433b25d4853547b59c15f1e315b47f23ca0952ca220fbffa5e8c46eca60",
+  "diff": {
+    "path": "artifacts/multimodal-summary-review.diff",
+    "added_lines": 237,
+    "removed_lines": 35,
+    "reviewed": "All 418 diff lines reviewed, including numeric spacing hunks."
+  },
+  "checks": {
+    "section_5_1_byte_identical": true,
+    "numeric_spacing_patterns": [
+      "[가-힣][0-9]",
+      "(?:native|first|independent|replay)[0-9]",
+      ",[0-9]+ seeds"
+    ],
+    "numeric_spacing_matches": 0,
+    "local_link_missing": [],
+    "routing_aggregation_failures": [],
+    "code_contract_failures": [],
+    "caption_task_order_table_matches_output": true,
+    "resource_time_and_storage_tables_match_output": true,
+    "router_counter_exact_match": true,
+    "all_256_checkpoint_compositions_match": true
+  },
+  "new_findings": {
+    "vqa_transfer": {
+      "T": -0.04323970090649698,
+      "R": -0.020873576496730026,
+      "K": -0.022366124409766958
+    },
+    "vqa_routing_bound": {
+      "what": "worst-case max |own-route contribution to R| over all 32 diagonal cells (no scorer execution)",
+      "own_route_text_mismatch_rows_by_task": {
+        "V": 1,
+        "G": 20
+      },
+      "normalizers": {
+        "V": 35.9765625,
+        "G": 33.59375
+      },
+      "rows_per_stage_task_eval": 512,
+      "aggregation_cells": 32,
+      "bound": 0.001901686740903467,
+      "R_interval_under_bound": [
+        -0.022775263237633493,
+        -0.01897188975582656
+      ],
+      "ratio_bound_to_absolute_transfer": 0.04398010858159588,
+      "caveats": [
+        "not a confidence interval and carries no causal claim; per-row error signs and magnitudes stay unknown",
+        "applies only to R (native minus oracle on the trained bank); the native-vs-independent subgroup contribution of the own group is not recoverable because the K side is a different comparison",
+        "per-group absolute scores remain unavailable without per-example accuracy (never persisted)",
+        "text-identical own rows contribute exactly 0 (deterministic scorer), so the bound uses only actually mismatching rows from the files, not a hardcoded count"
+      ]
+    },
+    "flickr_normalized_gain": -0.18836624480721265,
+    "caption_final_eligible_cells": {
+      "C": 19,
+      "F": 14
+    }
+  },
+  "conclusion_conflict": "No direct contradiction to section5.1 performance conclusions; H3 attribution and caption subgroup identifiability qualified explicitly in sections4.4,4.5,6.2.",
+  "input_inventory": [
+    {
+      "path": "artifacts/multimodal-g4-report/audit.json",
+      "sha256": "61aa4df5e50c43e17189595412b8701de40aa51ea460e0a0a4a3da5166b31ea3",
+      "role": "existing G4 rescored corpus scores and transfer records"
+    },
+    {
+      "path": "artifacts/multimodal-g4-report/statistics.json",
+      "sha256": "833a36c7a1c5f38f6c758764b8f9cb2ab61d6b677a80273256fd4de934d3a8c6",
+      "role": "reported G4 transfer statistics to reproduce"
+    },
+    {
+      "path": "artifacts/multimodal-g5-report/routing_audit.json",
+      "sha256": "c6a6d5a3b9212b84c2edd7f9ba949100472f6b58178b346154df6a6db0d85601",
+      "role": "existing G5 rescored per-bank variant corpus scores"
+    },
+    {
+      "path": "artifacts/multimodal-g5-summary.json",
+      "sha256": "8e14b497d9b73701e44f8acf17c3a8c6f25900e5ab5c9318f4ef6b19d87ba585",
+      "role": "reported G5 aggregate for reconciliation"
+    },
+    {
+      "path": "artifacts/multimodal-g1-normalizers.json",
+      "sha256": "9db5200bdd988a13dc0811bf6c599db77a6ee41688b07f195f9a67fcf2eba928"
+    },
+    {
+      "path": "artifacts/multimodal-g4-raw.tar.gz",
+      "sha256": "8cdb944de983e62b5b759d4ff010151b71144439e6655db89642731a601413d6",
+      "role": "G4 per-row predictions (id, prediction, expert, generation)"
+    },
+    {
+      "path": "artifacts/multimodal-g5-raw.tar.gz",
+      "sha256": "73531b6c8da198706c481baf9af98f09c3198b543a53244ae6031ce4db9bfe5d",
+      "role": "G5 per-row predictions for all routing variants"
+    },
+    {
+      "path": "artifacts/multimodal-g4-report.tar.gz",
+      "sha256": "c13f5b59a052264bc0d2b6c9a5aa46ef2968f5ac5d9b0bc40c764b97d53186b5"
+    },
+    {
+      "path": "artifacts/multimodal-g4-statistics.json",
+      "sha256": "833a36c7a1c5f38f6c758764b8f9cb2ab61d6b677a80273256fd4de934d3a8c6"
+    },
+    {
+      "path": "artifacts/multimodal-g4-report/resources.csv",
+      "sha256": "d3fb77bb15485ed4d9c70b4085e6c72faf0e05fe3b23ea4bb746f572178f579a"
+    },
+    {
+      "path": "artifacts/multimodal-confirmation-checkpoints.json",
+      "sha256": "f7300e31054d009888e498d99e5c70814e9a3d96aad51c8731373bca7e662ba5"
+    },
+    {
+      "path": "artifacts/multimodal-development-checkpoints.json",
+      "sha256": "2f735ddfc0ef8ee17c8a1df554f3a2f22a376fd37c1a88bd75d85466e4865de3"
+    },
+    {
+      "path": "artifacts/multimodal-backups.json",
+      "sha256": "9ace34bb97a800b75e9236043326230fc5616735e4ba3d4a9e1f99efb161db90"
+    },
+    {
+      "path": "artifacts/multimodal-confirmation-execution.json",
+      "sha256": "5d37fb6b47fb2168c11a8fce607f2cf0948d47d9cea4d97adf5d912b3b31c485"
+    },
+    {
+      "path": "artifacts/multimodal-confirmation-checkpoints.tar",
+      "sha256": "6b288479429c8498b2e517a22175486ce16fae4ca1c342f7c7e76f2007b8cb38",
+      "hash_source": "Previously verified backup inventory; this review inspected 256 archived checkpoint ZIP payloads, did not repeat whole-archive checksum."
+    }
+  ],
+  "scripts_and_outputs": [
+    {
+      "path": "scripts/aggregate_multimodal_review_statistics.py",
+      "bytes": 5019,
+      "sha256": "fb2b570749223323fa8e1bd7e8020e1825490ddf9a1366f3e822adb8b9ae6ec0"
+    },
+    {
+      "path": "scripts/routing_review_items27.py",
+      "bytes": 69907,
+      "sha256": "346ce40974b81c68b549d3065d6741661031204e21b6ef96b8296f14f872446e"
+    },
+    {
+      "path": "scripts/inspect_multimodal_checkpoint_zip.py",
+      "bytes": 16847,
+      "sha256": "477382debde89575ca71f57cf133dccdbb02829358ac7419aeff13d56271ce76"
+    },
+    {
+      "path": "scripts/aggregate_multimodal_resource_review.py",
+      "bytes": 25057,
+      "sha256": "a9d82ff53323f927156943c6cdd4178b83b17541688a5835e7d2f75ac018ce45"
+    },
+    {
+      "path": "artifacts/multimodal-review-statistics.json",
+      "bytes": 4481,
+      "sha256": "aa4e7f32a1eb4ce95d8173250a5a9d05ccd944c4c2303a4bdf86bb3baf9e6d11"
+    },
+    {
+      "path": "artifacts/routing-review-code-conditions.json",
+      "bytes": 9763,
+      "sha256": "33f5783113c6c4cdaa6b2d173ba638b04da70ce8a4afbcdd566f752b5dadad11"
+    },
+    {
+      "path": "artifacts/routing-review-routing-partition.json",
+      "bytes": 125090,
+      "sha256": "9ae700359038fd8bb36b372e00cce9207ee4a31cb30a20972ad08a5c8fab9e28"
+    },
+    {
+      "path": "artifacts/multimodal-checkpoint-zip-inspection.json",
+      "bytes": 655205,
+      "sha256": "f4d87bc8aa0bb1f4558cbc9f72f2b32a5d6c56816fc34b83c5f6e81209e1ef18"
+    },
+    {
+      "path": "artifacts/multimodal-resource-review.json",
+      "bytes": 95812,
+      "sha256": "9c5b04f919555b22dcab701c900d3364e48e7e9caa01de90610a0295019d706d"
+    },
+    {
+      "path": "artifacts/multimodal-summary-review.diff",
+      "bytes": 42002,
+      "sha256": "87fb045c3466375862aab9981fb37c1ac8c742a6b8495e5af5976453242ba7a8"
+    }
+  ]
+}

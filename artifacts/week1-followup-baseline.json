@@ -1,0 +1,27 @@
+{
+  "scope": "SHA256 captured by parent before 1-C/1-D execution; existing sources, summary, plan, and Week1 A/B outputs",
+  "sha256": {
+    "MULTIMODAL_RESEARCH_SUMMARY.md": "44bd7433b25d4853547b59c15f1e315b47f23ca0952ca220fbffa5e8c46eca60",
+    "artifacts/week1-flickr-samples.md": "9d0a51ae2be91ee9279d354551c9cd07bc106cf9fe9dd781a0df657f95afbb0b",
+    "artifacts/week1-flickr-sanity.json": "4b2649ddb067d0ee44a3627d93474346dd792e7654d27731ca3dfc12e4b5c5f1",
+    "artifacts/week1-index0-parity.json": "afe68cf468b5f290ce0660cc375410331578363416b98bff71f015100469e8ad",
+    "scripts/week1_flickr_sanity.py": "db89871a993652760a826a47fb1a6036ac7299c376e388159c36c579cd1bfd29",
+    "scripts/week1_index0_parity.py": "b3db9f99cfa7156f4206823bb6041ddf0f5d5eeca03c10514cbd40680b75d2f0",
+    "sema_multimodal/__init__.py": "0d0cc97542f6585249b327e47e7c55281f46abc365fc28726e4f22065a5f29b6",
+    "sema_multimodal/data.py": "2a3b293dc757ec16629d540b04dd0898ce68a99c0f577bd495b030751d03f6d4",
+    "sema_multimodal/metrics.py": "6f69c8a5e91dbbdf6858e8154784fcbcc0deb12a9235504c4e6b8bddab1f0a78",
+    "sema_multimodal/model.py": "1a09503f0dadb732c7fc2a04a8759f16f1d09552062c262403d8b06628dd6b2c",
+    "sema_multimodal/run.py": "85038e60d58cd0e674ae2be8129a88c8b67900dcc063264f5195696f6cd02e46",
+    "sema_vqa/__init__.py": "cabe5358c1b597b15b063061fa95e5e1c69e7d837464949bf593ac3234469469",
+    "sema_vqa/expansion.py": "6ead605a1a27d5a9e9cc32d83ae446605e4db28d5654b4ea4023c72d6cb3707a",
+    "sema_vqa/metrics.py": "1f47c87e78bf553c196695d8ec6ba24e839ef6d68f58eea3c181901b68be2333",
+    "sema_vqa/model.py": "98587839e9c2d54f9b4a8f8432b63f6734f238781f83ff192c5273d959ee4be1",
+    "sema_vqa/readout_model.py": "da26215b67f4f4499013ef3b1315d0aa00cda6492173ba3d895cf77f8fd01ebc",
+    "sema_vqa/readout_router.py": "e610fb4af534abdfafb906cc6e26b8b8af19edb738242f6a9530e1b2aa8861a2",
+    "sema_vqa/readout_run.py": "b4e61848983d578641434cf6b3f2c125f79d1fa163accce6ee27b86cea2f9ebd",
+    "sema_vqa/run.py": "42140fbff77edb1cffc1de27af679589e72643f978bb3712fd08759d6cd6a25b",
+    "sema_vqa/vision_model.py": "ba0a01892a69083611e8d5a4d41c82fd41112321a4debb826731d9b841813170",
+    "sema_vqa/vision_run.py": "065a162245c8391848a6cd80c4318412d5c9c4e31a3e567d6c7ad9500e90923d",
+    "멀티모달 CL 논문화 실행 계획.md": "0c7d91d07467dcc860d07207db5c1dc99d044eb821f518984012610589017242"
+  }
+}
