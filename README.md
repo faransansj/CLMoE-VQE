@@ -2,6 +2,7 @@
 
 ## 공개 작업 스냅샷
 
+- **연구 개요(목표·차별성·결과 시각화·계획/진행 상황·참고 문헌): [RESEARCH_OVERVIEW.md](RESEARCH_OVERVIEW.md).**
 - 연구 해석·한계: [멀티모달 연구 정리](MULTIMODAL_RESEARCH_SUMMARY.md).
 - 후속 진단·실험 계획: [논문화 실행 계획](멀티모달%20CL%20논문화%20실행%20계획.md), [P0 사전등록](preregistration-p0-strip.md).
 - 최근 실행 결과: [Stage 0 Flickr 진단](artifacts/stage0-flickr-expert-diagnosis.json), [Stage 0.5 decoding probe](artifacts/stage05-decoding-probe.json), [Stage 1 period-strip](artifacts/stage1-period-strip.json), [Stage 1 fidelity](artifacts/stage1-fidelity.json).
