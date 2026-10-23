@@ -69,7 +69,7 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
         normalize = _normalize_vqa_answer
         answers = [normalize(answer) for answer in answers]
         prediction = normalize(prediction)
-    matches = sum(ref == prediction for ref in answers)
+    matches = answers.count(prediction)
     # Ten leave-one-out votes give 0/.3/.6/.9 for 0..3 matches, then 1.
     return min(1.0, 3 * matches / 10.0)
 
