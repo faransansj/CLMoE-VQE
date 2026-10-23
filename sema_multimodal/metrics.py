@@ -50,6 +50,13 @@ def _vqa_processor():
     return processor
 
 
+@lru_cache(maxsize=4096)
+def _normalize_vqa_answer(text: str) -> str:
+    """Reuse official normalization for recurring answers with bounded storage."""
+    processor = _vqa_processor()
+    return processor.process_digit_article(processor.process_punctuation(text))
+
+
 def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
     """Official leave-one-annotator-out consensus, without intermediate rounding."""
     if (not isinstance(references, (list, tuple)) or len(references) != 10
@@ -59,8 +66,7 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
     answers, prediction = [clean(ref) for ref in references], clean(prediction)
     distinct = set(answers)
     if len(distinct) > 1:
-        processor = _vqa_processor()
-        normalize = lambda text: processor.process_digit_article(processor.process_punctuation(text))
+        normalize = _normalize_vqa_answer
         normalized = {answer: normalize(answer) for answer in distinct}
         answers = [normalized[answer] for answer in answers]
         prediction = normalized[prediction] if prediction in normalized else normalize(prediction)
