@@ -65,8 +65,8 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
         answers = [normalized[answer] for answer in answers]
         prediction = normalized[prediction] if prediction in normalized else normalize(prediction)
     matches = sum(ref == prediction for ref in answers)
-    return math.fsum(min(1.0, (matches - int(ref == prediction)) / 3.0)
-                     for ref in answers) / 10.0
+    # Ten leave-one-out votes give 0/.3/.6/.9 for 0..3 matches, then 1.
+    return min(1.0, 3 * matches / 10.0)
 
 
 def gqa_accuracy(prediction: str, reference: str) -> float:
