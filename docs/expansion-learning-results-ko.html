@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Expansion 기반 멀티모달 CL 실험 결과 보고서</title>
+<style>
+:root{color-scheme:light;--ink:#182637;--muted:#52657a;--line:#dbe3ed;--accent:#155c91}
+*{box-sizing:border-box}body{margin:0;background:#edf2f7;color:var(--ink);font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}main{max-width:1060px;margin:36px auto;padding:48px 56px;background:white;border:1px solid var(--line);border-radius:14px}header{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:30px}.eyebrow{color:var(--accent);font-size:13px;font-weight:750;letter-spacing:.08em}header p{margin:8px 0;color:var(--muted)}h1{font-size:32px;line-height:1.45;margin:0 0 28px}h2{font-size:24px;margin:48px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--line)}h3{font-size:19px;margin-top:26px}a{color:var(--accent);text-underline-offset:3px}strong{font-weight:750}p,li{font-size:16px}li{margin:5px 0}code{background:#edf2f7;border-radius:4px;padding:2px 5px;font-size:.9em}.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:#eaf1f8;font-weight:750}tbody tr:nth-child(even){background:#f7f9fc}tbody tr:last-child td{border-bottom:0}nav{padding:18px 24px;background:#f3f7fb;border-radius:8px;margin-bottom:32px}nav strong{font-size:16px}nav ol{columns:2;padding-left:22px}nav li{font-size:14px;margin:4px 0;break-inside:avoid}.actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap}button{border:1px solid var(--accent);background:white;color:var(--accent);padding:7px 14px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}@media(max-width:720px){main{margin:0;padding:24px 18px;border:0;border-radius:0}h1{font-size:26px}h2{font-size:21px}nav ol{columns:1}}@media print{body{background:white}main{max-width:none;margin:0;padding:0;border:0}.actions,nav{display:none}h2,h3{break-after:avoid}.table-wrap{overflow:visible}table{min-width:0;font-size:10pt}tr{break-inside:avoid}a{color:inherit}p,li{font-size:11pt}footer{font-size:9pt}}
+</style></head><body><main><header><div class="eyebrow">RESEARCH RESULTS · G4 / G5</div><p>기존 학습 결과 정리 · 평가 코드 속도 최적화 제외</p><div class="actions"><button onclick="window.print()">인쇄 / PDF로 저장</button><a href="expansion-learning-results-ko.md">Markdown 원문</a></div></header>
+<h1 id="expansion-continual-learning">Expansion 기반 멀티모달 Continual Learning 실험 결과 보고서</h1><nav aria-label="보고서 목차"><strong>목차</strong><ol><li><a href="#1">1. 요약</a></li><li><a href="#2">2. 연구 질문과 방법</a></li><li><a href="#3">3. 실험 구성</a></li><li><a href="#4">4. 최종 성능</a></li><li><a href="#5">5. 망각과 신규 학습</a></li><li><a href="#6-routing">6. Routing 진단</a></li><li><a href="#7-flickr">7. Flickr 실패 원인과 후속 진단</a></li><li><a href="#8">8. 연구 질문별 최종 판정</a></li><li><a href="#9">9. 재검증 시 확정할 항목</a></li><li><a href="#10">10. 근거 자료</a></li></ol></nav>
+<h2 id="1">1. 요약</h2>
+<p><strong>Task별 expert 확장·동결은 기존 지식 보존에 효과적이었고, shared 및 동일 용량의 단일 adapter보다 최종 성능이 높았다. 그러나 replay 대비 우위는 확보하지 못했으며, Flickr30k에서 신규 task 학습 실패가 나타났다.</strong></p>
+<p>후속 진단에서는 Flickr 학습 타깃의 마지막 마침표를 제거했을 때 종료(EOS) 실패와 caption 점수가 개선됐다. 다만 이는 3개 seed의 단일 task validation 실험이다. 수정된 조건에서 전체 continual-learning stream을 재학습한 결과는 본 보고서에 포함되지 않으므로, replay 대비 결론이 뒤집혔다고 해석할 수 없다.</p>
+<p>본 문서는 저장소에 기록된 <strong>G4/G5 및 Flickr 후속 진단 결과</strong>를 정리한다. 최근 수행한 VQAv2 평가 코드 속도 최적화는 별개의 보조 작업이므로 제외한다. 원격 서버에서 현재 실행 중인 작업을 확인한 보고서는 아니다.</p>
+<h2 id="2">2. 연구 질문과 방법</h2>
+<h3 id="_1">연구 질문</h3>
+<ol>
+<li>Expert를 확장하고 이전 expert를 동결하면 망각이 줄고 최종 성능이 개선되는가?</li>
+<li>그 이점이 동일 용량의 단일 adapter 및 작은 replay buffer와 비교해도 유지되는가?</li>
+<li>기존 지식 보존뿐 아니라 새 task 학습과 긍정적 전이도 나타나는가?</li>
+<li>이러한 결과가 VQA와 captioning을 함께 다루는 이질적인 task stream에서도 성립하는가?</li>
+</ol>
+<h3 id="expansion">평가한 expansion 방식</h3>
+<ul>
+<li>Backbone: 고정된 BLIP.</li>
+<li>적용 위치: 질문 encoder와 답변 decoder의 Q/V LoRA.</li>
+<li>새 task마다 rank-8 LoRA expert를 하나 추가하고, 이전 expert와 backbone은 동결한다.</li>
+<li>새 expert는 zero-delta(<code>B=0</code>)로 시작한다. 이전 expert의 파라미터를 새 expert로 전달하는 경로는 없다.</li>
+<li>추론 시 정답 task ID를 제공하지 않는다. Frozen image/text 특징에 기반한 ridge router가 expert 하나를 선택한다.</li>
+<li>Router는 task당 128개 특징 벡터를 저장하므로 memory-free 방법은 아니다.</li>
+</ul>
+<p><strong>범위 구분:</strong> 여기서 평가한 것은 <em>task마다 expert를 추가하는 방식</em>이다. 생성 품질을 기준으로 기존 expert 재사용과 신규 확장 중 하나를 자동 선택하는 방식은 후속 연구 후보이며, 아래 결과로 검증된 방법이 아니다.</p>
+<h2 id="3">3. 실험 구성</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>설정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td>VQAv2, GQA, COCO2014 caption, Flickr30k</td>
+</tr>
+<tr>
+<td>Task family</td>
+<td>VQA 2개, caption 2개</td>
+</tr>
+<tr>
+<td>Task별 이미지 수</td>
+<td>Train 2,048 / validation 256 / eval 512</td>
+</tr>
+<tr>
+<td>순서</td>
+<td>V→C→G→F, F→G→C→V, V→G→C→F, F→C→G→V</td>
+</tr>
+<tr>
+<td>Confirmation seed 수</td>
+<td>8개</td>
+</tr>
+<tr>
+<td>공통 학습 조건</td>
+<td>LR 3e-4, 5 epochs, effective batch 16</td>
+</tr>
+<tr>
+<td>생성 조건</td>
+<td>Greedy decoding; VQA 최대 32, caption 최대 64 new tokens</td>
+</tr>
+<tr>
+<td>G4</td>
+<td>비교군 전체 224 runs, 예측 1,409,024개 재채점</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>Expert bank를 고정한 routing 진단 160조건, 예측 1,081,344개 재채점</td>
+</tr>
+</tbody>
+</table></div>
+<p>V/C/G/F는 각각 VQAv2/COCO/GQA/Flickr를 의미한다. 위 규모는 각 데이터셋의 전체 benchmark 크기가 아니라 실험에 사용한 부분집합이다.</p>
+<h3 id="_2">주요 비교군</h3>
+<ul>
+<li><strong>Shared LoRA:</strong> 하나의 rank-8 adapter를 순차 학습.</li>
+<li><strong>Capacity-matched shared:</strong> Expansion의 총 adapter 용량에 맞춘 rank-32 단일 adapter.</li>
+<li><strong>Common replay:</strong> 과거 task당 64장의 이미지를 사용하는 replay.</li>
+<li><strong>Expansion:</strong> Task별 expert 추가·동결과 router 선택.</li>
+<li><strong>Tuned replay:</strong> 개발 단계에서 선택한 replay 설정. 10 epochs로, 공통 비교군보다 학습 예산이 두 배다.</li>
+</ul>
+<h2 id="4">4. 최종 성능</h2>
+<h3 id="_3">지표 해석</h3>
+<p>각 task 점수를 G1의 독립 학습 validation 점수로 나눈 뒤, 같은 family 안에서 평균한다. 아래 값은 <strong>정규화 점수이며 정확도 퍼센트가 아니다.</strong> 기준점 대비 비율이므로 1을 넘을 수 있다. Balanced는 두 family의 정규화 점수 평균이다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>방법</th>
+<th style="text-align: right;">VQA</th>
+<th style="text-align: right;">Caption</th>
+<th style="text-align: right;">Balanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frozen-first</td>
+<td style="text-align: right;">0.414</td>
+<td style="text-align: right;">0.191</td>
+<td style="text-align: right;">0.303</td>
+</tr>
+<tr>
+<td>Shared LoRA</td>
+<td style="text-align: right;">0.701</td>
+<td style="text-align: right;">0.365</td>
+<td style="text-align: right;">0.533</td>
+</tr>
+<tr>
+<td>Capacity-matched shared</td>
+<td style="text-align: right;">0.775</td>
+<td style="text-align: right;">0.650</td>
+<td style="text-align: right;">0.713</td>
+</tr>
+<tr>
+<td><strong>Expansion</strong></td>
+<td style="text-align: right;"><strong>0.973</strong></td>
+<td style="text-align: right;"><strong>0.743</strong></td>
+<td style="text-align: right;"><strong>0.858</strong></td>
+</tr>
+<tr>
+<td>Common replay</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.943</td>
+<td style="text-align: right;">0.968</td>
+</tr>
+<tr>
+<td>Tuned replay — 10 epochs</td>
+<td style="text-align: right;">1.069</td>
+<td style="text-align: right;">1.062</td>
+<td style="text-align: right;">1.066</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">비교 결과</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>비교</th>
+<th style="text-align: right;">VQA 차이</th>
+<th style="text-align: right;">Caption 차이</th>
+<th>판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expansion − Shared</td>
+<td style="text-align: right;">+0.272</td>
+<td style="text-align: right;">+0.378</td>
+<td>두 family 모두 유의하게 우세</td>
+</tr>
+<tr>
+<td>Expansion − Capacity-matched</td>
+<td style="text-align: right;">+0.198</td>
+<td style="text-align: right;">+0.093</td>
+<td>두 family 모두 유의하게 우세</td>
+</tr>
+<tr>
+<td>Expansion − Common replay</td>
+<td style="text-align: right;">−0.020</td>
+<td style="text-align: right;">−0.200</td>
+<td>VQA는 유의하지 않음; caption은 유의하게 열세</td>
+</tr>
+</tbody>
+</table></div>
+<p>차이는 표에 표시한 반올림 평균을 기준으로 제시했다.</p>
+<ul>
+<li>통계 단위는 <strong>8개 seed</strong>이며, 각 seed에서 4개 task 순서를 먼저 평균했다.</li>
+<li>주 비교 6개에는 exact two-sided sign-flip 검정과 Holm 보정을 적용했다.</li>
+<li>Shared·capacity 대비 네 비교의 Holm 보정 p는 모두 0.046875였다.</li>
+<li>Common replay 대비 VQA의 exact-test p는 0.125였다. 유의하지 않다는 것은 동등함을 입증했다는 뜻이 아니다.</li>
+<li>Tuned replay 대비로는 두 family 모두 열세였지만, 학습 예산이 다르므로 공통 예산 비교와 구분해야 한다.</li>
+</ul>
+<p><strong>판정:</strong> Expansion의 이점은 단순한 총 adapter 용량 증가만으로 설명되지 않는다. 그러나 replay를 포함한 사전 선언 종합 성공 기준은 충족하지 못했다. 확장·동결·routing 각각의 독립적인 인과 효과를 분리해 입증한 결과는 아니다.</p>
+<h2 id="5">5. 망각과 신규 학습</h2>
+<h3 id="51">5.1 이전 지식 보존</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>평균 망각 — 정규화 단위</th>
+<th style="text-align: right;">Shared</th>
+<th style="text-align: right;">Expansion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VQA</td>
+<td style="text-align: right;">0.437</td>
+<td style="text-align: right;"><strong>0.037</strong></td>
+</tr>
+<tr>
+<td>Caption</td>
+<td style="text-align: right;">0.639</td>
+<td style="text-align: right;"><strong>0.009</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Expansion의 평균 망각은 shared보다 크게 낮았다. 이전 expert를 보존하는 구조가 낮은 망각과 연결된 결과다. 다만 낮은 망각만으로 전체 방법의 우수성을 판단할 수는 없다. 새 task 학습과 최종 성능을 함께 봐야 한다.</p>
+<h3 id="52-task">5.2 새 task 학습</h3>
+<ul>
+<li><strong>VQAv2·GQA·COCO:</strong> 측정한 후속 task 조건 모두에서 학습 후 성능이 개선됐다.</li>
+<li><strong>Flickr30k:</strong> 후속 task로 학습한 <strong>16개 조건 모두에서 pre→post gain이 음수</strong>였다.</li>
+</ul>
+<p>따라서 모든 task에서 신규 학습이 성공했다고 주장할 수 없다. 특히 family 평균은 Flickr의 실패를 가릴 수 있으므로 task별 결과가 중요하다.</p>
+<h3 id="53">5.3 긍정적 전이</h3>
+<p>학습 직후 성능을 같은 seed의 독립 학습과 비교한 정규화 차이는 VQA −0.043, caption +0.020이었다. 이 결과는 <strong>일반적인 긍정적 전이를 지지하지 않는다.</strong> 이전 expert가 보존된다는 사실과 새 expert가 이전 지식을 학습에 활용한다는 주장은 구분해야 한다.</p>
+<h2 id="6-routing">6. Routing 진단</h2>
+<p>Expert bank를 고정한 G5 결과는 다음과 같다.</p>
+<ul>
+<li>다른 family로 보내는 비율은 약 <strong>0.02%</strong>로 매우 낮았다.</li>
+<li>오routing 약 <strong>23.9%</strong>는 대부분 같은 family 내부의 다른 task expert 선택이었다.</li>
+<li>Family mask를 적용해도 성능 변화가 없어, 단순 VQA/caption 구분은 주요 병목이 아니었다.</li>
+<li>정답 task expert를 강제로 선택하는 oracle은 VQA 점수를 <strong>0.973 → 1.015</strong>로 높였지만, caption은 <strong>0.743 → 0.711</strong>로 낮췄다.</li>
+<li>Caption의 역전은 Flickr에서 자기 expert보다 COCO expert를 사용하는 편이 나았던 현상과 관련됐다.</li>
+</ul>
+<p>이 결과만으로 품질 기반 expert 재사용의 우수성을 주장할 수는 없다. 후속 진단에서 Flickr expert의 종료 실패가 드러났기 때문에, 먼저 해당 문제를 수정한 조건에서 다시 확인해야 한다.</p>
+<h2 id="7-flickr">7. Flickr 실패 원인과 후속 진단</h2>
+<h3 id="_5">관찰</h3>
+<p>Flickr로 학습한 expert는 캡션을 적절히 끝내지 못하고 생성 길이 한도에 도달하는 경우가 많았다. 학습 타깃의 마지막 마침표와 EOS 생성 실패 사이의 연관성을 조사했다.</p>
+<h3 id="_6">단일 요인 대조</h3>
+<p>기존 경로를 재현하는 fidelity 검증 후, 학습 타깃 끝의 공백과 <strong>마지막 마침표 하나만 제거</strong>했다. Scoring reference는 변경하지 않았다. 3개 seed의 독립 Flickr 학습을 validation에서 비교한 결과다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Seed</th>
+<th style="text-align: right;">기존 CIDEr-D</th>
+<th style="text-align: right;">마침표 제거 CIDEr-D</th>
+<th style="text-align: right;">개선량</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>137</td>
+<td style="text-align: right;">0.112</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: right;">+0.162</td>
+</tr>
+<tr>
+<td>149</td>
+<td style="text-align: right;">0.105</td>
+<td style="text-align: right;">0.260</td>
+<td style="text-align: right;">+0.155</td>
+</tr>
+<tr>
+<td>163</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: right;">0.306</td>
+<td style="text-align: right;">+0.199</td>
+</tr>
+<tr>
+<td><strong>평균 — 반올림</strong></td>
+<td style="text-align: right;"><strong>0.108</strong></td>
+<td style="text-align: right;"><strong>0.280</strong></td>
+<td style="text-align: right;"><strong>약 +0.172</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>평균 EOS 도달률: 약 <strong>0.56 → 1.00</strong>.</li>
+<li>수정 후 평균 생성 길이: 약 11.4 tokens.</li>
+<li>수정 후에는 Flickr expert가 비교한 COCO expert보다 Flickr 점수가 높았다.</li>
+</ul>
+<h3 id="_7">해석과 한계</h3>
+<p>종료 실패가 Flickr 성능 저하에 기여했다는 근거다. 그러나 마침표와 EOS 사이의 세부 메커니즘까지 완전히 입증한 것은 아니다.</p>
+<p>또한 이는 <strong>단일 task·3 seed·validation 조건</strong>의 진단이다. 전체 CL stream에서 다음이 어떻게 달라지는지는 아직 이 결과로 알 수 없다.</p>
+<ul>
+<li>Flickr의 신규 학습 gain.</li>
+<li>Flickr normalizer와 caption family 정규화 점수.</li>
+<li>Native router와 task-ID oracle의 상대 성능.</li>
+<li>Expansion과 replay 사이의 성능 격차.</li>
+</ul>
+<p>특히 기존 Flickr normalizer가 종료 실패의 영향을 받았을 가능성이 있어, 수정 전후의 정규화 점수를 기준 변경 없이 직접 비교해서는 안 된다.</p>
+<h2 id="8">8. 연구 질문별 최종 판정</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>연구 질문</th>
+<th>현재 판정</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expansion이 망각을 줄이는가?</td>
+<td><strong>지지</strong></td>
+<td>Shared 대비 매우 낮은 평균 망각</td>
+</tr>
+<tr>
+<td>Shared보다 최종 성능이 높은가?</td>
+<td><strong>지지</strong></td>
+<td>VQA·caption 모두 유의하게 우세</td>
+</tr>
+<tr>
+<td>동일 용량 단일 adapter보다 좋은가?</td>
+<td><strong>지지</strong></td>
+<td>두 family에서 capacity-matched 대비 우세</td>
+</tr>
+<tr>
+<td>작은 replay보다 좋은가?</td>
+<td><strong>미지지</strong></td>
+<td>VQA 우위 없음, caption은 유의하게 열세</td>
+</tr>
+<tr>
+<td>모든 새 task를 잘 학습하는가?</td>
+<td><strong>미지지</strong></td>
+<td>Flickr 후속 학습 16/16 조건에서 음의 gain</td>
+</tr>
+<tr>
+<td>일반적 긍정적 전이가 있는가?</td>
+<td><strong>미입증</strong></td>
+<td>독립 학습 대비 일관된 개선 없음</td>
+</tr>
+<tr>
+<td>종료 문제를 수정하면 replay를 이기는가?</td>
+<td><strong>미검증</strong></td>
+<td>전체 stream 재검증 결과 필요</td>
+</tr>
+<tr>
+<td>품질 기반 자동 재사용/확장이 유효한가?</td>
+<td><strong>미검증</strong></td>
+<td>현재 결과는 task별 고정 확장 방식의 결과</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>현재 주장 가능한 결론:</strong> Task별 expert 확장·동결은 shared 및 동일 용량의 단일 adapter보다 보존과 최종 성능에 이점을 보였다. 하지만 replay 대비 일반적 우위와 모든 task에서의 신규 학습 성공은 입증하지 못했다. Flickr 종료 문제 수정 후의 전체 stream 재검증이 필요하다.</p>
+<h2 id="9">9. 재검증 시 확정할 항목</h2>
+<p>저장소의 P0 사전등록 초안에는 주 비교군, 1차 지표, paired 단위, 검정·임계값, 평가 split, L40S 실행 범위, 결과 노출 및 manifest 확인 등이 미해결로 기록돼 있다.</p>
+<p>특히 기존 G4는 <code>eval</code>, P0 runner는 <code>validation</code>을 사용하므로 개발용 진단과 confirmatory 평가를 구분해야 한다. 결과를 본 뒤 비교 조건을 선택하지 않도록 평가 계약을 먼저 확정해야 한다. 본 문서는 추가 학습의 실행 승인이나 완료 보고가 아니다.</p>
+<h2 id="10">10. 근거 자료</h2>
+<ul>
+<li><a href="../RESEARCH_OVERVIEW.md">연구 개요 및 G4/G5 결과</a>: 실험 구성, 최종 성능, 통계, 망각, 전이, routing, Flickr 진단.</li>
+<li><a href="../MULTIMODAL_RESEARCH_SUMMARY.md">멀티모달 연구 상세 정리</a>.</li>
+<li><a href="../MULTIMODAL_EXPERIMENTS.md">멀티모달 실험 기록</a>.</li>
+<li><a href="../artifacts/stage1-period-strip.json">Stage 1 period-strip 결과</a>.</li>
+<li><a href="../artifacts/stage1-fidelity.json">Stage 1 fidelity gate</a>.</li>
+<li><a href="../preregistration-p0-strip.md">P0 사전등록 초안</a>.</li>
+</ul>
+<p>본 보고서는 기존 기록의 요약이며 새로운 학습·통계 분석 결과를 추가하지 않는다.</p>
+<footer>기존 저장소 기록을 정리한 보고서입니다. 새로운 학습 결과 또는 현재 원격 실행 상태를 의미하지 않습니다.</footer></main></body></html>
