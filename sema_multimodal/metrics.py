@@ -57,10 +57,13 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
         raise ValueError("VQAv2 requires exactly ten official answer strings")
     clean = lambda text: text.replace("\n", " ").replace("\t", " ").strip()
     answers, prediction = [clean(ref) for ref in references], clean(prediction)
-    if len(set(answers)) > 1:
+    distinct = set(answers)
+    if len(distinct) > 1:
         processor = _vqa_processor()
         normalize = lambda text: processor.process_digit_article(processor.process_punctuation(text))
-        answers, prediction = [normalize(ref) for ref in answers], normalize(prediction)
+        normalized = {answer: normalize(answer) for answer in distinct}
+        answers = [normalized[answer] for answer in answers]
+        prediction = normalized[prediction] if prediction in normalized else normalize(prediction)
     matches = sum(ref == prediction for ref in answers)
     return math.fsum(min(1.0, (matches - int(ref == prediction)) / 3.0)
                      for ref in answers) / 10.0
