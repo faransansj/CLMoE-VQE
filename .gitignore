@@ -72,3 +72,10 @@ venv/
 !/artifacts/multimodal-review-statistics.json
 !/artifacts/multimodal-checkpoint-zip-inspection.json
 !/artifacts/routing-review-*.json
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
+*.gate.lock*

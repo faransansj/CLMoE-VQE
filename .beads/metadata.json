@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "CLMoE_VQE",
+  "project_id": "951e704b-15e6-4971-8b30-d3e2a0b6b5c8"
+}
