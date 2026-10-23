@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VQAv2 rescoring: removing repeated normalization</title>
+<style>
+body{font:17px/1.6 system-ui,sans-serif;color:#182332;background:#eef2f6;margin:0}main{max-width:1000px;margin:auto;padding:36px}section{background:white;padding:24px;margin:20px 0;border-radius:12px}h1{line-height:1.15;font-size:38px}h2{margin-top:0}.badge{color:#36516d;font-weight:700}.big{font-size:32px;font-weight:750}.cards{display:flex;gap:32px;flex-wrap:wrap}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:7px;border-bottom:1px solid #ddd}.limit{border-left:5px solid #bb6c10}svg{width:100%;height:auto}a{color:#125ca1}
+</style>
+<main>
+<p class="badge">AUTORESEARCH · TEN-RUN SEGMENT COMPLETE · INFRASTRUCTURE PROXY</p>
+<h1>Stop normalizing the same answer repeatedly.</h1>
+<p>The existing VQAv2 scorer can preserve official consensus and normalization while avoiding repeated regex work. This study changes CPU rescoring only—not model predictions or continual-learning outcomes.</p>
+<section class="cards"><div><div class="big">612.72 → 13.98 ms</div>Baseline → final replication / 3,520 predictions</div><div><div class="big">43.83×</div>Warm-vocabulary speedup</div><div><div class="big">46.090909</div>Unchanged accuracy points</div></section>
+<section><h2>Trajectory: normalization reuse is the inflection point</h2>
+<svg viewBox="0 0 800 315" role="img" aria-label="Log-scale scoring latency falls from 613 milliseconds to 14 over ten runs; fused generator trial nine is discarded.">
+<rect width="800" height="315" fill="#fff"/>
+<g stroke="#d4dce4"><path d="M70 40H740 M70 140H740 M70 240H740"/></g>
+<g font-size="13" fill="#47566a"><text x="10" y="44">1000</text><text x="20" y="144">100</text><text x="28" y="244">10</text><text x="70" y="22">scoring_ms · log scale · lower is better</text><text x="320" y="303">Canonical run number</text></g>
+<path d="M80 61.27H710" stroke="#a75151" stroke-dasharray="5 5"/>
+<polyline points="80,61.27 150,79.94 220,80.56 290,212.95 360,214.64 430,219.86 500,224.77 570,225.78 640,223.27 710,225.45" fill="none" stroke="#087c82" stroke-width="3"/>
+<g fill="#087c82"><circle cx="80" cy="61.27" r="4"/><circle cx="150" cy="79.94" r="4"/><circle cx="220" cy="80.56" r="4"/><circle cx="290" cy="212.95" r="5"/><circle cx="360" cy="214.64" r="4"/><circle cx="430" cy="219.86" r="4"/><circle cx="500" cy="224.77" r="4"/><circle cx="570" cy="225.78" r="4"/><circle cx="710" cy="225.45" r="5"/></g>
+<path d="M635 218L645 228M645 218L635 228" stroke="#b64d1e" stroke-width="3"/>
+<g font-size="13" fill="#182332"><text x="300" y="180">Run 4: bounded normalization LRU</text><text x="570" y="205">Run 9: discard</text></g>
+<g text-anchor="middle" font-size="13" fill="#47566a"><text x="80" y="275">1</text><text x="150" y="275">2</text><text x="220" y="275">3</text><text x="290" y="275">4</text><text x="360" y="275">5</text><text x="430" y="275">6</text><text x="500" y="275">7</text><text x="570" y="275">8</text><text x="640" y="275">9</text><text x="710" y="275">10</text></g>
+</svg><p>Each point: seven-pass median after warmup. Sequential, cumulative experiments—not independent ablations. Final replication is within 0.75% of the best observed retained run.</p></section>
+<section><h2>What changed—and what did not</h2><ul><li>Cache official normalization of strings in a bounded 4,096-entry LRU. Never cache scores or whole rows.</li><li>Use exact count-based consensus, native vote counting, identical inline whitespace cleanup and the official unanimous-reference branch.</li><li>Keep all reference validation, vote multiplicities, predictions, metric semantics, oracle and benchmark workload unchanged.</li><li>Discard a fused generator reduction: 14.70 ms vs the retained 13.88 ms.</li></ul></section>
+<section><h2>Stress evidence beyond the hot-cache metric</h2><table><tr><th>Scenario</th><th>Observed evidence</th></tr><tr><td>6,000 unique-answer cases; cold cache each repeat</td><td>1,273.078 → 371.549 ms median of three; 3.426×</td></tr><tr><td>5,000 varied differential cases</td><td>Pre-change parity; tuple/list inputs; no mutation; malformed-reference errors</td></tr><tr><td>6,000 unseen-string cases</td><td>Cold execution, cache eviction and revisits match baseline</td></tr><tr><td>Existing VQA/GQA regression tests</td><td>10 passed; caption scoring not exercised</td></tr></table></section>
+<section class="limit"><h2>Interpretation limits</h2><p>The canonical corpus deliberately repeats a small vocabulary. Startup and imports are excluded. The cold comparison still repeats annotator answers within each row. Neither is representative deployment evidence. The cache bound applies to normalization entries, not total process memory or the archived processor's existing identity map.</p><p>No evidence here resolves the multimodal expansion hypothesis, improves model quality, or measures captioning. No scheduled continuation tool exists in this runtime.</p></section>
+<section><h2>Direction after this capped segment</h2><p>The local scoring target has a replicated improvement. Transfer to real prediction corpora, large-vocabulary cache behavior and concurrent callers remains unmeasured. Those require separately locked evaluation—not changing this benchmark after observing results.</p><p><a href="../findings.md">Full findings and ten-run metric table</a> · <a href="../README.md">Reproduction setup</a></p></section>
+</main></html>

@@ -30,6 +30,15 @@ oracle checks and result checks. Wall-clock timing can vary; workload and scores
 are deterministic. Existing captioning, GQA and confirmatory research artifacts
 must remain unchanged.
 
+The ten-run scoring optimization segment measured **612.717439 → 13.978255 ms**
+(final unchanged-code replication; approximately **43.83×** on this deliberately
+repeated-vocabulary workload). Official string normalization now uses a bounded
+4,096-entry cache; consensus and vote counting avoid redundant Python work.
+Accuracy remained unchanged. A separate synthetic cold-cache comparison measured
+3.426×; neither result establishes representative deployment performance or
+model-quality gains. See [findings](findings.md) for the full trajectory, correctness
+evidence and limits, and the [visual report](to_human/vqa-scoring-progress.html).
+
 ## 공개 작업 스냅샷
 
 - **연구 개요(목표·차별성·결과 시각화·계획/진행 상황·참고 문헌): [RESEARCH_OVERVIEW.md](RESEARCH_OVERVIEW.md).**
