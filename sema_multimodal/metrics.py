@@ -62,8 +62,8 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
     if (not isinstance(references, (list, tuple)) or len(references) != 10
             or not all(isinstance(ref, str) for ref in references)):
         raise ValueError("VQAv2 requires exactly ten official answer strings")
-    clean = lambda text: text.replace("\n", " ").replace("\t", " ").strip()
-    answers, prediction = [clean(ref) for ref in references], clean(prediction)
+    answers = [ref.replace("\n", " ").replace("\t", " ").strip() for ref in references]
+    prediction = prediction.replace("\n", " ").replace("\t", " ").strip()
     distinct = set(answers)
     if len(distinct) > 1:
         normalize = _normalize_vqa_answer
