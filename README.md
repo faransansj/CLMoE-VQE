@@ -1,5 +1,35 @@
 # Continual VQA with expandable experts
 
+## Local autoresearch scoring benchmark
+
+`bash autoresearch.sh` measures the median wall-clock milliseconds of seven
+VQAv2 `TaskScorer.score` passes after one warmup. Each pass scores the same
+3,520 predictions: consensus/normalization boundary cases plus seeded generated
+cases, repeated sixteen times. This synthetic CPU proxy measures rescoring
+latency, **not model quality or the multimodal expansion hypothesis**.
+
+Setup (network is needed only here; benchmark execution is offline):
+
+```bash
+uv venv --python python3.12 .venv
+uv pip install --python .venv/bin/python tqdm==4.67.1 numpy==2.4.4
+uv pip install --python .venv/bin/python 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+bash autoresearch.sh
+```
+
+The existing VQA package imports PyTorch even for scoring. The harness uses
+`.venv/bin/python` unless `AUTORESEARCH_PYTHON` names another prepared interpreter.
+Primary metric: `scoring_ms` (lower is better). Secondary metrics:
+`predictions_per_second`, `accuracy_points`, and `predictions`.
+Every run checks individual scores against an independent leave-one-annotator-out
+consensus calculation using the archived official normalization tables, aggregate
+accuracy within `1e-12`, and reference immutability. Corpus, oracle, dependencies,
+and harness remain fixed during optimization; only production VQAv2 scoring may
+change. Timing includes scoring validation, but excludes imports, corpus creation,
+oracle checks and result checks. Wall-clock timing can vary; workload and scores
+are deterministic. Existing captioning, GQA and confirmatory research artifacts
+must remain unchanged.
+
 ## 공개 작업 스냅샷
 
 - **연구 개요(목표·차별성·결과 시각화·계획/진행 상황·참고 문헌): [RESEARCH_OVERVIEW.md](RESEARCH_OVERVIEW.md).**
