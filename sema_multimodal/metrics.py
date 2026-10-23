@@ -64,11 +64,12 @@ def vqav2_accuracy(prediction: str, references: Sequence[str]) -> float:
         raise ValueError("VQAv2 requires exactly ten official answer strings")
     answers = [ref.replace("\n", " ").replace("\t", " ").strip() for ref in references]
     prediction = prediction.replace("\n", " ").replace("\t", " ").strip()
-    distinct = set(answers)
-    if len(distinct) > 1:
-        normalize = _normalize_vqa_answer
-        answers = [normalize(answer) for answer in answers]
-        prediction = normalize(prediction)
+    # Official VQAEval leaves unanimous references unnormalized.
+    if answers.count(answers[0]) == 10:
+        return float(answers[0] == prediction)
+    normalize = _normalize_vqa_answer
+    answers = [normalize(answer) for answer in answers]
+    prediction = normalize(prediction)
     matches = answers.count(prediction)
     # Ten leave-one-out votes give 0/.3/.6/.9 for 0..3 matches, then 1.
     return min(1.0, 3 * matches / 10.0)
